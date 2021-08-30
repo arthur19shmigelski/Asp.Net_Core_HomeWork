@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using School.MVC.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using School.MVC.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CustomIdentityApp.Controllers
 {
@@ -19,9 +18,10 @@ namespace CustomIdentityApp.Controllers
             _roleManager = roleManager;
             _userManager = userManager;
         }
-        public IActionResult Index() => View(_roleManager.Roles.ToList());
-
-        public IActionResult Create() => View();
+        public IActionResult RolesList()
+        {
+           return View(_roleManager.Roles.ToList());
+        }
         [HttpPost]
         public async Task<IActionResult> Create(string name)
         {

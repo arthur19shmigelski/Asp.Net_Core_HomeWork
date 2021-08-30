@@ -10,9 +10,9 @@ namespace School.DAL.EF.Extensions
         {
             services.AddScoped<IRepository<Topic>, BaseRepository<Topic>>();
             services.AddScoped<IRepository<Course>, BaseRepository<Course>>();
-            services.AddScoped<IRepository<Teacher>, TeachersRepository>();
-            services.AddScoped<IRepository<Student>, StudentsRepository>();
-            services.AddScoped<IRepository<StudentGroup>, StudentGroupsRepository>();
+            services.AddScoped<IRepository<Teacher>, BaseRepository<Teacher>>();
+            services.AddScoped<IRepository<Student>, BaseRepository<Student>>();
+            services.AddScoped<IRepository<StudentGroup>, BaseRepository<StudentGroup>>();
             services.AddScoped<IRepository<StudentRequest>, StudentRequestsRepository>();
 
             return services;

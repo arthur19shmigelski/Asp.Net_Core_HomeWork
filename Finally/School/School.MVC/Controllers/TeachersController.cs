@@ -2,22 +2,19 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
-using School.BLL.Services.Teacher;
+using School.BLL.Services.Base;
 using School.MVC.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
 {
     [Authorize(Roles = "admin, manager")]
     public class TeachersController : Controller
     {
-        private readonly ITeacherService _teacherService;
+        private readonly IEntityService<Teacher> _teacherService;
         private readonly IMapper _mapper;
 
-        public TeachersController(ITeacherService teacherService, IMapper mapper)
+        public TeachersController(IEntityService<Teacher> teacherService, IMapper mapper)
         {
             _teacherService = teacherService;
             _mapper = mapper;

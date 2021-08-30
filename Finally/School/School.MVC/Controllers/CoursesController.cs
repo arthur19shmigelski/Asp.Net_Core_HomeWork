@@ -1,30 +1,28 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using School.BLL.Models;
 using School.BLL.Services.Base;
-using School.BLL.Services.Course;
 using School.BLL.Services.StudentRequest;
 using School.MVC.Configuration;
 using School.MVC.Models;
+using System.Collections.Generic;
 
 namespace AcademyCRM.MVC.Controllers
 {
     [Authorize(Roles = "admin, manager, student")]
     public class CoursesController : Controller
     {
-        private readonly ICourseService _courseService;
+        private readonly IEntityService<Course> _courseService;
         private readonly IEntityService<Topic> _topicService;
         private readonly IStudentRequestService _requestService;
         private readonly IConfiguration _configuration;
         private readonly SecurityOptions _securityOptions;
         private readonly IMapper _mapper;
 
-        public CoursesController(ICourseService courseService,
+        public CoursesController(IEntityService<Course> courseService,
             IMapper mapper,
             IEntityService<Topic> topicService,
             IStudentRequestService requestService,

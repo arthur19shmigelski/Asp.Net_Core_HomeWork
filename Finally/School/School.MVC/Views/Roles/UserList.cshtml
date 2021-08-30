@@ -1,14 +1,29 @@
 ﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
 
-<h2>Список пользователей</h2>
-<table class="table">
-    @foreach (var user in Model)
-    {
+<h2>List of users</h2>
+<table class="table table-bordered table-striped">
+    <thead>
         <tr>
-            <td>@user.Email</td>
-            <td>
-                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Права доступа</a>
-            </td>
+            <th>Login users</th>
+            <th>Roles</th>
         </tr>
-    }
+
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Change roles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tr>
+        <th>
+            <div class="text-info">Total users: @Model.Count()</div>
+        </th>
+        <th></th>
+    </tr>
 </table>

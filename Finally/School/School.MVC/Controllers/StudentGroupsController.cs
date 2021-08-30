@@ -2,12 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
-using School.BLL.Services.Course;
-using School.BLL.Services.StudentGroup;
+using School.BLL.Services.Base;
 using School.BLL.Services.StudentRequest;
-using School.BLL.Services.Teacher;
 using School.MVC.Models;
-using System;
 using System.Collections.Generic;
 
 namespace School.MVC.Controllers
@@ -15,13 +12,17 @@ namespace School.MVC.Controllers
     [Authorize(Roles = "admin, manager, student")]
     public class StudentGroupsController : Controller
     {
-        private readonly IStudentGroupService _groupService;
-        private readonly ITeacherService _teacherService;
-        private readonly ICourseService _courseService;
+        private readonly IEntityService<StudentGroup> _groupService;
+        private readonly IEntityService<Teacher> _teacherService;
+        private readonly IEntityService<Course> _courseService;
         private readonly IStudentRequestService _requestService;
         private readonly IMapper _mapper;
 
-        public StudentGroupsController(IStudentGroupService groupService, ITeacherService teacherService, ICourseService courseService, IStudentRequestService requestService, IMapper mapper)
+        public StudentGroupsController(IEntityService<StudentGroup> groupService,
+           IEntityService<Teacher> teacherService,
+           IEntityService<Course> courseService,
+           IStudentRequestService requestService,
+           IMapper mapper)
         {
             _groupService = groupService;
             _teacherService = teacherService;

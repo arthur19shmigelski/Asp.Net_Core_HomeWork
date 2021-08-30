@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace School.BLL.Services.StudentRequest
 {
-    interface IStudentRequestService : IEntityService<Models.StudentRequest>
+    public interface IStudentRequestService : IEntityService<Models.StudentRequest>
     {
         IEnumerable<Models.StudentRequest> GetOpenRequestsByCourse(int courseId);
         int GetOpenRequestsCountByCourse(int courseId);

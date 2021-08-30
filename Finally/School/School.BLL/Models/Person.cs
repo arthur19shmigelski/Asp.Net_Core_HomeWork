@@ -7,12 +7,15 @@ namespace School.BLL.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field <FirstName> can't be empty")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field <LastName> can't be empty")]
         public string LastName { get; set; }
 
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? BirthDate { get; set; }
 
         [StringLength(maximumLength: 100, MinimumLength = 3)]

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using School.BLL.Models;
 
 namespace School.DAL.EF.Contexts
 {
-    public class AcademyContext : DbContext
+    public class AcademyContext : IdentityDbContext
     {
         public DbSet<Student> Students { get; set; } = default!;
         public DbSet<StudentGroup> StudentGroups { get; set; } = default!;

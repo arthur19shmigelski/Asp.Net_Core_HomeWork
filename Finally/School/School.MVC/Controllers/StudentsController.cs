@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
+using School.BLL.Services.Base;
 using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;
 using School.MVC.Models;
@@ -11,22 +13,26 @@ using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
 {
+    [Authorize(Roles = "admin, manager")]
     public class StudentsController : Controller
     {
         private readonly IStudentService _studentsService;
         private readonly IStudentGroupService _groupService;
         private readonly IMapper _mapper;
+        private readonly IEntityService<Student> _studentServiceEntity;
 
-        public StudentsController(IStudentService studentService, IStudentGroupService groupService, IMapper mapper)
+        public StudentsController(IStudentService studentService, IStudentGroupService groupService, IMapper mapper, IEntityService<Student> studentServiceEntity)
         {
             _studentsService = studentService;
             _groupService = groupService;
             _mapper = mapper;
+            _studentServiceEntity = studentServiceEntity;
         }
 
         public IActionResult Index()
         {
-            var students = _studentsService.GetAll();
+            var students = _studentServiceEntity.GetAll();
+            //var students = _studentsService.GetAll();
             return View(_mapper.Map<IEnumerable<StudentModel>>(students));
         }
 

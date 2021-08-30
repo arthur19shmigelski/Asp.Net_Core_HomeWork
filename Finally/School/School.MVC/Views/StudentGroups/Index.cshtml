@@ -1,0 +1,38 @@
+﻿@model IEnumerable<StudentGroupModel>
+@{
+    ViewData["Title"] = "Student Groups";
+}
+<h1>Groups</h1>
+
+<div class="row mt-2">
+    <p>
+        <a asp-action="Edit" class="btn btn-success">Create new Group</a>
+    </p>
+    <table class="table table-bordered">
+
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Teacher</th>
+        </tr>
+
+        @foreach (var group in Model)
+        {
+            <tr>
+                <td><a asp-controller="StudentGroups" asp-action="Edit" asp-route-id="@group.Id">@group.Title</a></td>
+                <td>@group.Status</td>
+                <td>
+                    <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@group.TeacherId">
+                        @group.Teacher?.LastName @group.Teacher?.FirstName?[0].
+                    </a>
+                </td>
+            </tr>
+        }
+        <tr>
+            <th>
+                <div class="text-info">Total: @Model.Count()</div>
+            </th>
+        </tr>
+    </table>
+</div>

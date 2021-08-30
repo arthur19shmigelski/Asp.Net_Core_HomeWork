@@ -16,9 +16,10 @@ namespace School.BLL.Extensions
 {
     public static class ServicesExtensions
     {
-        public static IServiceCollection AddBusinessLogicServices(this IServiceCollection services)
+        public static IServiceCollection AddBusinessLogicServicesFromBLL(this IServiceCollection services)
         {
             services.AddScoped<IEntityService<Topic>, BaseEntityService<Topic>>();
+            services.AddScoped<IEntityService<Student>, BaseEntityService<Student>>();
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<ITeacherService, TeacherService>();
             services.AddScoped<IStudentService, StudentService>();

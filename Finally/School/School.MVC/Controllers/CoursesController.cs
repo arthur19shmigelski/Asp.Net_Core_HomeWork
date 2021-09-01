@@ -91,14 +91,14 @@ namespace AcademyCRM.MVC.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) return View(courseModel);
+                 if (!ModelState.IsValid) return View(courseModel);
 
-                var course = _mapper.Map<Course>(courseModel);
-                if (courseModel.Id > 0)
-                    _courseService.Update(course);
-                else
-                    _courseService.Create(course);
-                return RedirectToAction("Index");
+            var course = _mapper.Map<Course>(courseModel);
+            if (courseModel.Id > 0)
+                _courseService.Update(course);
+            else
+                _courseService.Create(course);
+            return RedirectToAction("Index");
             }
            
 

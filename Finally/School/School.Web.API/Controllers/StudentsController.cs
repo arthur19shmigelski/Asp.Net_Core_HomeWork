@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
-using School.BLL.Services.Student;
+using School.BLL.Services.Base;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
 using System.Net;
@@ -12,9 +12,9 @@ namespace School.Web.API.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly IStudentService _studentsService;
+        private readonly IEntityService<Student> _studentsService;
 
-        public StudentsController(IStudentService studentService)
+        public StudentsController(IEntityService<Student> studentService)
         {
             _studentsService = studentService;
         }

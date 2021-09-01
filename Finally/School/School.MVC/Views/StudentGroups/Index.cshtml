@@ -20,6 +20,7 @@
         @foreach (var group in Model)
         {
             <tr>
+                <td>@group.Id</td>
                 <td><a asp-controller="StudentGroups" asp-action="Edit" asp-route-id="@group.Id">@group.Title</a></td>
                 <td>@group.Status</td>
                 <td>

@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
 using School.BLL.Services.Base;
 using School.MVC.Models;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace School.MVC.Controllers
 {
@@ -22,42 +25,84 @@ namespace School.MVC.Controllers
 
         public IActionResult Index()
         {
-            var teachers = _teacherService.GetAll();
-            return View(_mapper.Map<IEnumerable<TeacherModel>>(teachers));
+            try
+            {
+                var teachers = _teacherService.GetAll();
+                return View(_mapper.Map<IEnumerable<TeacherModel>>(teachers));
+            }
+            
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
         }
 
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-            var modelTeacher = id.HasValue
-                ? _mapper.Map<TeacherModel>(_teacherService.GetById(id.Value))
-                : new TeacherModel();
-            return View(_mapper.Map<TeacherModel>(modelTeacher));
+            try
+            {
+                var modelTeacher = id.HasValue
+            ? _mapper.Map<TeacherModel>(_teacherService.GetById(id.Value))
+            : new TeacherModel();
+                return View(_mapper.Map<TeacherModel>(modelTeacher));
+            }
+
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
         }
 
         [HttpPost]
         public IActionResult Edit(TeacherModel teacherModel)
         {
-            if(ModelState.IsValid)
+            try
             {
-                var teacher = _mapper.Map<Teacher>(teacherModel);
-                if (teacherModel.Id > 0)
-                    _teacherService.Update(teacher);
-                else
-                    _teacherService.Create(teacher);
+                if (ModelState.IsValid)
+                {
+                    var teacher = _mapper.Map<Teacher>(teacherModel);
+                    if (teacherModel.Id > 0)
+                        _teacherService.Update(teacher);
+                    else
+                        _teacherService.Create(teacher);
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                return View(teacherModel);
+            }         
+
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
             }
-            return View(teacherModel);
         }
 
         [HttpGet]
         public IActionResult Delete(TeacherModel teacherModel)
         {
-            var teacher = _mapper.Map<Teacher>(teacherModel);
-            _teacherService.Delete(teacher);
+            try
+            {
+                var teacher = _mapper.Map<Teacher>(teacherModel);
+                _teacherService.Delete(teacher);
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

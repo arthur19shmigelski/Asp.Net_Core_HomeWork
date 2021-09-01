@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
 using School.BLL.Services.Base;
 using School.BLL.Services.StudentRequest;
 using School.MVC.Models;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace School.MVC.Controllers
 {
@@ -33,51 +36,84 @@ namespace School.MVC.Controllers
 
         public IActionResult Index()
         {
-            var groups = _groupService.GetAll();
-            return View(_mapper.Map<IEnumerable<StudentGroupModel>>(groups));
+            try
+            {
+                var groups = _groupService.GetAll();
+                return View(_mapper.Map<IEnumerable<StudentGroupModel>>(groups));
+            }
+
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
         }
 
         [HttpGet]
         public IActionResult Edit(int? id, int? courseId)
         {
-            StudentGroupModel model;
-            if (id.HasValue)
+            try
             {
-                var group = _groupService.GetById(id.Value);
-                model = _mapper.Map<StudentGroupModel>(group);
-                model.Students =_mapper.Map<IEnumerable<StudentModel>>(group.Students);
-            }
-            else
-            {
-                
-                model = new StudentGroupModel
+                StudentGroupModel model;
+                if (id.HasValue)
                 {
-                    CourseId = courseId,
-                    Students = _mapper.Map<IEnumerable<StudentModel>>(
-                        _requestService.GetStudentsByCourse(courseId.Value))
-                };
-            }
-            
-            ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherModel>>(_teacherService.GetAll());
-            ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(_courseService.GetAll());
-            ViewBag.IsAdmin = HttpContext.User.IsInRole("admin");
+                    var group = _groupService.GetById(id.Value);
+                    model = _mapper.Map<StudentGroupModel>(group);
+                    model.Students = _mapper.Map<IEnumerable<StudentModel>>(group.Students);
+                }
+                else
+                {
+                    model = new StudentGroupModel
+                    {
+                        CourseId = courseId,
+                        Students = _mapper.Map<IEnumerable<StudentModel>>(
+                            _requestService.GetStudentsByCourse(courseId.Value))
+                    };
+                }
 
-            return View(model);
+                ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherModel>>(_teacherService.GetAll());
+                ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(_courseService.GetAll());
+                ViewBag.IsAdmin = HttpContext.User.IsInRole("admin");
+
+                return View(model);
+            }
+
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
         }
 
         [HttpPost]
         [Authorize(Roles = "admin")]
         public IActionResult Edit(StudentGroupModel groupModel)
         {
-            if (!ModelState.IsValid) return View(groupModel);
+            try
+            {
+                if (!ModelState.IsValid) 
+                    return View(groupModel);
 
-            var group = _mapper.Map<StudentGroup>(groupModel);
-            if (groupModel.Id > 0)
-                _groupService.Update(group);
-            else
-                _groupService.Create(group);
+                var group = _mapper.Map<StudentGroup>(groupModel);
+                if (groupModel.Id > 0)
+                    _groupService.Update(group);
+                else
+                    _groupService.Create(group);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

@@ -1,4 +1,5 @@
 using AutoMapper;
+using ElmahCore.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -26,7 +27,6 @@ namespace School.MVC
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AcademyContext>(options =>
@@ -54,9 +54,10 @@ namespace School.MVC
                    Configuration.GetSection(SecurityOptions.SectionTitle));
 
             services.AddRazorPages();
+
+            services.AddElmah();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)
         {
             if (env.IsDevelopment())
@@ -67,7 +68,6 @@ namespace School.MVC
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -87,6 +87,9 @@ namespace School.MVC
             });
 
             CreateRoles(serviceProvider, securityOptions).Wait();
+
+            app.UseStatusCodePages("text/html", "<h1 style='color:red;'>Error. Code: {0} </h1>");
+            app.UseElmah();
         }
 
         private async Task CreateRoles(IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)
@@ -95,34 +98,28 @@ namespace School.MVC
 
             var roles = new[] { "admin", "manager", "student" };
 
-
             foreach (var roleName in roles)
             {
                 roleManager.CreateAsync(new IdentityRole
                 {
                     Name = roleName,
-                    NormalizedName = roleName.ToUpper(),
-
+                    NormalizedName = roleName.ToUpper()
                 }).Wait();
             }
-
 
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
             var adminUser = await userManager.FindByEmailAsync(Configuration["Security:AdminUserEmail"]);
-
             if (adminUser != null)
             {
                 await userManager.AddToRoleAsync(adminUser, "ADMIN");
             }
 
             var managerUser = await userManager.FindByEmailAsync(Configuration["Security:ManagerUserEmail"]);
-
             if (managerUser != null)
             {
                 await userManager.AddToRoleAsync(managerUser, "MANAGER");
             }
-
         }
     }
 }

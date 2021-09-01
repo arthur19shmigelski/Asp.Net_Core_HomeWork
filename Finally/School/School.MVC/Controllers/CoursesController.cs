@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +9,9 @@ using School.BLL.Services.Base;
 using School.BLL.Services.StudentRequest;
 using School.MVC.Configuration;
 using School.MVC.Models;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace AcademyCRM.MVC.Controllers
 {
@@ -41,40 +44,75 @@ namespace AcademyCRM.MVC.Controllers
 
         public IActionResult Index()
         {
-            var courses = _courseService.GetAll();
-            var models = _mapper.Map<IEnumerable<CourseModel>>(courses);
-
-            foreach (var model in models)
+            try
             {
-                model.RequestsCount = _requestService.GetOpenRequestsCountByCourse(model.Id);
+                var courses = _courseService.GetAll();
+                var models = _mapper.Map<IEnumerable<CourseModel>>(courses);
+
+                foreach (var model in models)
+                {
+                    model.RequestsCount = _requestService.GetOpenRequestsCountByCourse(model.Id);
+                }
+
+                return View(models);
+            }
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
             }
 
-            return View(models);
         }
 
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-            var model = id.HasValue ? _mapper.Map<CourseModel>(_courseService.GetById(id.Value)) : new CourseModel();
+            try
+            {
+                var model = id.HasValue ? _mapper.Map<CourseModel>(_courseService.GetById(id.Value)) : new CourseModel();
 
-            if(id.HasValue)
-                model.Requests = _mapper.Map<IEnumerable<StudentRequestModel>>(_requestService.GetOpenRequestsByCourse(id.Value));
+                if (id.HasValue)
+                    model.Requests = _mapper.Map<IEnumerable<StudentRequestModel>>(_requestService.GetOpenRequestsByCourse(id.Value));
 
-            ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(_topicService.GetAll());
-            return View(model);
+                ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(_topicService.GetAll());
+                return View(model);
+            }
+
+
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
         }
 
         [HttpPost]
         public IActionResult Edit(CourseModel courseModel)
         {
-            if (!ModelState.IsValid) return View(courseModel);
+            try
+            {
+                if (!ModelState.IsValid) return View(courseModel);
 
-            var course = _mapper.Map<Course>(courseModel);
-            if (courseModel.Id > 0)
-                _courseService.Update(course);
-            else
-                _courseService.Create(course);
-            return RedirectToAction("Index");
+                var course = _mapper.Map<Course>(courseModel);
+                if (courseModel.Id > 0)
+                    _courseService.Update(course);
+                else
+                    _courseService.Create(course);
+                return RedirectToAction("Index");
+            }
+           
+
+             catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using ElmahCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using School.MVC.Models;
+using School.BLL.ShortModels;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;

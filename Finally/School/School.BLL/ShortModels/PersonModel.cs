@@ -1,8 +1,8 @@
-﻿using School.MVC.Models.Validation;
+﻿using School.BLL.ShortModels.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace School.MVC.Models
+namespace School.BLL.ShortModels
 {
     public class PersonModel
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace School.MVC.Models
+namespace School.BLL.ShortModels
 {
     public class ErrorViewModel
     {

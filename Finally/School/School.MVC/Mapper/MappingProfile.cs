@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using School.BLL.Models;
-using School.MVC.Models;
+using School.BLL.ShortModels;
 
 namespace School.MVC.Mapper
 {

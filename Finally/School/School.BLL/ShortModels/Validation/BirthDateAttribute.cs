@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace School.MVC.Models.Validation
+namespace School.BLL.ShortModels.Validation
 {
     public class BirthDateAttribute : ValidationAttribute, IClientModelValidator
     {

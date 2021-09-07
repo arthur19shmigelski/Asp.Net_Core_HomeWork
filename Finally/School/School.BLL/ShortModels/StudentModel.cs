@@ -1,6 +1,6 @@
 ﻿using School.BLL.Models.Enum;
 
-namespace School.MVC.Models
+namespace School.BLL.ShortModels
 {
     public class StudentModel : PersonModel
     {

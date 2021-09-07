@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
-namespace School.MVC.Models
+namespace School.BLL.ShortModels
 {
 
     public class ChangeRoleViewModel

@@ -8,7 +8,7 @@ using School.BLL.Models;
 using School.BLL.Services.Base;
 using School.BLL.Services.StudentRequest;
 using School.MVC.Configuration;
-using School.MVC.Models;
+using School.BLL.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

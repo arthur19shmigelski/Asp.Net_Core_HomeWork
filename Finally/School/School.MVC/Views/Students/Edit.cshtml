@@ -1,4 +1,4 @@
-﻿@model School.MVC.Models.StudentModel
+﻿@model StudentModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -41,7 +41,7 @@
             <option value="">Select group...</option>
             @if (ViewBag.Groups != null)
                 foreach (var group in (List
-                <School.MVC.Models.StudentGroupModel>)ViewBag.Groups)
+                <StudentGroupModel>)ViewBag.Groups)
                 {
                     if (group.Id == Model.GroupId)
                     {

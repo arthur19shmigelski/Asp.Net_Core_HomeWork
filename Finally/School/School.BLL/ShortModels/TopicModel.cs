@@ -1,4 +1,4 @@
-﻿namespace School.MVC.Models
+﻿namespace School.BLL.ShortModels
 {
     public class TopicModel
     {

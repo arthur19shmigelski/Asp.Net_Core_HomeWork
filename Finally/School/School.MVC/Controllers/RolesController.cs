@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using School.MVC.Models;
+using School.BLL.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

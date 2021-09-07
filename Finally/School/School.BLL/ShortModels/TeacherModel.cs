@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace School.MVC.Models
+namespace School.BLL.ShortModels
 {
     public class TeacherModel : PersonModel
     {

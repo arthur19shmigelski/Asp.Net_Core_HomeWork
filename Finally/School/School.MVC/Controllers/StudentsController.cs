@@ -93,7 +93,7 @@ namespace School.MVC.Controllers
             try
             {
                 var student = _mapper.Map<Student>(studentModel);
-                _studentsService.Delete(student);
+                _studentsService.Delete(student.Id);
 
                 return RedirectToAction(nameof(Index));
             }

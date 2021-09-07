@@ -10,6 +10,6 @@ namespace School.BLL.Models
         public StudentType Type { get; set; }
 
         public int? GroupId { get; set; }
-        public StudentGroup? Group { get; set; }
+        public StudentGroup Group { get; set; }
     }
 }

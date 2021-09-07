@@ -77,7 +77,7 @@ namespace School.Web.API.Controllers
             {
                 return NotFound();
             }
-            _studentsService.Delete(user);
+            _studentsService.Delete(user.Id);
             return Ok(user);
         }
     }

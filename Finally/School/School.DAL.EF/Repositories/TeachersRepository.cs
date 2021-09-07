@@ -1,50 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
-using School.BLL.Models;
+﻿using School.BLL.Models;
 using School.DAL.EF.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
-    public class TeachersRepository : IRepository<Teacher>
+    public class TeachersRepository : BaseRepository<Teacher>
     {
         private readonly AcademyContext _context;
-
-        public TeachersRepository(AcademyContext context)
+        public TeachersRepository(AcademyContext context) : base(context)
         {
             _context = context;
         }
 
-        public void Create(Teacher item)
+        public override void Update(Teacher item)
         {
-            _context.Teachers.Add(item);
-            _context.SaveChanges();
-        }
+            var originalTeacher = _context.Teachers.Find(item.Id);
 
-        public void Delete(Teacher item)
-        {
-            _context.Teachers.Remove(item);
-            _context.SaveChanges();
-        }
+            originalTeacher.Bio = item.Bio;
+            originalTeacher.BirthDate = item.BirthDate;
+            originalTeacher.Email = item.Email;
+            originalTeacher.FirstName = item.FirstName;
+            originalTeacher.LastName = item.LastName;
+            originalTeacher.LinkToProfile = item.LinkToProfile;
+            originalTeacher.Phone = item.Phone;
 
-        public IEnumerable<Teacher> Find(Func<Teacher, bool> predicate)
-        {
-            return _context.Teachers.Where(predicate).ToList();
-        }
-
-        public Teacher Get(int id) => _context.Teachers.Find(id);
-
-        public IEnumerable<Teacher> GetAll()
-        {
-            return _context.Teachers.ToList();
-        }
-
-        public void Update(Teacher item)
-        {
-            _context.Entry(item).State = EntityState.Modified;
             _context.SaveChanges();
         }
     }

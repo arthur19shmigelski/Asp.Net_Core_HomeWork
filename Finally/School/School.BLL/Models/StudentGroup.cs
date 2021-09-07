@@ -16,7 +16,7 @@ namespace School.BLL.Models
         public Course Course { get; set; }
 
         public int? TeacherId { get; set; }
-        public Teacher? Teacher { get; set; }
+        public Teacher Teacher { get; set; }
 
         public DateTime? StartDate { get; set; }
 

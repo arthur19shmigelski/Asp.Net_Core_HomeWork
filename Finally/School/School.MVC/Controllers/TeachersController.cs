@@ -87,7 +87,7 @@ namespace School.MVC.Controllers
             try
             {
                 var teacher = _mapper.Map<Teacher>(teacherModel);
-                _teacherService.Delete(teacher);
+                _teacherService.Delete(teacher.Id);
 
                 return RedirectToAction(nameof(Index));
             }

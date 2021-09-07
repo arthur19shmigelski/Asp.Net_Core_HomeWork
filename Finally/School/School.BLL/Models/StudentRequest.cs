@@ -16,7 +16,7 @@ namespace School.BLL.Models
         public Student Student { get; set; }
         public int CourseId { get; set; }
         public Course Course { get; set; }
-        public string? Comments { get; set; }
+        public string Comments { get; set; }
 
         public RequestStatus Status { get; set; }
     }

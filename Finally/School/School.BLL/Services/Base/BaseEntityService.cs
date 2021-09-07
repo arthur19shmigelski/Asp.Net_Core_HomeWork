@@ -36,9 +36,9 @@ namespace School.BLL.Services.Base
             _repository.Update(course);
         }
 
-        public void Delete(TEntity entity)
+        public void Delete(int id)
         {
-            _repository.Delete(entity);
+            _repository.Delete(id);
         }
     }
 }

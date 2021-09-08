@@ -26,14 +26,14 @@ namespace School.BLL.Services.Base
             return _repository.Get(id);
         }
 
-        public void Create(TEntity course)
+        public void Create(TEntity entity)
         {
-            _repository.Create(course);
+            _repository.Create(entity);
         }
 
-        public void Update(TEntity course)
+        public void Update(TEntity entity)
         {
-            _repository.Update(course);
+            _repository.Update(entity);
         }
 
         public void Delete(int id)

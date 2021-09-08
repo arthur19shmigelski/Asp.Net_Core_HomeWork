@@ -1,5 +1,6 @@
 ﻿using School.BLL.Models;
 using School.DAL.EF.Contexts;
+using System.Linq;
 
 namespace School.DAL.EF.Repositories
 {
@@ -10,6 +11,24 @@ namespace School.DAL.EF.Repositories
         {
             _context = context;
         }
+
+        public override void Delete(int id)
+        {
+            var teacher = _context.Teachers.Find(id);
+            var groups = (StudentGroup)_context.StudentGroups.Where(c=>c.TeacherId == id).Select(c=>c);
+
+            _context.StudentGroups.Update(groups);
+
+            _context.SaveChanges();
+
+            //if (entity != null)
+            //{
+            //    _entities.Remove(entity);
+
+            //    _context.SaveChanges();
+            //}
+        }
+
 
         public override void Update(Teacher item)
         {

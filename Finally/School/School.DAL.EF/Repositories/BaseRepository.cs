@@ -25,15 +25,24 @@ namespace School.DAL.EF.Repositories
         public void Create(TEntity item)
         {
             _context.Entry(item).State = EntityState.Added;
+
             _context.SaveChanges();
         }
 
         
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
+            
             var entity = _entities.Find(id);
-            if (entity != null)
-                _entities.Remove(entity);
+            _context.Entry(entity).State = EntityState.Deleted;
+            _context.SaveChanges();
+
+            //if (entity != null)
+            //{
+            //    _entities.Remove(entity);
+
+            //    _context.SaveChanges();
+            //}
         }
 
         public IEnumerable<TEntity> Find(Func<TEntity, bool> predicate)

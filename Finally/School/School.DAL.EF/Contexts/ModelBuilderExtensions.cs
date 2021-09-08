@@ -144,7 +144,7 @@ namespace School.DAL.EF.Contexts
                     Email = "Fedorov@gmail.com",
                     BirthDate = new DateTime(1998,01,01),
                     Phone = "+375291111111",
-                    GroupId = 1,
+                    GroupId = group1.Id,
                     Type = BLL.Models.Enum.StudentType.Online,
                     StartDate = DateTime.Today
                 },
@@ -156,7 +156,7 @@ namespace School.DAL.EF.Contexts
                     Email = "Antonov@gmail.com",
                     BirthDate = new DateTime(1990, 02, 02),
                     Phone = "+375292222222",
-                    GroupId = 2,
+                    GroupId = group2.Id,
                     Type = BLL.Models.Enum.StudentType.Mix,
                     StartDate = new DateTime(2021, 10, 10)
                 },
@@ -168,7 +168,7 @@ namespace School.DAL.EF.Contexts
                     Email = "Petrov@gmail.com",
                     BirthDate = new DateTime(1988, 03, 03),
                     Phone = "+375443333333",
-                    GroupId = 3,
+                    GroupId = group3.Id,
                     Type = BLL.Models.Enum.StudentType.InClass,
                     StartDate = new DateTime(2023, 01, 01)
 
@@ -181,7 +181,7 @@ namespace School.DAL.EF.Contexts
                     Email = "Ivashko@gmail.com",
                     BirthDate = new DateTime(2000, 04, 04),
                     Phone = "+375444444444",
-                    GroupId = 1,
+                    GroupId = group1.Id,
                     Type = BLL.Models.Enum.StudentType.Online,
                     StartDate = new DateTime(2022, 05, 05)
                 },
@@ -193,7 +193,7 @@ namespace School.DAL.EF.Contexts
                     Email = "Shmigelski@gmail.com",
                     BirthDate = new DateTime(1998, 05, 05),
                     Phone = "+375295555555",
-                    GroupId = 2,
+                    GroupId = group2.Id,
                     Type = BLL.Models.Enum.StudentType.Online,
                     StartDate = new DateTime(2022, 06, 06)
                 },
@@ -205,7 +205,7 @@ namespace School.DAL.EF.Contexts
                     Email = "Sergeenko@yandex.com",
                     BirthDate = new DateTime(1997, 06, 06),
                     Phone = "+375446666666",
-                    GroupId = 3,
+                    GroupId = group3.Id,
                     Type = BLL.Models.Enum.StudentType.Mix,
                     StartDate = new DateTime(2020, 02, 02)
                 },
@@ -217,7 +217,7 @@ namespace School.DAL.EF.Contexts
                     Email = "Micinat@gmail.com",
                     BirthDate = new DateTime(1994, 07, 07),
                     Phone = "+375447777777",
-                    GroupId = 1,
+                    GroupId = group1.Id,
                     Type = BLL.Models.Enum.StudentType.Mix,
                     StartDate = new DateTime(2022, 05, 05)
                 },
@@ -229,7 +229,7 @@ namespace School.DAL.EF.Contexts
                     Email = "Frunze@mail.ru",
                     BirthDate = new DateTime(1973, 08, 08),
                     Phone = "+375448888888",
-                    GroupId = 2,
+                    GroupId = group2.Id,
                     Type = BLL.Models.Enum.StudentType.InClass,
                     StartDate = new DateTime(2022, 05, 05)
                 },
@@ -241,7 +241,7 @@ namespace School.DAL.EF.Contexts
                     Email = "VaneevaPolina@gmail.com",
                     BirthDate = new DateTime(1992, 09, 09),
                     Phone = "+375449999999",
-                    GroupId = 3,
+                    GroupId = group3.Id,
                     Type = BLL.Models.Enum.StudentType.Mix,
                     StartDate = new DateTime(2021, 03, 03)
                 },
@@ -253,7 +253,7 @@ namespace School.DAL.EF.Contexts
                     Email = "YakimovMiron@gmail.com",
                     BirthDate = new DateTime(1999, 10, 10),
                     Phone = "+375441010101",
-                    GroupId = 1,
+                    GroupId = group1.Id,
                     Type = BLL.Models.Enum.StudentType.InClass,
                     StartDate = new DateTime(2023, 02, 02)
                 },
@@ -265,7 +265,7 @@ namespace School.DAL.EF.Contexts
                     Email = "MorozNikita@gmail.com",
                     BirthDate = new DateTime(1999, 11, 03),
                     Phone = "+375440110111",
-                    GroupId = 2,
+                    GroupId = group2.Id,
                     Type = BLL.Models.Enum.StudentType.InClass,
                     StartDate = new DateTime(2022, 07, 08)
                 },
@@ -277,7 +277,7 @@ namespace School.DAL.EF.Contexts
                     Email = "PonimashVitalik@gmail.com",
                     BirthDate = new DateTime(1996, 02, 01),
                     Phone = "+375441212123",
-                    GroupId = 3,
+                    GroupId = group3.Id,
                     Type = BLL.Models.Enum.StudentType.Online,
                     StartDate = new DateTime(2022, 05, 06)
                 },
@@ -289,7 +289,7 @@ namespace School.DAL.EF.Contexts
                     Email = "FistashkaIrina@yandex.by",
                     BirthDate = new DateTime(2000, 11, 10),
                     Phone = "+375444444444",
-                    GroupId = 1,
+                    GroupId = group1.Id,
                     Type = BLL.Models.Enum.StudentType.Online,
                     StartDate = new DateTime(2021, 09, 09)
                 },
@@ -301,7 +301,7 @@ namespace School.DAL.EF.Contexts
                     Email = "Ivashko@gmail.com",
                     BirthDate = new DateTime(2000, 11, 11),
                     Phone = "+375441534545",
-                    GroupId = 2,
+                    GroupId = group2.Id,
                     Type = BLL.Models.Enum.StudentType.Mix,
                     StartDate = new DateTime(2021, 08, 08)
                 },
@@ -313,12 +313,11 @@ namespace School.DAL.EF.Contexts
                     Email = "EfremovSergey@mail.ru",
                     BirthDate = new DateTime(1988, 10, 15),
                     Phone = "+375441232323",
-                    GroupId = 3,
+                    GroupId = group3.Id,
                     Type = BLL.Models.Enum.StudentType.Online,
                     StartDate = new DateTime(2021, 09, 09)
                 }
             );
-
         }
     }
 }

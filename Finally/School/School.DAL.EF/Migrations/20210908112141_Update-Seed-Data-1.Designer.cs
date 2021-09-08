@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.DAL.EF.Contexts;
 
 namespace School.DAL.EF.Migrations
 {
     [DbContext(typeof(AcademyContext))]
-    partial class AcademyContextModelSnapshot : ModelSnapshot
+    [Migration("20210908112141_Update-Seed-Data-1")]
+    partial class UpdateSeedData1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,32 +241,6 @@ namespace School.DAL.EF.Migrations
                     b.HasIndex("TopicId");
 
                     b.ToTable("Courses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Introduction to C#",
-                            Program = "1. Getting Started",
-                            Title = "Introduction to C#",
-                            TopicId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Introduction to Java",
-                            Program = "1. Getting Started",
-                            Title = "Introduction to Java",
-                            TopicId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Web with Motion Design",
-                            Program = "1. What is Motion Design?",
-                            Title = "Web Design",
-                            TopicId = 3
-                        });
                 });
 
             modelBuilder.Entity("School.BLL.Models.Student", b =>
@@ -306,188 +282,6 @@ namespace School.DAL.EF.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BirthDate = new DateTime(1998, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Fedorov@gmail.com",
-                            FirstName = "Oleg",
-                            GroupId = 1,
-                            LastName = "Fedorov",
-                            Phone = "+375291111111",
-                            StartDate = new DateTime(2021, 9, 8, 0, 0, 0, 0, DateTimeKind.Local),
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BirthDate = new DateTime(1990, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Antonov@gmail.com",
-                            FirstName = "Andrey",
-                            GroupId = 2,
-                            LastName = "Antonov",
-                            Phone = "+375292222222",
-                            StartDate = new DateTime(2021, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BirthDate = new DateTime(1988, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Petrov@gmail.com",
-                            FirstName = "Ivan",
-                            GroupId = 3,
-                            LastName = "Petrov",
-                            Phone = "+375443333333",
-                            StartDate = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BirthDate = new DateTime(2000, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Ivashko@gmail.com",
-                            FirstName = "Sergey",
-                            GroupId = 1,
-                            LastName = "Ivashko",
-                            Phone = "+375444444444",
-                            StartDate = new DateTime(2022, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 5,
-                            BirthDate = new DateTime(1998, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Shmigelski@gmail.com",
-                            FirstName = "Arthur",
-                            GroupId = 2,
-                            LastName = "Shmigelski",
-                            Phone = "+375295555555",
-                            StartDate = new DateTime(2022, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 6,
-                            BirthDate = new DateTime(1997, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Sergeenko@yandex.com",
-                            FirstName = "Maxim",
-                            GroupId = 3,
-                            LastName = "Sergeenko",
-                            Phone = "+375446666666",
-                            StartDate = new DateTime(2020, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            BirthDate = new DateTime(1994, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Micinat@gmail.com",
-                            FirstName = "Vladimir",
-                            GroupId = 1,
-                            LastName = "Micinat",
-                            Phone = "+375447777777",
-                            StartDate = new DateTime(2022, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 8,
-                            BirthDate = new DateTime(1973, 8, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Frunze@mail.ru",
-                            FirstName = "Anatoliy",
-                            GroupId = 2,
-                            LastName = "Frunze",
-                            Phone = "+375448888888",
-                            StartDate = new DateTime(2022, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 9,
-                            BirthDate = new DateTime(1992, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "VaneevaPolina@gmail.com",
-                            FirstName = "Polina",
-                            GroupId = 3,
-                            LastName = "Vaneeva",
-                            Phone = "+375449999999",
-                            StartDate = new DateTime(2021, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 10,
-                            BirthDate = new DateTime(1999, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "YakimovMiron@gmail.com",
-                            FirstName = "Miron",
-                            GroupId = 1,
-                            LastName = "Yakimov",
-                            Phone = "+375441010101",
-                            StartDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 11,
-                            BirthDate = new DateTime(1999, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "MorozNikita@gmail.com",
-                            FirstName = "Nikita",
-                            GroupId = 2,
-                            LastName = "Moroz",
-                            Phone = "+375440110111",
-                            StartDate = new DateTime(2022, 7, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 12,
-                            BirthDate = new DateTime(1996, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "PonimashVitalik@gmail.com",
-                            FirstName = "Vitalik",
-                            GroupId = 3,
-                            LastName = "Ponimash",
-                            Phone = "+375441212123",
-                            StartDate = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 13,
-                            BirthDate = new DateTime(2000, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "FistashkaIrina@yandex.by",
-                            FirstName = "Irina",
-                            GroupId = 1,
-                            LastName = "Fistashka",
-                            Phone = "+375444444444",
-                            StartDate = new DateTime(2021, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 14,
-                            BirthDate = new DateTime(2000, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Ivashko@gmail.com",
-                            FirstName = "Alena",
-                            GroupId = 2,
-                            LastName = "Filimonova",
-                            Phone = "+375441534545",
-                            StartDate = new DateTime(2021, 8, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 15,
-                            BirthDate = new DateTime(1988, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "EfremovSergey@mail.ru",
-                            FirstName = "Sergey",
-                            GroupId = 3,
-                            LastName = "Efremov",
-                            Phone = "+375441232323",
-                            StartDate = new DateTime(2021, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Type = 0
-                        });
                 });
 
             modelBuilder.Entity("School.BLL.Models.StudentGroup", b =>
@@ -520,35 +314,6 @@ namespace School.DAL.EF.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("StudentGroups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CourseId = 1,
-                            StartDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            TeacherId = 1,
-                            Title = "Basic_C#_01.01"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CourseId = 2,
-                            StartDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            TeacherId = 2,
-                            Title = "Java_02_02"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CourseId = 3,
-                            StartDate = new DateTime(2024, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            TeacherId = 3,
-                            Title = "Motion Design_03_03"
-                        });
                 });
 
             modelBuilder.Entity("School.BLL.Models.StudentRequest", b =>
@@ -619,41 +384,6 @@ namespace School.DAL.EF.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Teachers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Bio = "My name is Vadim Korotkov.",
-                            BirthDate = new DateTime(1977, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Korotkov@mail.ru",
-                            FirstName = "Vadim",
-                            LastName = "Korotkov",
-                            LinkToProfile = "https://www.linkedin.com/feed/Korotkov",
-                            Phone = "+375291111111"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Bio = "My name is Sergey Gromov.",
-                            BirthDate = new DateTime(1944, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Gromov@yandex.ru",
-                            FirstName = "Sergey",
-                            LastName = "Gromov",
-                            LinkToProfile = "https://www.linkedin.com/feed/Gromov",
-                            Phone = "+375292222222"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Bio = "My name is Andrew Kamilov.",
-                            BirthDate = new DateTime(1956, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "Kamilov@yandex.ru",
-                            FirstName = "Andrew",
-                            LastName = "Kamilov",
-                            LinkToProfile = "https://www.linkedin.com/feed/Kamilov",
-                            Phone = "+375293333333"
-                        });
                 });
 
             modelBuilder.Entity("School.BLL.Models.Topic", b =>
@@ -677,26 +407,6 @@ namespace School.DAL.EF.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("Topics");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = ".Net (ASP.NET, Unity)",
-                            Title = ".Net"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Full-stack, JS, Spring",
-                            Title = "Java"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "UI/UX, Motion Design, 3D Design",
-                            Title = "Design"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

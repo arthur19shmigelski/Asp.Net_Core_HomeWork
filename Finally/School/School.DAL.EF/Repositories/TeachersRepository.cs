@@ -1,36 +1,63 @@
 ﻿using School.BLL.Models;
 using School.DAL.EF.Contexts;
+using School.DAL.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace School.DAL.EF.Repositories
 {
-    public class TeachersRepository : BaseRepository<Teacher>
+    public class TeachersRepository : IRepository<Teacher>
     {
         private readonly AcademyContext _context;
-        public TeachersRepository(AcademyContext context) : base(context)
+        public TeachersRepository(AcademyContext context)
         {
             _context = context;
         }
 
-        public override void Delete(int id)
+        public void Create(Teacher item)
         {
-            var teacher = _context.Teachers.Find(id);
-            var groups = (StudentGroup)_context.StudentGroups.Where(c=>c.TeacherId == id).Select(c=>c);
-
-            _context.StudentGroups.Update(groups);
-
+            _context.Teachers.Add(item);
             _context.SaveChanges();
-
-            //if (entity != null)
-            //{
-            //    _entities.Remove(entity);
-
-            //    _context.SaveChanges();
-            //}
         }
 
+        public void Delete(int id)
+        {
+            var teacher = _context.Teachers.Find(id);
 
-        public override void Update(Teacher item)
+            var groups = _context.StudentGroups.Where(c => c.TeacherId == id).Select(c => c).ToList();
+
+            foreach (var item in groups)
+            {
+                item.TeacherId = null;
+                item.Teacher = null;
+                _context.StudentGroups.Update(item);
+            }
+
+            _context.Teachers.Remove(teacher);
+
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<Teacher> Find(Func<Teacher, bool> predicate)
+        {
+            return _context.Teachers
+                                        .Where(predicate)
+                                        .AsQueryable()
+                                        .ToList();
+        }
+
+        public IEnumerable<Teacher> GetAll()
+        {
+            return _context.Teachers.ToList();
+        }
+
+        public Teacher GetById(int id)
+        {
+            return _context.Teachers.Find(id);
+        }
+
+        public void Update(Teacher item)
         {
             var originalTeacher = _context.Teachers.Find(item.Id);
 

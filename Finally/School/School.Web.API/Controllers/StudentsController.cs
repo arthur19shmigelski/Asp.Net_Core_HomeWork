@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
 using School.BLL.Services.Base;
+using School.BLL.Services.Student;
+using School.BLL.Services.StudentGroup;
+using School.BLL.ShortModels;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
 using System.Net;
@@ -12,18 +16,22 @@ namespace School.Web.API.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly IEntityService<Student> _studentsService;
+        private readonly IStudentService _studentsService;
+        private readonly IStudentGroupService _groupService;
+        private readonly IMapper _mapper;
 
-        public StudentsController(IEntityService<Student> studentService)
+        public StudentsController(IStudentService studentService, IStudentGroupService groupService, IMapper mapper)
         {
             _studentsService = studentService;
+            _groupService = groupService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> Get()
         {
             var students = _studentsService.GetAll();
-            return Ok(students);
+            return Ok(_mapper.Map<IEnumerable<StudentModel>>(students));
         }
 
         // GET api/users/1
@@ -33,7 +41,9 @@ namespace School.Web.API.Controllers
             Student student = _studentsService.GetById(id);
             if (student == null)
                 return NotFound();
-            return new ObjectResult(student);
+
+            var shortStudent = _mapper.Map<IEnumerable<StudentModel>>(student);
+            return new ObjectResult(shortStudent);
         }
 
 

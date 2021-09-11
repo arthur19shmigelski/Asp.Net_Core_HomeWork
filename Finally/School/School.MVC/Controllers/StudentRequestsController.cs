@@ -3,7 +3,8 @@ using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
-using School.BLL.Services.Base;
+using School.BLL.Services.Course;
+using School.BLL.Services.Student;
 using School.BLL.Services.StudentRequest;
 using School.BLL.ShortModels;
 using System;
@@ -17,13 +18,13 @@ namespace AcademyCRM.MVC.Controllers
     public class StudentRequestsController : Controller
     {
         private readonly IStudentRequestService _requestService;
-        private readonly IEntityService<Course> _courseService;
-        private readonly IEntityService<Student> _studentService;
+        private readonly ICourseService _courseService;
+        private readonly IStudentService _studentService;
         private readonly IMapper _mapper;
 
         public StudentRequestsController(IMapper mapper,
-            IEntityService<Student> studentService,
-            IEntityService<Course> courseService,
+            IStudentService studentService,
+            ICourseService courseService,
             IStudentRequestService requestService)
         {
             _mapper = mapper;

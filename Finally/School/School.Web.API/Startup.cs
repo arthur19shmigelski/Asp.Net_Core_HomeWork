@@ -7,9 +7,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using School.BLL.Models;
 using School.BLL.Services.Base;
+using School.BLL.Services.Student;
 using School.DAL;
 using School.DAL.EF.Contexts;
 using School.DAL.EF.Repositories;
+using School.DAL.Interfaces;
 
 namespace School.Web.API
 {
@@ -28,8 +30,8 @@ namespace School.Web.API
             services.AddDbContext<AcademyContext>(options =>
                 options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=SchoolDb;Trusted_Connection=True;"));
 
-            services.AddScoped<IEntityService<Student>, BaseEntityService<Student>>();
-            services.AddScoped<IRepository<Student>, BaseRepository<Student>>();
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IRepository<Student>, StudentsRepository>();
 
 
             services.AddControllers().AddNewtonsoftJson(options =>

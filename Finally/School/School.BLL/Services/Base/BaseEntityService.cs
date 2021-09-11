@@ -1,8 +1,5 @@
-﻿using School.DAL;
-using System;
+﻿using School.DAL.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace School.BLL.Services.Base
@@ -16,14 +13,14 @@ namespace School.BLL.Services.Base
             _repository = repository;
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public  IEnumerable<TEntity> GetAll()
         {
-            return _repository.GetAll();
+            return  _repository.GetAll();
         }
 
         public TEntity GetById(int id)
         {
-            return _repository.Get(id);
+            return _repository.GetById(id);
         }
 
         public void Create(TEntity entity)

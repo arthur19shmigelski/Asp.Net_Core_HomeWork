@@ -12,22 +12,24 @@ using School.BLL.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using School.BLL.Services.Course;
+using School.BLL.Services.Topic;
 
 namespace AcademyCRM.MVC.Controllers
 {
     [Authorize(Roles = "admin, manager, student")]
     public class CoursesController : Controller
     {
-        private readonly IEntityService<Course> _courseService;
-        private readonly IEntityService<Topic> _topicService;
+        private readonly ICourseService _courseService;
+        private readonly ITopicService _topicService;
         private readonly IStudentRequestService _requestService;
         private readonly IConfiguration _configuration;
         private readonly SecurityOptions _securityOptions;
         private readonly IMapper _mapper;
 
-        public CoursesController(IEntityService<Course> courseService,
+        public CoursesController(ICourseService courseService,
             IMapper mapper,
-            IEntityService<Topic> topicService,
+            ITopicService topicService,
             IStudentRequestService requestService,
             IConfiguration configuration,
             IOptions<SecurityOptions> options

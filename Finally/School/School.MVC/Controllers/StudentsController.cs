@@ -3,7 +3,8 @@ using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
-using School.BLL.Services.Base;
+using School.BLL.Services.Student;
+using School.BLL.Services.StudentGroup;
 using School.BLL.ShortModels;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,15 @@ namespace School.MVC.Controllers
     [Authorize(Roles = "admin, manager")]
     public class StudentsController : Controller
     {
-        private readonly IEntityService<Student> _studentsService;
-        private readonly IEntityService<StudentGroup> _groupService;
+        private readonly IStudentService _studentsService;
+        private readonly IStudentGroupService _groupService;
         private readonly IMapper _mapper;
 
-        public StudentsController(IEntityService<Student> studentService, IEntityService<StudentGroup> groupService, IMapper mapper, IEntityService<Student> studentServiceEntity)
+        public StudentsController(IStudentService studentService, IStudentGroupService groupService, IMapper mapper)
         {
             _studentsService = studentService;
             _groupService = groupService;
             _mapper = mapper;
-            _studentsService = studentServiceEntity;
         }
 
         public IActionResult Index()

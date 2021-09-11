@@ -1,31 +1,32 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.BLL.Models;
-using School.BLL.ShortModels;
 using School.DAL.EF.Contexts;
+using School.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace School.DAL.EF.Repositories
 {
-    public class StudentGroupsRepository : BaseRepository<StudentGroup>
+    public class StudentGroupsRepository : IRepository<StudentGroup>
     {
         private readonly AcademyContext _context;
 
-        public StudentGroupsRepository(AcademyContext context) : base(context)
+        public StudentGroupsRepository(AcademyContext context)
         {
             _context = context;
         }
 
-       
-        public override StudentGroup Get(int id) => _context.StudentGroups.Include(g => g.Students).First(g => g.Id == id);
-
-        public override IEnumerable<StudentGroup> GetAll()
+        public StudentGroup GetById(int id)
         {
-            return _context.StudentGroups.Include(g => g.Teacher).ToList();
+            return _context.StudentGroups.Include(g => g.Students).First(g => g.Id == id);
+        }
+        public IEnumerable<StudentGroup> GetAll()
+        {
+            return  _context.StudentGroups.Include(g => g.Teacher).ToList();
         }
 
-        public override void Update(StudentGroup item)
+        public void Update(StudentGroup item)
         {
             var originalStudentGroup = _context.StudentGroups.Find(item.Id);
 
@@ -38,6 +39,27 @@ namespace School.DAL.EF.Repositories
             originalStudentGroup.TeacherId = item.TeacherId;
             originalStudentGroup.Title = item.Title;
 
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<StudentGroup> Find(Func<StudentGroup, bool> predicate)
+        {
+            return _context.StudentGroups
+                           .Where(predicate)
+                           .AsQueryable()
+                           .ToList();
+        }
+
+        public void Create(StudentGroup item)
+        {
+            _context.StudentGroups.Add(item);
+            _context.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var item = _context.StudentGroups.Find(id);
+            _context.StudentGroups.Remove(item);
             _context.SaveChanges();
         }
     }

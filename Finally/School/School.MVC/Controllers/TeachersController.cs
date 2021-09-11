@@ -3,7 +3,7 @@ using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
-using School.BLL.Services.Base;
+using School.BLL.Services.Teacher;
 using School.BLL.ShortModels;
 using System;
 using System.Collections.Generic;
@@ -14,10 +14,10 @@ namespace School.MVC.Controllers
     [Authorize(Roles = "admin, manager")]
     public class TeachersController : Controller
     {
-        private readonly IEntityService<Teacher> _teacherService;
+        private readonly ITeacherService _teacherService;
         private readonly IMapper _mapper;
 
-        public TeachersController(IEntityService<Teacher> teacherService, IMapper mapper)
+        public TeachersController(ITeacherService teacherService, IMapper mapper)
         {
             _teacherService = teacherService;
             _mapper = mapper;
@@ -30,7 +30,7 @@ namespace School.MVC.Controllers
                 var teachers = _teacherService.GetAll();
                 return View(_mapper.Map<IEnumerable<TeacherModel>>(teachers));
             }
-            
+
             catch (Exception e)
             {
                 ElmahExtensions.RiseError(new Exception(e.Message));
@@ -72,7 +72,7 @@ namespace School.MVC.Controllers
                     return RedirectToAction("Index");
                 }
                 return View(teacherModel);
-            }         
+            }
 
             catch (Exception e)
             {

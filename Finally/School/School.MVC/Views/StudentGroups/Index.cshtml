@@ -2,12 +2,9 @@
 @{
     ViewData["Title"] = "Student Groups";
 }
-<h1>Groups</h1>
+<h1 class="text text-center alert-info"> <i>Список наших групп</i></h1>
 
 <div class="row mt-2">
-    <p>
-        <a asp-action="Edit" class="btn btn-success">Create new Group</a>
-    </p>
     <table class="table table-bordered">
 
         <tr>
@@ -15,20 +12,29 @@
             <th>Title</th>
             <th>Status</th>
             <th>Teacher</th>
+            <th></th>
         </tr>
 
         @foreach (var group in Model)
         {
-            <tr>
-                <td>@group.Id</td>
-                <td><a asp-controller="StudentGroups" asp-action="Edit" asp-route-id="@group.Id">@group.Title</a></td>
-                <td>@group.Status</td>
-                <td>
-                    <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@group.TeacherId">
-                        @group.Teacher?.LastName @group.Teacher?.FirstName?[0].
-                    </a>
-                </td>
-            </tr>
+    <tr>
+        <td>@group.Id</td>
+        <td><a asp-controller="StudentGroups" asp-action="Edit" asp-route-id="@group.Id">@group.Title</a></td>
+        <td>@group.Status</td>
+        <td>
+            <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@group.TeacherId">
+                @group.Teacher?.LastName @group.Teacher?.FirstName?[0].
+            </a>
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@group.Id" class="btn btn-outline-info">
+                Изменить
+            </a>
+            <button type="submit" class="btn btn-outline-warning">
+                @Html.ActionLink("Удалить", "Delete", new { id = group.Id })
+            </button>
+        </td>
+    </tr>
         }
         <tr>
             <th>
@@ -36,4 +42,7 @@
             </th>
         </tr>
     </table>
+    <p>
+        <a asp-action="Edit" class="btn btn-success">Добавить новую группу</a>
+    </p>
 </div>

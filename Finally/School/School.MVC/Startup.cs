@@ -127,19 +127,7 @@ namespace School.MVC
             foreach (var student in value)
             {
                     await userManager.AddToRoleAsync(student, "STUDENT");   
-            }
-
-            //Доработать регистрацию студентов
-            //var studentUsers = userManager.Users;
-
-            ////var studentUser = ;
-            //foreach (var item in studentUsers)
-            //{
-            //    if (item != adminUser || item != managerUser)
-            //        await userManager.AddToRoleAsync(item, "STUDENT");
-            //    else
-            //        continue;
-            //}
+            }     
         }
     }
 }

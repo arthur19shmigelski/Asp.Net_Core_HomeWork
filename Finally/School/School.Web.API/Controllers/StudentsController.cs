@@ -5,8 +5,10 @@ using School.BLL.Services.Base;
 using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;
 using School.BLL.ShortModels;
+using School.Web.API.Dto;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -30,8 +32,22 @@ namespace School.Web.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> Get()
         {
-            var students = _studentsService.GetAll();
-            return Ok(_mapper.Map<IEnumerable<StudentModel>>(students));
+            var allStudents = _studentsService.GetAll();
+            var mapingStudent = _mapper.Map<IEnumerable<StudentDto>>(allStudents);
+
+            return  Ok(mapingStudent);
+
+            //Вариант 2. Вывод в список (выглядит лучше, чем обычно...)
+            //var allStudents = _studentsService.GetAll();
+            //var mappingToStudentModel = _mapper.Map<IEnumerable<StudentModel>>(allStudents);
+
+            //List<string> shotList = new List<string>();
+
+            //foreach (var item in mappingToStudentModel)
+            //{
+            //    shotList.Add($"{item.FullName} - {item.BirthDate} - {item.Email}".ToString());
+            //}
+            //return  Ok(shotList);
         }
 
         // GET api/users/1
@@ -41,42 +57,45 @@ namespace School.Web.API.Controllers
             Student student = _studentsService.GetById(id);
             if (student == null)
                 return NotFound();
-
-            var shortStudent = _mapper.Map<IEnumerable<StudentModel>>(student);
-            return new ObjectResult(shortStudent);
+            else
+            {
+                var mapingStudent = _mapper.Map<StudentDto>(student);
+                return new ObjectResult(mapingStudent);
+            }
         }
 
 
         // POST api/users
         [HttpPost]
-        public async Task<ActionResult<Student>> Post(Student student)
+        public async Task<ActionResult<Student>> Post(StudentDto student)
         {
             if(student != null)
             {
-                _studentsService.Create(student);
-                return new ObjectResult(student);
+                var newStudent = _mapper.Map<Student>(student);
+                _studentsService.Create(newStudent);
+                return new ObjectResult(newStudent);
             }
-            return BadRequest();
+            else
+                return BadRequest();
         }
 
         // PUT api/users/
         [HttpPut]
         [SwaggerResponse((int)HttpStatusCode.OK, "Студент создан")]
-        public async Task<ActionResult<Student>> Put(Student student)
+        public async Task<ActionResult<Student>> Put(StudentDto student)
         {
             if (student == null)
             {
                 return BadRequest();
             }
-            //Пересмотреть эту часть, потому что когда выполняю этот метод GetById выпадает error, что сущность с этим айди уже tracking...
-            //if (_studentsService.GetById(student.Id) == null)
-            //{
-            //    return NotFound();
-            //}
-            _studentsService.Update(student);
-            return Ok(student);
+            else
+            {
+                var value = _studentsService.GetById(student.Id);
+                
+                _studentsService.Update(_mapper.Map<Student>(value));
+                return Ok(_mapper.Map<Student>(value));
+            }
         }
-
 
         // DELETE api/users/5
         [HttpDelete("{id}")]
@@ -84,11 +103,12 @@ namespace School.Web.API.Controllers
         {
             Student user = _studentsService.GetById(id);
             if (user == null)
-            {
                 return NotFound();
+            else
+            {
+                _studentsService.Delete(user.Id);
+                return Ok(user);
             }
-            _studentsService.Delete(user.Id);
-            return Ok(user);
         }
     }
 }

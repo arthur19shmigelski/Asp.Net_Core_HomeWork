@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -5,13 +6,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using School.BLL.Extensions;
 using School.BLL.Models;
-using School.BLL.Services.Base;
 using School.BLL.Services.Student;
-using School.DAL;
+using School.BLL.Services.StudentGroup;
 using School.DAL.EF.Contexts;
+using School.DAL.EF.Extensions;
 using School.DAL.EF.Repositories;
 using School.DAL.Interfaces;
+using School.MVC.Mapper;
+using School.Web.API.Mapper;
 
 namespace School.Web.API
 {
@@ -30,8 +34,15 @@ namespace School.Web.API
             services.AddDbContext<AcademyContext>(options =>
                 options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=SchoolDb;Trusted_Connection=True;"));
 
-            services.AddScoped<IStudentService, StudentService>();
-            services.AddScoped<IRepository<Student>, StudentsRepository>();
+            services.AddBusinessLogicServicesFromDalEF();
+            services.AddBusinessLogicServicesFromBLL();
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MapperProfile());
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
 
             services.AddControllers().AddNewtonsoftJson(options =>

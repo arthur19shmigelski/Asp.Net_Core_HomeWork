@@ -15,7 +15,7 @@ namespace School.DAL.EF.Contexts
                 Id = 1,
                 Title = ".Net",
                 Description = ".Net (ASP.NET, Unity)"
-                
+
             };
             var topic2 = new Topic()
             {
@@ -37,8 +37,18 @@ namespace School.DAL.EF.Contexts
             {
                 Id = 1,
                 Title = "Introduction to C#",
-                Description = "Introduction to C#",
-                Program = "1. Getting Started",
+                Description = "\tC# (си шарп) – объектно-ориентированный язык программирования, разработанный " +
+                "компанией Microsoft. Прямой интерес такой крупной корпорации к языку гарантирует, что он " +
+                "продолжит развиваться и находить применение в различных отраслях." + "\n\t"+
+                "C Sharp впитал лучшие качества, а также унаследовал особенности " +
+                "синтаксиса Java и C++. Применяется язык для веб-разработки, создания настольных и " +
+                "мобильных приложений. Если вы записались на курс по C# в Минске для того, чтобы научиться " +
+                "создавать web-проекты, то в дальнейшем вам необходимо освоить инструментарий .NET.",
+                Program = "1. Вводное. Установка окружения(C#, Visual Studio). Запуск первой программы Console Application." +
+                "2. Типы данных. Переменные. Операторы." +
+                "3. Операторы if/switch" +
+                "4. Циклы" +
+                "5. И многое другое",
                 TopicId = 1
             };
 
@@ -46,8 +56,16 @@ namespace School.DAL.EF.Contexts
             {
                 Id = 2,
                 Title = "Introduction to Java",
-                Description = "Introduction to Java",
-                Program = "1. Getting Started",
+                Description = "Язык программирования Java находится в числе лидеров во многих рейтингах: " +
+                "TIOBE – на основе подсчёта результатов поисковых запросов, PYPL – по анализу популярности в поисковике Google," +
+                " IEEE – по комплексу показателей, таких как упоминание в проектах, статьях, вакансиях и других. Такая популярность" +
+                " обусловлена практически безграничными его возможностями и областями применения. Java не зависит от определённой платформы, " +
+                "его называют безопасным, портативным, высокопроизводительным и динамичным языком.",
+                Program = "1. Вводное. Установка окружения(Java, Intellij IDEA). Запуск первой программы." +
+                "2. Типы данных. Переменные. Операторы." +
+                "3. Операторы if/switch" +
+                "4. Циклы" +
+                "5. И многое другое",
                 TopicId = 2
             };
 
@@ -55,8 +73,16 @@ namespace School.DAL.EF.Contexts
             {
                 Id = 3,
                 Title = "Web Design",
-                Description = "Web with Motion Design",
-                Program = "1. What is Motion Design?",
+                Description = "UI/UX и web-дизайн ориентирован на создание внешне привлекательных, " +
+                "удобных в использовании и функциональных пользовательских интерфейсов. Чтобы достичь " +
+                "успеха в этой сфере, необходимо обладать художественным вкусом, быть внимательным к деталям, " +
+                "понимать принципы компьютерной графики и визуального дизайна, уметь работать с инструментами " +
+                "(например, Adobe Photoshop, Adobe Illustrator, Sketch, Figma).",
+                Program = "1. Принципы визуального дизайна" +
+                          "2. Особенности UI/UX/web дизайна" +
+                          "3. Основы композиции" +
+                          "4. Правила работы со шрифтамин" +
+                          "5. И много другой информации",
                 TopicId = 3
             };
 
@@ -71,7 +97,7 @@ namespace School.DAL.EF.Contexts
                 LastName = "Korotkov",
                 LinkToProfile = "https://www.linkedin.com/feed/Korotkov",
                 Bio = "My name is Vadim Korotkov.",
-                BirthDate = new DateTime(1977,01,01),
+                BirthDate = new DateTime(1977, 01, 01),
                 Email = "Korotkov@mail.ru",
                 Phone = "+375291111111"
             };
@@ -108,8 +134,8 @@ namespace School.DAL.EF.Contexts
                 Title = "Basic_C#_01.01",
                 TeacherId = teacher1.Id,
                 CourseId = course1.Id,
-                Status= BLL.Models.Enum.GroupStatus.NotStarted,
-                StartDate = new DateTime(2022, 01,01)
+                Status = BLL.Models.Enum.GroupStatus.NotStarted,
+                StartDate = new DateTime(2022, 01, 01)
             };
             var group2 = new StudentGroup()
             {
@@ -142,7 +168,7 @@ namespace School.DAL.EF.Contexts
                     FirstName = "Oleg",
                     LastName = "Fedorov",
                     Email = "Fedorov@gmail.com",
-                    BirthDate = new DateTime(1998,01,01),
+                    BirthDate = new DateTime(1998, 01, 01),
                     Phone = "+375291111111",
                     GroupId = group1.Id,
                     Type = BLL.Models.Enum.StudentType.Online,
@@ -259,7 +285,7 @@ namespace School.DAL.EF.Contexts
                 },
                 new Student()
                 {
-                    Id =11,
+                    Id = 11,
                     FirstName = "Nikita",
                     LastName = "Moroz",
                     Email = "MorozNikita@gmail.com",
@@ -298,7 +324,7 @@ namespace School.DAL.EF.Contexts
                     Id = 14,
                     FirstName = "Alena",
                     LastName = "Filimonova",
-                    Email = "Ivashko@gmail.com",
+                    Email = "Filimonova@gmail.com",
                     BirthDate = new DateTime(2000, 11, 11),
                     Phone = "+375441534545",
                     GroupId = group2.Id,

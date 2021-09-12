@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Web.API", "School.We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.MVC", "School.MVC\School.MVC.csproj", "{CF4790E0-88B3-438D-A75F-693724397FA9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.Angular", "School.Angular\School.Angular.csproj", "{E364EDBF-49BD-4CA6-AE4F-BAF0FDD086FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{CF4790E0-88B3-438D-A75F-693724397FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF4790E0-88B3-438D-A75F-693724397FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF4790E0-88B3-438D-A75F-693724397FA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E364EDBF-49BD-4CA6-AE4F-BAF0FDD086FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E364EDBF-49BD-4CA6-AE4F-BAF0FDD086FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E364EDBF-49BD-4CA6-AE4F-BAF0FDD086FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E364EDBF-49BD-4CA6-AE4F-BAF0FDD086FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<CourseModel>
+@{
+    ViewData["Title"] = "Courses";
+
+}
+<div id="container">
+
+    <h1 class="text text-center alert-info"> <i>Список наших курсов</i></h1>
+
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>Название</th>
+                <th>Описание курса</th>
+                @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                {
+                    <th>Действие</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderBy(c => c.Title))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        <i>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </i>
+                    </td>
+                    @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">
+                                Изменить
+                            </a>
+                            <button type="submit" class="btn btn-outline-warning">
+                                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+                            </button>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <th>
+                <div class="text-info">Итого курсов: @Model.Count()</div>
+            </th>
+        </tr>
+    </table>
+    @if (ViewContext.HttpContext.User.IsInRole("admin"))
+    {
+        <p>
+            <a asp-action="Edit" class="btn btn-success">Добавить новый курс</a>
+        </p>
+    }
+    @if (ViewContext.HttpContext.User.IsInRole("student"))
+    {
+        <p>
+            <a asp-action="Write" class="btn btn-success">Записаться на курс</a>
+        </p>
+    }
+</div>

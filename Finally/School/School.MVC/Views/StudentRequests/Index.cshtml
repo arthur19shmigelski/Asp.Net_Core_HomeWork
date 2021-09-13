@@ -1,0 +1,52 @@
+﻿@model IEnumerable<StudentRequestModel>
+@{
+    ViewData["Title"] = "Student Requests";
+
+}
+<h1 class="text text-center alert-info"> <i>Список запросов</i></h1>
+
+<div id="container">
+
+    <div class="row mt-2">
+        <table class="table table-bordered">
+
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Created)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CourseId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comments)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var request in Model.OrderBy(r => r.CourseTitle).ThenBy(r => r.StudentName))
+            {
+                <tr>
+                    <td><a asp-controller="StudentRequests" asp-action="Edit" asp-route-id="@request.Id">@request.Created.ToShortDateString()</a></td>
+                    <td><a asp-controller="Courses" asp-action="Edit" asp-route-id="@request.CourseId">@request.CourseTitle</a></td>
+                    <td><a asp-controller="Students" asp-action="Edit" asp-route-id="@request.StudentId">@request.StudentName</a></td>
+                    <td>@request.Comments</td>
+                </tr>
+            }
+
+            <tr>
+                <th>
+                    <div class="text-info">Итого запросов: @Model.Count()</div>
+                </th>
+            </tr>
+        </table>
+        <p>
+            <a asp-action="Edit" class="btn btn-success">Добавить новый запрос</a>
+        </p>
+    </div>
+</div>

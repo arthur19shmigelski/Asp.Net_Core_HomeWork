@@ -6,7 +6,7 @@
     @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 }
 
-<h1 class="text text-center alert-info">Изменить студента: <u> <i> @Model.FullName</i> </u></h1>
+<h1 class="text text-center alert-info"> @(Model.Id == 0?"Добавить нового студента" : "Изменить студента: ") <u> <i> @Model.FullName</i> </u></h1>
 <hr />
 @using (Html.BeginForm("Edit", "Students", FormMethod.Post))
 {

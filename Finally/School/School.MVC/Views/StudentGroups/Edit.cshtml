@@ -4,6 +4,7 @@
     ViewData["Title"] = "Group " + Model.Title;
 
 }
+<h1 class="text text-center alert-info">@(Model.Id == 0?"Создать новую группу" : "Изменить группу: ") <u> <i> @Model.Title</i> </u></h1>
 
 @using (Html.BeginForm("Edit", "StudentGroups", FormMethod.Post))
 {

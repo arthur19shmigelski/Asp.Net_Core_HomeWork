@@ -4,6 +4,7 @@
     ViewData["Title"] = $"Student Request ({Model.StudentName}, {Model.CourseTitle})";
 
 }
+<h1 class="text text-center alert-info"> @(Model.Id == 0?"Создать новый запрос" : "Изменить запрос: ") <u> <i> </i> </u></h1>
 
 @using (Html.BeginForm("Edit", "StudentRequests", FormMethod.Post))
 {

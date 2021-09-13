@@ -1,10 +1,18 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using School.Angular.Mapper;
+using School.BLL.Models;
+using School.BLL.Services.Course;
+using School.DAL.EF.Contexts;
+using School.DAL.EF.Repositories;
+using School.DAL.Interfaces;
 
 namespace School.Angular
 {
@@ -26,6 +34,22 @@ namespace School.Angular
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddDbContext<AcademyContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            services.AddScoped<IRepository<Course>, CoursesRepository>();
+
+            services.AddScoped<ICourseService, CourseService>();
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MapperProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

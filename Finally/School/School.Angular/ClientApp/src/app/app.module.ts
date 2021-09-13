@@ -28,7 +28,8 @@ import { CoursesComponent } from './courses/courses.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'courses', component: CoursesComponent},
+      { path: 'courses', component: CoursesComponent},      
+      { path: 'courses/:id', component: CoursesComponent},
     ])
   ],
   providers: [],

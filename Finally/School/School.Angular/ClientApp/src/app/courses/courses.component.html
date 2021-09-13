@@ -11,10 +11,16 @@
   </thead>
   <tbody>
     <tr *ngFor="let course of courses">
-      <td>{{ course.title }}</td>
-      <td><div class="btn btn-link" (click)="filter(course.topicId)"> {{ course.topicName }} </div></td>
+      <td><a [routerLink]="['/courses', course.id]">{{ course.title }}</a>
+        <div *ngIf="courses.length === 1">
+          {{ course.description }}
+        </div>
+      </td>
+      <td>
+        <div class="btn btn-link" (click)="filter(course.topicId)"> {{ course.topicName }} </div>
+      </td>
     </tr>
-    <tr *ngif="isFilterApplied">
+    <tr *ngIf="isFilterApplied">
       <td></td>
       <td><div class="text-muted" (click)="clearFilter()">Clear filter</div></td>
     </tr>

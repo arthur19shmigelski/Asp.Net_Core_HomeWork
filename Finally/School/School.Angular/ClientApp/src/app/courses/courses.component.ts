@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'courses',
@@ -9,12 +10,23 @@ export class CoursesComponent {
   public courses: Course[];
   public coursesAll: Course[];
   isFilterApplied: boolean=false;
+  id: number;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(http: HttpClient, private route: ActivatedRoute, @Inject('BASE_URL') baseUrl: string) {
     http.get<Course[]>(baseUrl + 'courses').subscribe(result => {
       this.coursesAll = result;
       this.courses =result;
+
+      this.id = Number.parseInt(route.snapshot.params["id"]);
+      if(this.id)
+        this.filterById(this.id);
+
     }, error => console.error(error));
+  }
+
+  filterById(id: number)
+  {
+    this.courses = this.coursesAll.filter(c=>c.id);
   }
 
   filter(topicId: number): void
@@ -34,4 +46,6 @@ interface Course {
   title: string;
   topicId: number;
   topicName: string;
+  id: number;
+  description: string;
 }

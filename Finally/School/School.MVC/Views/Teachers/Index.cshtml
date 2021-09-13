@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
 
 <h1 class="text text-center alert-info"> <i>Список наших учителей</i></h1>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -16,22 +15,14 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>
+                <th >
                     @Html.DisplayNameFor(model => model.Id)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FullName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BirthDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Phone)
-                </th>
-                <th></th>
+                <th> Полное имя </th>
+                <th> Дата рождения </th>
+                <th> Email </th>
+                <th> Телефон </th>
+                <th> Действие </th>
             </tr>
         </thead>
         <tbody>
@@ -66,7 +57,7 @@
         </tbody>
         <tr>
             <th>
-                <div class="text-info">Итого учителей: @Model.Count() </div> 
+                <div class="text-info">Итого учителей: @Model.Count() </div>
             </th>
         </tr>
     </table>
@@ -83,18 +74,10 @@ else
                 <th>
                     @Html.DisplayNameFor(model => model.Id)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FullName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BirthDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Phone)
-                </th>
+                <th> Полное имя </th>
+                <th> Дата рождения </th>
+                <th> Email </th>
+                <th> Телефон </th>
             </tr>
         </thead>
         <tbody>

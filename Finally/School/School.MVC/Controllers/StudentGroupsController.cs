@@ -102,7 +102,7 @@ namespace School.MVC.Controllers
                 else
                     _groupService.Create(group);
 
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             catch (Exception e)

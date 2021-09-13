@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 export class CoursesComponent {
   public courses: Course[];
   public coursesAll: Course[];
-  isFilterApplied: boolean=false;
+  isFilterApplied: boolean = false;
   id: number;
 
   constructor(http: HttpClient, private route: ActivatedRoute, @Inject('BASE_URL') baseUrl: string) {
@@ -19,14 +19,15 @@ export class CoursesComponent {
 
       this.id = Number.parseInt(route.snapshot.params["id"]);
       if(this.id)
+      {
         this.filterById(this.id);
-
+      }
     }, error => console.error(error));
   }
 
   filterById(id: number)
   {
-    this.courses = this.coursesAll.filter(c=>c.id);
+    this.courses = this.coursesAll.filter(c=>c.id === id);
   }
 
   filter(topicId: number): void
@@ -43,9 +44,9 @@ export class CoursesComponent {
 }
 
 interface Course {
+  id: number;
   title: string;
   topicId: number;
   topicName: string;
-  id: number;
   description: string;
 }

@@ -5,15 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using School.BLL.Models;
-using School.BLL.Services.Base;
+using School.BLL.Services.Course;
+using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
-using School.MVC.Configuration;
+using School.BLL.Services.Topic;
 using School.BLL.ShortModels;
+using School.MVC.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using School.BLL.Services.Course;
-using School.BLL.Services.Topic;
+using System.Linq;
 
 namespace AcademyCRM.MVC.Controllers
 {
@@ -22,6 +23,7 @@ namespace AcademyCRM.MVC.Controllers
     {
         private readonly ICourseService _courseService;
         private readonly ITopicService _topicService;
+        private readonly IStudentGroupService _groupService;
         private readonly IStudentRequestService _requestService;
         private readonly IConfiguration _configuration;
         private readonly SecurityOptions _securityOptions;
@@ -32,7 +34,8 @@ namespace AcademyCRM.MVC.Controllers
             ITopicService topicService,
             IStudentRequestService requestService,
             IConfiguration configuration,
-            IOptions<SecurityOptions> options
+            IOptions<SecurityOptions> options,
+            IStudentGroupService groupService
             )
         {
             _mapper = mapper;
@@ -41,7 +44,7 @@ namespace AcademyCRM.MVC.Controllers
             _configuration = configuration;
             _securityOptions = options.Value;
             _courseService = courseService;
-
+            _groupService = groupService;
         }
 
         public IActionResult Index()
@@ -105,6 +108,20 @@ namespace AcademyCRM.MVC.Controllers
            
 
              catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
+        }
+
+        public IActionResult Write()
+        {
+            try
+            {
+                return RedirectToAction("Index", "StudentRequests");               
+            }
+
+            catch (Exception e)
             {
                 ElmahExtensions.RiseError(new Exception(e.Message));
                 return RedirectToAction(nameof(Error));

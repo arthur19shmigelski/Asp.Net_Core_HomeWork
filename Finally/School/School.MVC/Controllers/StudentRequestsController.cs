@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace AcademyCRM.MVC.Controllers
 {
-    [Authorize(Roles = "admin, manager")]
+    [Authorize(Roles = "admin, manager, student")]
     public class StudentRequestsController : Controller
     {
         private readonly IStudentRequestService _requestService;

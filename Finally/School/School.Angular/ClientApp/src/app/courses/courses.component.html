@@ -14,6 +14,9 @@
       <td><a [routerLink]="['/courses', course.id]">{{ course.title }}</a>
         <div *ngIf="courses.length === 1">
           {{ course.description }}
+          <td>
+              <a class="nav-link text-dark" [routerLink]="['/courses']">Back to the list of course</a>
+          </td>
         </div>
       </td>
       <td>

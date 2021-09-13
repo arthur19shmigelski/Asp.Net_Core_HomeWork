@@ -114,19 +114,7 @@ namespace AcademyCRM.MVC.Controllers
             }
         }
 
-        public IActionResult Write()
-        {
-            try
-            {
-                return RedirectToAction("Index", "StudentRequests");               
-            }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
-        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

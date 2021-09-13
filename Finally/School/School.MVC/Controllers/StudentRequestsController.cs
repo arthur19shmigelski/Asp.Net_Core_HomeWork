@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AcademyCRM.MVC.Controllers
 {
@@ -33,11 +34,11 @@ namespace AcademyCRM.MVC.Controllers
             _requestService = requestService;
         }
 
-        public IActionResult Index(bool? includeClosed)
+        public async Task<IActionResult> Index(bool? includeClosed)
         {
             try
             {
-                var requests = includeClosed == true ? _requestService.GetAll() : _requestService.GetAllOpen();
+                var requests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
                 return View(_mapper.Map<IEnumerable<StudentRequestModel>>(requests));
             }
             catch (Exception e)
@@ -48,14 +49,27 @@ namespace AcademyCRM.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             try
             {
-                var model = id.HasValue ? _mapper.Map<StudentRequestModel>(_requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
-                ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(_courseService.GetAll().OrderBy(c => c.Title));
-                ViewBag.Students = _mapper.Map<IEnumerable<StudentModel>>(_studentService.GetAll().OrderBy(s => s.LastName));
+
+                var model = id.HasValue ? _mapper.Map<StudentRequestModel>(await _requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
+
+                var allCourses = await _courseService.GetAll();
+                ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(allCourses.OrderBy(c => c.Title));
+
+                var allStudents = await _studentService.GetAll();
+                ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(allStudents.OrderBy(s => s.LastName));
+
                 return View(model);
+
+                //Как было
+                //var model = id.HasValue ? _mapper.Map<StudentRequestModel>(await _requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
+
+                //ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(await _courseService.GetAll().OrderBy(c => c.Title));
+                //ViewBag.Students = _mapper.Map<IEnumerable<StudentModel>>(_studentService.GetAll().OrderBy(s => s.LastName));
+                //return View(model);
             }
             catch (Exception e)
             {
@@ -65,7 +79,7 @@ namespace AcademyCRM.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(StudentRequestModel model)
+        public async Task<IActionResult> Edit(StudentRequestModel model)
         {
             try
             {
@@ -73,9 +87,9 @@ namespace AcademyCRM.MVC.Controllers
 
                 var request = _mapper.Map<StudentRequest>(model);
                 if (model.Id > 0)
-                    _requestService.Update(request);
+                    await _requestService.Update(request);
                 else
-                    _requestService.Create(request);
+                    await _requestService.Create(request);
                 return RedirectToAction("Index");
             }
 

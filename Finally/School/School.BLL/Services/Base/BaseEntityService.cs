@@ -23,19 +23,19 @@ namespace School.BLL.Services.Base
             return await _repository.GetById(id);
         }
 
-        public void Create(TEntity entity)
+        public async Task Create(TEntity entity)
         {
-            _repository.Create(entity);
+            await _repository.Create(entity);
         }
 
-        public void Update(TEntity entity)
+        public async Task Update(TEntity entity)
         {
-            _repository.Update(entity);
+            await _repository.Update(entity);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _repository.Delete(id);
+           await _repository.Delete(id);
         }
     }
 }

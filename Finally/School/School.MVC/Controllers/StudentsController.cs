@@ -9,6 +9,7 @@ using School.BLL.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
 {
@@ -26,11 +27,11 @@ namespace School.MVC.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var students = _studentsService.GetAll();
+                var students = await _studentsService.GetAll();
                 return View(_mapper.Map<IEnumerable<StudentModel>>(students));
             }
 
@@ -42,15 +43,15 @@ namespace School.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             try
             {
                 var model = id.HasValue
-                   ? _mapper.Map<StudentModel>(_studentsService.GetById(id.Value))
+                   ? _mapper.Map<StudentModel>(await _studentsService.GetById(id.Value))
                    : new StudentModel();
 
-                ViewBag.Groups = _mapper.Map<IEnumerable<StudentGroupModel>>(_groupService.GetAll());
+                ViewBag.Groups = _mapper.Map<IEnumerable<StudentGroupModel>>(await _groupService.GetAll());
                 ViewBag.Type = model.Type;
                 return View(model);
             }
@@ -63,7 +64,7 @@ namespace School.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(StudentModel studentModel)
+        public async Task<IActionResult> Edit(StudentModel studentModel)
         {
             try
             {
@@ -71,9 +72,9 @@ namespace School.MVC.Controllers
                 {
                     var student = _mapper.Map<Student>(studentModel);
                     if (studentModel.Id > 0)
-                        _studentsService.Update(student);
+                        await _studentsService.Update(student);
                     else
-                        _studentsService.Create(student);
+                        await _studentsService.Create(student);
 
                     return RedirectToAction("Index");
                 }
@@ -88,12 +89,12 @@ namespace School.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(StudentModel studentModel)
+        public async Task<IActionResult> Delete(StudentModel studentModel)
         {
             try
             {
                 var student = _mapper.Map<Student>(studentModel);
-                _studentsService.Delete(student.Id);
+                await _studentsService.Delete(student.Id);
 
                 return RedirectToAction(nameof(Index));
             }

@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace School.BLL.Services.Base
 {
     public interface IEntityService<TEntity>
     {
-        IEnumerable<TEntity> GetAll();
-        TEntity GetById(int id);
-        void Create(TEntity entity);
-        void Update(TEntity entity);
-        void Delete(int id);
+        Task<IEnumerable<TEntity>> GetAll();
+        Task<TEntity> GetById(int id);
+        Task Create(TEntity entity);
+        Task Update(TEntity entity);
+        Task Delete(int id);
     }
 }

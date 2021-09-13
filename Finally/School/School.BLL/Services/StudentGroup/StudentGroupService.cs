@@ -4,7 +4,7 @@ using School.BLL.Services.StudentRequest;
 using School.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace School.BLL.Services.StudentGroup
 {
@@ -21,47 +21,48 @@ namespace School.BLL.Services.StudentGroup
             _studentService = studentService;
         }
 
-        public IEnumerable<Models.StudentGroup> GetAll()
+        public async Task<IEnumerable<Models.StudentGroup>> GetAll()
         {
-            return _repository.GetAll();
+            return await _repository.GetAll();
         }
 
-        public Models.StudentGroup GetById(int id)
+        public async Task<Models.StudentGroup> GetById(int id)
         {
-            return _repository.GetById(id);
+            return await _repository.GetById(id);
         }
 
-        public void Create(Models.StudentGroup entity)
+        public async Task Create(Models.StudentGroup entity)
         {
-            _repository.Create(entity);
+            await _repository.Create(entity);
 
             //find all requests related to new group
-            var requests = _requestService.GetOpenRequestsByCourse(entity.CourseId).ToList();
+            var requests = await _requestService.GetOpenRequestsByCourse(entity.CourseId);
 
+            var requestsToList = requests.ToList();
             //add students from requests to group
-            var studentsToGroup = requests.Select(r => r.Student);
+            var studentsToGroup = requestsToList.Select(r => r.Student);
             foreach (var student in studentsToGroup)
             {
                 student.GroupId = entity.Id;
-                _studentService.Update(student);
+                await _studentService.Update(student);
             }
 
             //close requests
             foreach (var request in requests)
             {
                 request.Status = RequestStatus.Closed;
-                _requestService.Update(request);
+                await _requestService.Update(request);
             }
         }
 
-        public void Update(Models.StudentGroup group)
+        public async Task Update(Models.StudentGroup group)
         {
-            _repository.Update(group);
+            await _repository.Update(group);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _repository.Delete(id);
+            await _repository.Delete(id);
         }
     }
 }

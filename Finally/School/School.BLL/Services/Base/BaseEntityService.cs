@@ -13,14 +13,14 @@ namespace School.BLL.Services.Base
             _repository = repository;
         }
 
-        public  IEnumerable<TEntity> GetAll()
+        public  async Task<IEnumerable<TEntity>> GetAll()
         {
-            return  _repository.GetAll();
+            return await _repository.GetAll();
         }
 
-        public TEntity GetById(int id)
+        public async Task<TEntity> GetById(int id)
         {
-            return _repository.GetById(id);
+            return await _repository.GetById(id);
         }
 
         public void Create(TEntity entity)

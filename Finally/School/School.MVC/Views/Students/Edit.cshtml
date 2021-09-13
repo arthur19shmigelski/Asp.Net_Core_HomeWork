@@ -13,28 +13,28 @@
     @Html.HiddenFor(x => x.Id)
 
     <div class="form-group">
-        <label asp-for="FirstName"></label>
+        <label asp-for="FirstName">Имя</label>
         <input class="form-control" type="text" asp-for="FirstName" />
         <span class="alert-danger" asp-validation-for="FirstName" />
     </div>
     <div class="form-group">
-        <label asp-for="LastName"></label>
+        <label asp-for="LastName">Фамилия</label>
         <input class="form-control" type="text" asp-for="LastName" />
         <span class="alert-danger" asp-validation-for="LastName" />
     </div>
     <div class="form-group">
-        <label asp-for="BirthDate"></label>
+        <label asp-for="BirthDate">Дата рождения</label>
         <input class="form-control" type="date" asp-for="BirthDate" />
         @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        <label asp-for="Email"></label>
+        <label asp-for="Email">Email</label>
         <input class="form-control" type="text" asp-for="Email" />
         <span class="alert-danger" asp-validation-for="Email" />
     </div>
 
     <div class="form-group">
-        <label asp-for="GroupId"></label>
+        <label asp-for="GroupId">Группа</label>
         <select class="form-control" asp-for="GroupId">
             <option value="">Select group...</option>
             @if (ViewBag.Groups != null)
@@ -53,7 +53,7 @@
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="Phone" class="control-label"></label>
+        <label asp-for="Phone" class="control-label">Телефон для связи</label>
         <input asp-for="Phone" class="form-control" />
         <span asp-validation-for="Phone" class="text-danger"></span>
     </div>

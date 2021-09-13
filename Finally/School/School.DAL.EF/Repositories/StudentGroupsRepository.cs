@@ -5,6 +5,7 @@ using School.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
@@ -17,16 +18,16 @@ namespace School.DAL.EF.Repositories
             _context = context;
         }
 
-        public StudentGroup GetById(int id)
+        public async Task<StudentGroup> GetById(int id)
         {
-            return _context.StudentGroups.Include(g => g.Students).First(g => g.Id == id);
+            return await _context.StudentGroups.Include(g => g.Students).FirstAsync(g => g.Id == id);
         }
-        public IEnumerable<StudentGroup> GetAll()
+        public async Task<IEnumerable<StudentGroup>> GetAll()
         {
-            return  _context.StudentGroups.Include(g => g.Teacher).ToList();
+            return  await _context.StudentGroups.Include(g => g.Teacher).ToListAsync();
         }
 
-        public void Update(StudentGroup item)
+        public async Task Update(StudentGroup item)
         {
             var originalStudentGroup = _context.StudentGroups.Find(item.Id);
 
@@ -39,28 +40,28 @@ namespace School.DAL.EF.Repositories
             originalStudentGroup.TeacherId = item.TeacherId;
             originalStudentGroup.Title = item.Title;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<StudentGroup> Find(Func<StudentGroup, bool> predicate)
+        public async Task<IEnumerable<StudentGroup>> Find(Func<StudentGroup, bool> predicate)
         {
-            return _context.StudentGroups
+            return await _context.StudentGroups
                            .Where(predicate)
                            .AsQueryable()
-                           .ToList();
+                           .ToListAsync();
         }
 
-        public void Create(StudentGroup item)
+        public async Task Create(StudentGroup item)
         {
-            _context.StudentGroups.Add(item);
-            _context.SaveChanges();
+            await _context.StudentGroups.AddAsync(item);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var item = _context.StudentGroups.Find(id);
+            StudentGroup item = await _context.StudentGroups.FindAsync(id);
             _context.StudentGroups.Remove(item);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

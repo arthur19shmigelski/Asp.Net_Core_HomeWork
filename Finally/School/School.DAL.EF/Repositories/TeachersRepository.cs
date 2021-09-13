@@ -1,9 +1,11 @@
-﻿using School.BLL.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using School.BLL.Models;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
@@ -15,15 +17,15 @@ namespace School.DAL.EF.Repositories
             _context = context;
         }
 
-        public void Create(Teacher item)
+        public async Task Create(Teacher item)
         {
-            _context.Teachers.Add(item);
-            _context.SaveChanges();
+            await _context.Teachers.AddAsync(item);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var teacher = _context.Teachers.Find(id);
+            var teacher = await _context.Teachers.FindAsync(id);
 
             var groups = _context.StudentGroups.Where(c => c.TeacherId == id).Select(c => c).ToList();
 
@@ -36,30 +38,30 @@ namespace School.DAL.EF.Repositories
 
             _context.Teachers.Remove(teacher);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<Teacher> Find(Func<Teacher, bool> predicate)
+        public async Task<IEnumerable<Teacher>> Find(Func<Teacher, bool> predicate)
         {
-            return _context.Teachers
+            return await _context.Teachers
                                         .Where(predicate)
                                         .AsQueryable()
-                                        .ToList();
+                                        .ToListAsync();
         }
 
-        public IEnumerable<Teacher> GetAll()
+        public async Task<IEnumerable<Teacher>> GetAll()
         {
-            return _context.Teachers.ToList();
+            return await _context.Teachers.ToListAsync();
         }
 
-        public Teacher GetById(int id)
+        public async Task<Teacher> GetById(int id)
         {
-            return _context.Teachers.Find(id);
+            return await _context.Teachers.FindAsync(id);
         }
 
-        public void Update(Teacher item)
+        public async Task Update(Teacher item)
         {
-            var originalTeacher = _context.Teachers.Find(item.Id);
+            var originalTeacher = await _context.Teachers.FindAsync(item.Id);
 
             originalTeacher.Bio = item.Bio;
             originalTeacher.BirthDate = item.BirthDate;
@@ -69,7 +71,7 @@ namespace School.DAL.EF.Repositories
             originalTeacher.LinkToProfile = item.LinkToProfile;
             originalTeacher.Phone = item.Phone;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

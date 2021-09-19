@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using School.BLL.ShortModels;
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
 {
@@ -23,7 +22,7 @@ namespace School.MVC.Controllers
             {
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ElmahExtensions.RiseError(new Exception(e.Message));
                 return RedirectToAction(nameof(Error));

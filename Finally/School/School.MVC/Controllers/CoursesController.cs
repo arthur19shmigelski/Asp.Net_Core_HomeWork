@@ -14,7 +14,6 @@ using School.MVC.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AcademyCRM.MVC.Controllers
@@ -97,25 +96,25 @@ namespace AcademyCRM.MVC.Controllers
         {
             try
             {
-                 if (!ModelState.IsValid) return View(courseModel);
+                if (!ModelState.IsValid) return View(courseModel);
 
-            var course = _mapper.Map<Course>(courseModel);
-            if (courseModel.Id > 0)
-                await _courseService.Update(course);
-            else
-                await _courseService.Create(course);
-            return RedirectToAction("Index");
+                var course = _mapper.Map<Course>(courseModel);
+                if (courseModel.Id > 0)
+                    await _courseService.Update(course);
+                else
+                    await _courseService.Create(course);
+                return RedirectToAction("Index");
             }
-           
 
-             catch (Exception e)
+
+            catch (Exception e)
             {
                 ElmahExtensions.RiseError(new Exception(e.Message));
                 return RedirectToAction(nameof(Error));
             }
         }
 
-        
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

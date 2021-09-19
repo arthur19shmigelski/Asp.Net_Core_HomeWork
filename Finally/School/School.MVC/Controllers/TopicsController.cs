@@ -7,7 +7,6 @@ using School.BLL.Services.Topic;
 using School.BLL.ShortModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
@@ -28,11 +27,11 @@ namespace School.MVC.Controllers
             this.topicService = topicService;
         }
 
-        public  IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var topics =  topicService.GetAll();
+                var topics = await topicService.GetAll();
 
                 return View(_mapper.Map<IEnumerable<TopicModel>>(topics));
             }
@@ -44,12 +43,12 @@ namespace School.MVC.Controllers
         }
 
         [HttpGet]
-        public  IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             try
             {
                 var topicModel = id.HasValue ?
-                    _mapper.Map<TopicModel>(topicService.GetById(id.Value)) :
+                    _mapper.Map<TopicModel>(await topicService.GetById(id.Value)) :
                     new TopicModel();
 
                 return View(topicModel);
@@ -62,7 +61,7 @@ namespace School.MVC.Controllers
         }
 
         [HttpPost]
-        public  IActionResult Edit(TopicModel topicModel)
+        public async Task<IActionResult> Edit(TopicModel topicModel)
         {
             try
             {
@@ -70,9 +69,9 @@ namespace School.MVC.Controllers
                 {
                     var topic = _mapper.Map<Topic>(topicModel);
                     if (topic.Id == 0)
-                        topicService.Create(topic);
+                        await topicService.Create(topic);
                     else
-                        topicService.Update(topic);
+                        await topicService.Update(topic);
 
                     return RedirectToAction("Index", "Topics");
                 }

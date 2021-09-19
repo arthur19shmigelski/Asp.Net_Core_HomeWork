@@ -63,13 +63,6 @@ namespace AcademyCRM.MVC.Controllers
                 ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(allStudents.OrderBy(s => s.LastName));
 
                 return View(model);
-
-                //Как было
-                //var model = id.HasValue ? _mapper.Map<StudentRequestModel>(await _requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
-
-                //ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(await _courseService.GetAll().OrderBy(c => c.Title));
-                //ViewBag.Students = _mapper.Map<IEnumerable<StudentModel>>(_studentService.GetAll().OrderBy(s => s.LastName));
-                //return View(model);
             }
             catch (Exception e)
             {

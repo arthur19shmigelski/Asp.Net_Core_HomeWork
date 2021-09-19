@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
-using School.BLL.Services.Base;
 using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;
-using School.BLL.ShortModels;
 using School.Web.API.Dto;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -35,7 +32,7 @@ namespace School.Web.API.Controllers
             var allStudents = await _studentsService.GetAll();
             var mapingStudent = _mapper.Map<IEnumerable<StudentDto>>(allStudents);
 
-            return  Ok(mapingStudent);
+            return Ok(mapingStudent);
 
             //Вариант 2. Вывод в список (выглядит лучше, чем обычно...)
             //var allStudents = _studentsService.GetAll();
@@ -64,12 +61,11 @@ namespace School.Web.API.Controllers
             }
         }
 
-
         // POST api/users
         [HttpPost]
         public async Task<ActionResult<Student>> Post(StudentDto student)
         {
-            if(student != null)
+            if (student != null)
             {
                 var newStudent = _mapper.Map<Student>(student);
                 await _studentsService.Create(newStudent);
@@ -91,7 +87,7 @@ namespace School.Web.API.Controllers
             else
             {
                 var value = _studentsService.GetById(student.Id);
-                
+
                 await _studentsService.Update(_mapper.Map<Student>(value));
                 return Ok(_mapper.Map<Student>(value));
             }

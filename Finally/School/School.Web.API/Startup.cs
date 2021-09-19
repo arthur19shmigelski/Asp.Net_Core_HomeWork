@@ -7,14 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using School.BLL.Extensions;
-using School.BLL.Models;
-using School.BLL.Services.Student;
-using School.BLL.Services.StudentGroup;
 using School.DAL.EF.Contexts;
 using School.DAL.EF.Extensions;
-using School.DAL.EF.Repositories;
-using School.DAL.Interfaces;
-using School.MVC.Mapper;
 using School.Web.API.Mapper;
 
 namespace School.Web.API

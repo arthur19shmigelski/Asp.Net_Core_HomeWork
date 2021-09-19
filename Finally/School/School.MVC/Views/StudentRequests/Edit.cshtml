@@ -4,6 +4,7 @@
     ViewData["Title"] = $"Student Request ({Model.StudentName}, {Model.CourseTitle})";
 
 }
+<h1 class="text text-center alert-info"> @(Model.Id == 0?"Создать новый запрос" : "Изменить запрос: ") <u> <i> </i> </u></h1>
 
 @using (Html.BeginForm("Edit", "StudentRequests", FormMethod.Post))
 {
@@ -21,23 +22,27 @@
     <div class="form-group">
         <div class="row align-items-end">
             <div class="col-10">
-                <label asp-for="StudentId">Student</label>
-                <select class="form-control" asp-for="StudentId" required>
-                    <option value="">Select student...</option>
-                    @if (ViewBag.Students != null)
-                        foreach (var student in (List
-                        <StudentModel>)ViewBag.Students)
-                        {
-                            if (student.Id == Model.StudentId)
+                @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                {
+                    <label asp-for="StudentId">Student</label>
+                    <select class="form-control" asp-for="StudentId" required>
+                        <option value="">Select student...</option>
+                        @if (ViewBag.Students != null)
+                            foreach (var student in (List
+                            <StudentModel>)ViewBag.Students)
                             {
-                                <option value="@student.Id" selected>@student.FullName</option>
+                                if (student.Id == Model.StudentId)
+                                {
+                                    <option value="@student.Id" selected>@student.FullName</option>
+                                }
+                                else
+                                {
+                                    <option value="@student.Id">@student.FullName</option>
+                                }
                             }
-                            else
-                            {
-                                <option value="@student.Id">@student.FullName</option>
-                            }
-                        }
-                </select>
+                    </select>
+                }
+
             </div>
             <div class="col-2">
                 <a class="btn btn-info" asp-controller="Students" asp-action="Edit">Add New</a>

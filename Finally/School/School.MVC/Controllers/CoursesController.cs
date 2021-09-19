@@ -14,7 +14,7 @@ using School.MVC.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace AcademyCRM.MVC.Controllers
 {
@@ -47,16 +47,16 @@ namespace AcademyCRM.MVC.Controllers
             _groupService = groupService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var courses = _courseService.GetAll();
+                var courses = await _courseService.GetAll();
                 var models = _mapper.Map<IEnumerable<CourseModel>>(courses);
 
                 foreach (var model in models)
                 {
-                    model.RequestsCount = _requestService.GetOpenRequestsCountByCourse(model.Id);
+                    model.RequestsCount = await _requestService.GetOpenRequestsCountByCourse(model.Id);
                 }
 
                 return View(models);
@@ -70,16 +70,16 @@ namespace AcademyCRM.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             try
             {
-                var model = id.HasValue ? _mapper.Map<CourseModel>(_courseService.GetById(id.Value)) : new CourseModel();
+                var model = id.HasValue ? _mapper.Map<CourseModel>(await _courseService.GetById(id.Value)) : new CourseModel();
 
                 if (id.HasValue)
-                    model.Requests = _mapper.Map<IEnumerable<StudentRequestModel>>(_requestService.GetOpenRequestsByCourse(id.Value));
+                    model.Requests = _mapper.Map<IEnumerable<StudentRequestModel>>(await _requestService.GetOpenRequestsByCourse(id.Value));
 
-                ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(_topicService.GetAll());
+                ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(await _topicService.GetAll());
                 return View(model);
             }
 
@@ -92,34 +92,20 @@ namespace AcademyCRM.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(CourseModel courseModel)
+        public async Task<IActionResult> Edit(CourseModel courseModel)
         {
             try
             {
-                 if (!ModelState.IsValid) return View(courseModel);
+                if (!ModelState.IsValid) return View(courseModel);
 
-            var course = _mapper.Map<Course>(courseModel);
-            if (courseModel.Id > 0)
-                _courseService.Update(course);
-            else
-                _courseService.Create(course);
-            return RedirectToAction("Index");
+                var course = _mapper.Map<Course>(courseModel);
+                if (courseModel.Id > 0)
+                    await _courseService.Update(course);
+                else
+                    await _courseService.Create(course);
+                return RedirectToAction("Index");
             }
-           
 
-             catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
-        }
-
-        public IActionResult Write()
-        {
-            try
-            {
-                return RedirectToAction("Index", "StudentRequests");               
-            }
 
             catch (Exception e)
             {
@@ -127,6 +113,8 @@ namespace AcademyCRM.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

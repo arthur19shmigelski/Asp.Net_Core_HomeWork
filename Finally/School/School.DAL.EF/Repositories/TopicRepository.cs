@@ -1,9 +1,11 @@
-﻿using School.BLL.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using School.BLL.Models;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
@@ -15,47 +17,48 @@ namespace School.DAL.EF.Repositories
         {
             _context = context;
         }
-        public void Create(Topic item)
+        public async Task Create(Topic item)
         {
-            _context.Topics.Add(item);
+            await _context.Topics.AddAsync(item);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var item = _context.StudentGroups.Find(id);
+            var item = await _context.StudentGroups.FindAsync(id);
             _context.StudentGroups.Remove(item);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<Topic> Find(Func<Topic, bool> predicate)
+        public async Task<IEnumerable<Topic>> Find(Func<Topic, bool> predicate)
         {
-            return _context.Topics
+            return await _context.Topics
                            .Where(predicate)
                            .AsQueryable()
-                           .ToList();
+                           .ToListAsync();
         }
 
-        public IEnumerable<Topic> GetAll()
+        public async Task<IEnumerable<Topic>> GetAll()
         {
-            return _context.Topics.ToList();
+            return await _context.Topics.ToListAsync();
 
         }
 
-        public Topic GetById(int id)
+        public async Task<Topic> GetById(int id)
         {
-            return _context.Topics.Find(id);
+            return await _context.Topics.FindAsync(id);
         }
 
-        public void Update(Topic item)
+        public async Task Update(Topic item)
         {
-            var originalTopic = _context.Topics.Find(item.Id);
+            var originalTopic = await _context.Topics.FindAsync(item.Id);
 
             originalTopic.Description = item.Description;
             originalTopic.Parent = item.Parent;
             originalTopic.ParentId = item.ParentId;
             originalTopic.Title = item.Title;
-            
-            _context.SaveChanges();
+
+            await _context.SaveChangesAsync();
         }
     }
 }

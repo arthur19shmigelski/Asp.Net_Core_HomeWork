@@ -14,7 +14,6 @@ using School.DAL.EF.Extensions;
 using School.MVC.Configuration;
 using School.MVC.Mapper;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -123,11 +122,11 @@ namespace School.MVC
                 await userManager.AddToRoleAsync(managerUser, "MANAGER");
             }
 
-            var value = userManager.Users.Where(email => email.Email != Configuration["Security:ManagerUserEmail"] && email.Email != Configuration["Security:AdminUserEmail"]).Select(users=>users).ToList();
+            var value = userManager.Users.Where(email => email.Email != Configuration["Security:ManagerUserEmail"] && email.Email != Configuration["Security:AdminUserEmail"]).Select(users => users).ToList();
             foreach (var student in value)
             {
-                    await userManager.AddToRoleAsync(student, "STUDENT");   
-            }     
+                await userManager.AddToRoleAsync(student, "STUDENT");
+            }
         }
     }
 }

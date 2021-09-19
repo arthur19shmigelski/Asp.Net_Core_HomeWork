@@ -11,6 +11,7 @@ using School.BLL.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
 {
@@ -36,11 +37,11 @@ namespace School.MVC.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var groups = _groupService.GetAll();
+                var groups = await _groupService.GetAll();
                 return View(_mapper.Map<IEnumerable<StudentGroupModel>>(groups));
             }
 
@@ -52,14 +53,14 @@ namespace School.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id, int? courseId)
+        public async Task<IActionResult> Edit(int? id, int? courseId)
         {
             try
             {
                 StudentGroupModel model;
                 if (id.HasValue)
                 {
-                    var group = _groupService.GetById(id.Value);
+                    var group = await _groupService.GetById(id.Value);
                     model = _mapper.Map<StudentGroupModel>(group);
                     model.Students = _mapper.Map<IEnumerable<StudentModel>>(group.Students);
                 }
@@ -89,7 +90,7 @@ namespace School.MVC.Controllers
 
         [HttpPost]
         [Authorize(Roles = "admin")]
-        public IActionResult Edit(StudentGroupModel groupModel)
+        public async Task<IActionResult> Edit(StudentGroupModel groupModel)
         {
             try
             {
@@ -98,9 +99,9 @@ namespace School.MVC.Controllers
 
                 var group = _mapper.Map<StudentGroup>(groupModel);
                 if (groupModel.Id > 0)
-                    _groupService.Update(group);
+                    await _groupService.Update(group);
                 else
-                    _groupService.Create(group);
+                    await _groupService.Create(group);
 
                 return RedirectToAction(nameof(Index));
             }

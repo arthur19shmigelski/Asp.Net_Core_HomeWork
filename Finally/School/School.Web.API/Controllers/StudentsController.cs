@@ -32,7 +32,7 @@ namespace School.Web.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> Get()
         {
-            var allStudents = _studentsService.GetAll();
+            var allStudents = await _studentsService.GetAll();
             var mapingStudent = _mapper.Map<IEnumerable<StudentDto>>(allStudents);
 
             return  Ok(mapingStudent);
@@ -54,7 +54,7 @@ namespace School.Web.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> Get(int id)
         {
-            Student student = _studentsService.GetById(id);
+            Student student = await _studentsService.GetById(id);
             if (student == null)
                 return NotFound();
             else
@@ -72,7 +72,7 @@ namespace School.Web.API.Controllers
             if(student != null)
             {
                 var newStudent = _mapper.Map<Student>(student);
-                _studentsService.Create(newStudent);
+                await _studentsService.Create(newStudent);
                 return new ObjectResult(newStudent);
             }
             else
@@ -92,7 +92,7 @@ namespace School.Web.API.Controllers
             {
                 var value = _studentsService.GetById(student.Id);
                 
-                _studentsService.Update(_mapper.Map<Student>(value));
+                await _studentsService.Update(_mapper.Map<Student>(value));
                 return Ok(_mapper.Map<Student>(value));
             }
         }
@@ -101,12 +101,12 @@ namespace School.Web.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Student>> Delete(int id)
         {
-            Student user = _studentsService.GetById(id);
+            Student user = await _studentsService.GetById(id);
             if (user == null)
                 return NotFound();
             else
             {
-                _studentsService.Delete(user.Id);
+                await _studentsService.Delete(user.Id);
                 return Ok(user);
             }
         }

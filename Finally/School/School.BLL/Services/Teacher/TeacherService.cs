@@ -1,5 +1,6 @@
 ﻿using School.DAL.Interfaces;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace School.BLL.Services.Teacher
 {
@@ -12,29 +13,29 @@ namespace School.BLL.Services.Teacher
             _repository = repository;
         }
 
-        public IEnumerable<Models.Teacher> GetAll()
+        public async Task<IEnumerable<Models.Teacher>> GetAll()
         {
-            return _repository.GetAll();
+            return await _repository.GetAll();
         }
 
-        public Models.Teacher GetById(int id)
+        public async Task<Models.Teacher> GetById(int id)
         {
-            return _repository.GetById(id);
+            return await _repository.GetById(id);
         }
 
-        public void Create(Models.Teacher teacher)
+        public async Task Create(Models.Teacher teacher)
         {
-            _repository.Create(teacher);
+            await _repository.Create(teacher);
         }
 
-        public void Update(Models.Teacher teacher)
+        public async Task Update(Models.Teacher teacher)
         {
-            _repository.Update(teacher);
+            await _repository.Update(teacher);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _repository.Delete(id);
+            await _repository.Delete(id);
         }
     }
 }

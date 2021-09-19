@@ -19,26 +19,29 @@ namespace School.BLL.Services.StudentRequest
             _repository = repository;
         }
 
-        public IEnumerable<Models.StudentRequest> GetAllOpen()
+        public async Task<IEnumerable<Models.StudentRequest>> GetAllOpen()
         {
-            return _repository.GetAll().Where(r => r.Status == RequestStatus.Open);
+            var allRequests =  await _repository.GetAll();
+            return allRequests.Where(r => r.Status == RequestStatus.Open);
         }
 
-        public IEnumerable<Models.StudentRequest> GetOpenRequestsByCourse(int courseId)
+        public async Task<IEnumerable<Models.StudentRequest>> GetOpenRequestsByCourse(int courseId)
         {
-            return _repository.GetAll().Where(r => r.CourseId == courseId && r.Status == RequestStatus.Open);
+            var allRequests = await _repository.GetAll();
+            return allRequests.Where(r => r.CourseId == courseId && r.Status == RequestStatus.Open).ToList();
         }
 
-        public int GetOpenRequestsCountByCourse(int courseId)
+        public async Task<int> GetOpenRequestsCountByCourse(int courseId)
         {
-            return _repository.Find(r => r.CourseId == courseId && r.Status == RequestStatus.Open).Count();
+            var findAll = await _repository.Find(r => r.CourseId == courseId && r.Status == RequestStatus.Open);
+            return  findAll.ToList().Count();
         }
 
-        public IEnumerable<Models.Student> GetStudentsByCourse(int courseId)
+        public async Task<IEnumerable<Models.Student>> GetStudentsByCourse(int courseId)
         {
-            return _repository.GetAll().Where(r => r.CourseId == courseId).Select(r => r.Student).Distinct();
+            var allRequests = await _repository.GetAll();
+
+            return allRequests.Where(r => r.CourseId == courseId).Select(r => r.Student).Distinct();
         }
-
-
     }
 }

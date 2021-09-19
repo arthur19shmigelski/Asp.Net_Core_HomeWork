@@ -5,6 +5,7 @@ using School.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
@@ -17,43 +18,43 @@ namespace School.DAL.EF.Repositories
             _context = context;
         }
 
-        public void Create(StudentRequest item)
+        public async Task Create(StudentRequest item)
         {
-            _context.StudentRequests.Add(item);
-            _context.SaveChanges();
+            await _context.StudentRequests.AddAsync(item);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var item = _context.StudentRequests.Find(id);
+            StudentRequest item = await _context.StudentRequests.FindAsync(id);
             _context.StudentRequests.Remove(item);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<StudentRequest> Find(Func<StudentRequest, bool> predicate)
+        public async Task<IEnumerable<StudentRequest>> Find(Func<StudentRequest, bool> predicate)
         {
-            return _context.StudentRequests
+            return await _context.StudentRequests
                             .Where(predicate)
                             .AsQueryable()
-                            .ToList();
+                            .ToListAsync();
         }
 
-        public IEnumerable<StudentRequest> GetAll()
+        public async Task<IEnumerable<StudentRequest>> GetAll()
         {
-            return _context.StudentRequests
+            return await _context.StudentRequests
                 .Include(r => r.Student)
                 .Include(r => r.Course)
-                .ToList();
+                .ToListAsync();
         }
 
-        public StudentRequest GetById(int id)
+        public async Task<StudentRequest> GetById(int id)
         {
-            return _context.StudentRequests.Find(id);
+            return await _context.StudentRequests.FindAsync(id);
         }
 
-        public void Update(StudentRequest item)
+        public async Task Update(StudentRequest item)
         {
-            var originalStudentRequest = _context.StudentRequests.Find(item.Id);
+            var originalStudentRequest = await _context.StudentRequests.FindAsync(item.Id);
 
             originalStudentRequest.Comments = item.Comments;
             originalStudentRequest.Course = item.Course;
@@ -64,7 +65,7 @@ namespace School.DAL.EF.Repositories
             originalStudentRequest.StudentId = item.StudentId;
             originalStudentRequest.Updated = item.Updated;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

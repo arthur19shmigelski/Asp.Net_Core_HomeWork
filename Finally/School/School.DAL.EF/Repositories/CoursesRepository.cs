@@ -5,6 +5,7 @@ using School.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
@@ -17,39 +18,39 @@ namespace School.DAL.EF.Repositories
             _context = context;
         }
 
-        public IEnumerable<Course> GetAll()
+        public async Task<IEnumerable<Course>> GetAll()
         {
-            return _context.Courses
+            return await _context.Courses
                 .Include(c => c.Topic)
-                .ToList();
+                .ToListAsync();
         }
-        public Course GetById(int id)
+        public async Task<Course> GetById(int id)
         {
-            return _context.Courses.Find(id);
-        }
-
-        public void Create(Course item)
-        {
-            _context.Courses.Add(item);
-            _context.SaveChanges();
+            return await _context.Courses.FindAsync(id);
         }
 
-        public void Delete(int id)
+        public async Task Create(Course item)
         {
-            var item = _context.Courses.Find(id);
-            _context.Courses.Remove(item);
-            _context.SaveChanges();
+            await _context.Courses.AddAsync(item);
+            await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<Course> Find(Func<Course, bool> predicate)
+        public async Task Delete(int id)
         {
-            return _context.Courses
+            var item =  _context.Courses.FindAsync(id);
+            _context.Courses.Remove(item.Result);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Course>> Find(Func<Course, bool> predicate)
+        {
+            return await _context.Courses
                             .Where(predicate)
                             .AsQueryable()
-                            .ToList();
+                            .ToListAsync();
         }
 
-        public void Update(Course item)
+        public async Task Update(Course item)
         {
             var originalCourse = _context.Courses.Find(item.Id);
 
@@ -59,7 +60,7 @@ namespace School.DAL.EF.Repositories
             originalCourse.Topic = item.Topic;
             originalCourse.TopicId = item.TopicId;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

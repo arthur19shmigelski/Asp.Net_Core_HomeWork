@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using School.Angular.Dto;
 using School.BLL.Services.Course;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace School.Angular.Controllers
 {
@@ -20,9 +21,9 @@ namespace School.Angular.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CourseDto> Get()
+        public async Task<IEnumerable<CourseDto>> Get()
         {
-            return _mapper.Map<IEnumerable<CourseDto>>(_service.GetAll());
+            return _mapper.Map<IEnumerable<CourseDto>>(await _service.GetAll());
         }
     }
 }

@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Services.Course;
 using School.Web.API.Dto;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.Web.API.Controllers
@@ -22,9 +20,9 @@ namespace School.Web.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CourseDto> Get()
+        public async Task<IEnumerable<CourseDto>> Get()
         {
-            return _mapper.Map<IEnumerable<CourseDto>>(_service.GetAll());
+            return _mapper.Map<IEnumerable<CourseDto>>(await _service.GetAll());
         }
     }
 }

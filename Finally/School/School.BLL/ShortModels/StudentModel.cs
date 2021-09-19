@@ -7,6 +7,5 @@ namespace School.BLL.ShortModels
         public int? GroupId { get; set; }
         public StudentGroupModel Group { get; set; }
         public StudentType Type { get; set; }
-
     }
 }

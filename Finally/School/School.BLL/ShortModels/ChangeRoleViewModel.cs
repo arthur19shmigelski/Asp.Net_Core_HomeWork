@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace School.BLL.ShortModels
 {
-
     public class ChangeRoleViewModel
     {
         public string UserId { get; set; }

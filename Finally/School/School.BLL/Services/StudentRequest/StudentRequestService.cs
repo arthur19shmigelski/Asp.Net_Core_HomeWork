@@ -33,8 +33,11 @@ namespace School.BLL.Services.StudentRequest
 
         public async Task<int> GetOpenRequestsCountByCourse(int courseId)
         {
-            var findAll = await _repository.Find(r => r.CourseId == courseId && r.Status == RequestStatus.Open);
-            return  findAll.ToList().Count();
+            var requests = await _repository.GetAll();
+            return requests.Where(r => r.CourseId == courseId && r.Status == RequestStatus.Open)
+                .Distinct()
+                .ToList()
+                .Count();
         }
 
         public async Task<IEnumerable<Models.Student>> GetStudentsByCourse(int courseId)

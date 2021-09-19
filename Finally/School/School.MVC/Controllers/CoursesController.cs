@@ -56,7 +56,8 @@ namespace AcademyCRM.MVC.Controllers
 
                 foreach (var model in models)
                 {
-                    model.RequestsCount = await _requestService.GetOpenRequestsCountByCourse(model.Id);
+                    var value = await _requestService.GetOpenRequestsCountByCourse(model.Id);
+                    model.RequestsCount = value;
                 }
 
                 return View(models);

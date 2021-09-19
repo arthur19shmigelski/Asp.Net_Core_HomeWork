@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace School.BLL.ShortModels
 {
     public class TeacherModel : PersonModel
     {
-        [Required(ErrorMessage = "Please, enter you link to profile")]
+        [Required(ErrorMessage = "Поле <LinkToProfile> не может быть пустым")]
         public string LinkToProfile { get; set; }
     }
 }

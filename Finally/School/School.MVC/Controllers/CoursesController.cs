@@ -67,7 +67,6 @@ namespace AcademyCRM.MVC.Controllers
                 ElmahExtensions.RiseError(new Exception(e.Message));
                 return RedirectToAction(nameof(Error));
             }
-
         }
 
         [HttpGet]

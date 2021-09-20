@@ -41,7 +41,6 @@ namespace School.DAL.EF.Repositories
         public async Task<IEnumerable<Topic>> GetAll()
         {
             return await _context.Topics.ToListAsync();
-
         }
 
         public async Task<Topic> GetById(int id)

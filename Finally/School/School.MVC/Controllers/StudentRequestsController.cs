@@ -53,14 +53,13 @@ namespace AcademyCRM.MVC.Controllers
         {
             try
             {
-
                 var model = id.HasValue ? _mapper.Map<StudentRequestModel>(await _requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
 
                 var allCourses = await _courseService.GetAll();
                 ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(allCourses.OrderBy(c => c.Title));
 
                 var allStudents = await _studentService.GetAll();
-                ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(allStudents.OrderBy(s => s.LastName));
+                ViewBag.Students = _mapper.Map<IEnumerable<StudentModel>>(allStudents.OrderBy(s => s.LastName));
 
                 return View(model);
             }

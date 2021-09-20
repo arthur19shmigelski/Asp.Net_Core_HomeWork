@@ -15,7 +15,7 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="Created"></label>
+        <label asp-for="Created">Создан от</label>
         <input class="form-control" type="date" asp-for="Created" readonly="readonly" />
     </div>
 
@@ -24,9 +24,9 @@
             <div class="col-10">
                 @if (ViewContext.HttpContext.User.IsInRole("admin"))
                 {
-                    <label asp-for="StudentId">Student</label>
+                    <label asp-for="StudentId">Список студентов</label>
                     <select class="form-control" asp-for="StudentId" required>
-                        <option value="">Select student...</option>
+                        <option value="">Выбрать...</option>
                         @if (ViewBag.Students != null)
                             foreach (var student in (List
                             <StudentModel>)ViewBag.Students)
@@ -45,15 +45,15 @@
 
             </div>
             <div class="col-2">
-                <a class="btn btn-info" asp-controller="Students" asp-action="Edit">Add New</a>
+                <a class="btn btn-info" asp-controller="Students" asp-action="Edit">Добавить нового</a>
             </div>
         </div>
     </div>
 
     <div class="form-group">
-        <label asp-for="CourseId">Course</label>
+        <label asp-for="CourseId">Курсы</label>
         <select class="form-control" asp-for="CourseId" required>
-            <option value="">Select course...</option>
+            <option value="">Выбрать...</option>
             @if (ViewBag.Courses != null)
                 foreach (var course in (List
                 <CourseModel>)ViewBag.Courses)
@@ -70,12 +70,12 @@
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="Comments"></label>
+        <label asp-for="Comments">Комментарий</label>
         <textarea class="form-control" asp-for="Comments"></textarea>
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-success">Сохранить</button>
     </div>
 }
 

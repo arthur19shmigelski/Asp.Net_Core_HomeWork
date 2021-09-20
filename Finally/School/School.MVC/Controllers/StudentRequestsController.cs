@@ -82,7 +82,7 @@ namespace AcademyCRM.MVC.Controllers
                     await _requestService.Update(request);
                 else
                     await _requestService.Create(request);
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             catch (Exception e)

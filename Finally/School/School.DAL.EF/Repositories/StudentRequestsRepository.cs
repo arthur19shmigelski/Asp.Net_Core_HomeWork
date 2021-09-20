@@ -20,7 +20,7 @@ namespace School.DAL.EF.Repositories
 
         public async Task Create(StudentRequest item)
         {
-            await _context.StudentRequests.AddAsync(item);
+            _context.StudentRequests.Add(item);
             await _context.SaveChangesAsync();
         }
 

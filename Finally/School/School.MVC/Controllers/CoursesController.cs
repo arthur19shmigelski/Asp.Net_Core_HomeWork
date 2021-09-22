@@ -96,7 +96,13 @@ namespace AcademyCRM.MVC.Controllers
             {
                 if (!ModelState.IsValid) return View(courseModel);
 
+                //Плохо мапируется... Почему?
                 var course = _mapper.Map<Course>(courseModel);
+
+                var topicForCourse = await _topicService.GetById(courseModel.TopicId);
+
+                course.Topic = topicForCourse;
+
                 if (courseModel.Id > 0)
                     await _courseService.Update(course);
                 else
@@ -115,6 +121,7 @@ namespace AcademyCRM.MVC.Controllers
         {
             try
             {
+
                 await _courseService.Delete(id);
                 return RedirectToAction("Index");
             }
@@ -124,6 +131,7 @@ namespace AcademyCRM.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

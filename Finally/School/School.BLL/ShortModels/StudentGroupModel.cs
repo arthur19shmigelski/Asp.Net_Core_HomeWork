@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace School.BLL.ShortModels
@@ -18,7 +19,7 @@ namespace School.BLL.ShortModels
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public string StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         public string Status { get; set; }
         public IEnumerable<StudentModel> Students { get; set; }

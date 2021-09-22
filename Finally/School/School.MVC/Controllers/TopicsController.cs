@@ -13,7 +13,7 @@ namespace School.MVC.Controllers
 {
     public class TopicsController : Controller
     {
-        private readonly ITopicService topicService;
+        private readonly ITopicService _topicService;
 
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
@@ -24,14 +24,14 @@ namespace School.MVC.Controllers
             _mapper = mapper;
             _logger = logger;
 
-            this.topicService = topicService;
+            _topicService = topicService;
         }
 
         public async Task<IActionResult> Index()
         {
             try
             {
-                var topics = await topicService.GetAll();
+                var topics = await _topicService.GetAll();
 
                 return View(_mapper.Map<IEnumerable<TopicModel>>(topics));
             }
@@ -48,7 +48,7 @@ namespace School.MVC.Controllers
             try
             {
                 var topicModel = id.HasValue ?
-                    _mapper.Map<TopicModel>(await topicService.GetById(id.Value)) :
+                    _mapper.Map<TopicModel>(await _topicService.GetById(id.Value)) :
                     new TopicModel();
 
                 return View(topicModel);
@@ -69,9 +69,9 @@ namespace School.MVC.Controllers
                 {
                     var topic = _mapper.Map<Topic>(topicModel);
                     if (topic.Id == 0)
-                        await topicService.Create(topic);
+                        await _topicService.Create(topic);
                     else
-                        await topicService.Update(topic);
+                        await _topicService.Update(topic);
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -90,7 +90,12 @@ namespace School.MVC.Controllers
         {
             try
             {
-                await topicService.Delete(id);
+                var topic = await _topicService.GetById(id);
+                if(topic.Courses.Count>0)
+                {
+
+                }    
+                await _topicService.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception e)

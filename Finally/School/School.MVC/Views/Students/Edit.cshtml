@@ -23,9 +23,9 @@
         <span class="alert-danger" asp-validation-for="LastName" />
     </div>
     <div class="form-group">
-        <label asp-for="BirthDate">Дата рождения</label>
-        <input class="form-control" type="date" asp-for="BirthDate" />
-        @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
+        <label asp-for="Age">Полных лет</label>
+        <input class="form-control" type="date" asp-for="Age" />
+        @Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
         <label asp-for="Email">Email</label>

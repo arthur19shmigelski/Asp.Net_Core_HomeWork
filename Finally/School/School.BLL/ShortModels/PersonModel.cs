@@ -17,9 +17,9 @@ namespace School.BLL.ShortModels
         [StringLength(maximumLength: 20, MinimumLength = 3, ErrorMessage = "Длина поля <LastName> должна быть 3-20")]
         public string LastName { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime? BirthDate { get; set; }
+        [Required(ErrorMessage = "Поле <Age> не может быть пустым")]
+        [Range(16,90,ErrorMessage ="Возраст должен быть от 16 до 90 лет!")]
+        public int? Age { get; set; }
 
         [Required(ErrorMessage = "Поле <Email> не может быть пустым")]
         [EmailAddress(ErrorMessage = "Некорректный <Email> адрес")]

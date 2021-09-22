@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.BLL.Models;
+using School.BLL.Models.Enum;
 using System;
 
 namespace School.DAL.EF.Contexts
@@ -46,7 +47,7 @@ namespace School.DAL.EF.Contexts
             modelBuilder.Entity<Topic>().HasData(topic1, topic2, topic3);
 
             /*------------------------------------------------------------------------------------------------------------------------*/
-            /*Seed for 3 Courses*/
+            /*Seed for 9 Courses*/
             var course1 = new Course()
             {
                 Id = 1,
@@ -172,8 +173,8 @@ namespace School.DAL.EF.Contexts
                 FirstName = "Vadim",
                 LastName = "Korotkov",
                 LinkToProfile = "https://www.linkedin.com/feed/Korotkov",
-                Bio = "My name is Vadim Korotkov.",
-                BirthDate = new DateTime(1977, 01, 01),
+                Bio = "My name is Vadim Korotkov. I'am full-stack developer. I know all language, frameworks",
+                Age = 30,
                 Email = "Korotkov@mail.ru",
                 Phone = "+375291111111"
             };
@@ -183,8 +184,8 @@ namespace School.DAL.EF.Contexts
                 FirstName = "Sergey",
                 LastName = "Gromov",
                 LinkToProfile = "https://www.linkedin.com/feed/Gromov",
-                Bio = "My name is Sergey Gromov.",
-                BirthDate = new DateTime(1944, 02, 02),
+                Bio = "My name is Sergey Gromov. I'am a back-end developer on .Net Framework + Java (JS).",
+                Age = 32,
                 Email = "Gromov@yandex.ru",
                 Phone = "+375292222222"
             };
@@ -194,230 +195,282 @@ namespace School.DAL.EF.Contexts
                 FirstName = "Andrew",
                 LastName = "Kamilov",
                 LinkToProfile = "https://www.linkedin.com/feed/Kamilov",
-                Bio = "My name is Andrew Kamilov.",
-                BirthDate = new DateTime(1956, 03, 03),
+                Bio = "My name is Andrew Kamilov. I'am front-end developer, know some modern frameworks (Angular, Vue, React)",
+                Age = 36,
                 Email = "Kamilov@yandex.ru",
                 Phone = "+375293333333"
             };
 
-            modelBuilder.Entity<Teacher>().HasData(teacher1, teacher2, teacher3);
-
-            /*------------------------------------------------------------------------------------------------------------------------*/
-            /*Seed for 3 StudentGroups*/
-            var group1 = new StudentGroup()
+            var teacher4 = new Teacher()
             {
-                Id = 1,
-                Title = "Basic_C#_01.01",
-                TeacherId = teacher1.Id,
-                CourseId = course1.Id,
-                Status = BLL.Models.Enum.GroupStatus.NotStarted,
-                StartDate = new DateTime(2022, 01, 01)
+                Id = 4,
+                FirstName = "Marina",
+                LastName = "Kuzmina",
+                LinkToProfile = "https://www.linkedin.com/feed/Kuzmina",
+                Bio = "My name is Marina Kuzmina. I am a Design teacher",
+                Age = 34,
+                Email = "Kuzmina@yandex.ru",
+                Phone = "+375296561723"
             };
-            var group2 = new StudentGroup()
+            var teacher5 = new Teacher()
             {
-                Id = 2,
-                Title = "Java_02_02",
-                TeacherId = teacher2.Id,
-                CourseId = course2.Id,
-                Status = BLL.Models.Enum.GroupStatus.NotStarted,
-                StartDate = new DateTime(2023, 02, 02)
+                Id = 5,
+                FirstName = "Vladimir",
+                LastName = "Vorobei",
+                LinkToProfile = "https://www.linkedin.com/feed/Vorobei",
+                Bio = "My name is Vladimir Vorobei. I am a C# language teacher",
+                Age = 27,
+                Email = "Vorobei@yandex.ru",
+                Phone = "+375290989093"
             };
-            var group3 = new StudentGroup()
-            {
-                Id = 3,
-                Title = "Motion Design_03_03",
-                TeacherId = teacher3.Id,
-                CourseId = course3.Id,
-                Status = BLL.Models.Enum.GroupStatus.NotStarted,
-                StartDate = new DateTime(2024, 03, 03)
-            };
-
-            modelBuilder.Entity<StudentGroup>().HasData(group1, group2, group3);
-
+            modelBuilder.Entity<Teacher>().HasData(teacher1, teacher2, teacher3, teacher4, teacher5);
 
             /*------------------------------------------------------------------------------------------------------------------------*/
             /*Seed for 15 students*/
+
+
+
+            var student1 = new Student()
+            {
+                Id = 1,
+                FirstName = "Oleg",
+                LastName = "Fedorov",
+                Email = "Fedorov@gmail.com",
+                Age = 22,
+                Phone = "+375291111111",
+                Type = BLL.Models.Enum.StudentType.Online,
+            };
+            var student2 = new Student()
+            {
+                Id = 2,
+                FirstName = "Andrey",
+                LastName = "Antonov",
+                Email = "Antonov@gmail.com",
+                Age = 26,
+                Phone = "+375292222222",
+                Type = BLL.Models.Enum.StudentType.Mix,
+            };
+            var student3 = new Student()
+            {
+                Id = 3,
+                FirstName = "Ivan",
+                LastName = "Petrov",
+                Email = "Petrov@gmail.com",
+                Age = 17,
+                Phone = "+375443333333",
+                Type = BLL.Models.Enum.StudentType.InClass,
+            };
+            var student4 = new Student()
+            {
+                Id = 4,
+                FirstName = "Sergey",
+                LastName = "Ivashko",
+                Email = "Ivashko@gmail.com",
+                Age = 19,
+                Phone = "+375444444444",
+                Type = BLL.Models.Enum.StudentType.Online,
+            };
+            var student5 = new Student()
+            {
+                Id = 5,
+                FirstName = "Arthur",
+                LastName = "Shmigelski",
+                Email = "Shmigelski@gmail.com",
+                Age = 25,
+                Phone = "+375295555555",
+                Type = BLL.Models.Enum.StudentType.Online,
+            };
+            var student6 = new Student()
+            {
+                Id = 6,
+                FirstName = "Maxim",
+                LastName = "Sergeenko",
+                Email = "Sergeenko@yandex.com",
+                Age = 25,
+                Phone = "+375446666666",
+                Type = BLL.Models.Enum.StudentType.Mix,
+            };
+            var student7 = new Student()
+            {
+                Id = 7,
+                FirstName = "Vladimir",
+                LastName = "Micinat",
+                Email = "Micinat@gmail.com",
+                Age = 50,
+                Phone = "+375447777777",
+                Type = BLL.Models.Enum.StudentType.Mix,
+            };
+            var student8 = new Student()
+            {
+                Id = 8,
+                FirstName = "Anatoliy",
+                LastName = "Frunze",
+                Email = "Frunze@mail.ru",
+                Age = 46,
+                Phone = "+375448888888",
+                Type = BLL.Models.Enum.StudentType.InClass,
+            };
+            var student9 = new Student()
+            {
+                Id = 9,
+                FirstName = "Polina",
+                LastName = "Vaneeva",
+                Email = "VaneevaPolina@gmail.com",
+                Age = 40,
+                Phone = "+375449999999",
+                Type = BLL.Models.Enum.StudentType.Mix,
+            };
+            var student10 = new Student()
+            {
+                Id = 10,
+                FirstName = "Miron",
+                LastName = "Yakimov",
+                Email = "YakimovMiron@gmail.com",
+                Age = 39,
+                Phone = "+375441010101",
+                Type = BLL.Models.Enum.StudentType.InClass,
+            };
+            var student11 = new Student()
+            {
+                Id = 11,
+                FirstName = "Nikita",
+                LastName = "Moroz",
+                Email = "MorozNikita@gmail.com",
+                Age = 22,
+                Phone = "+375440110111",
+                Type = BLL.Models.Enum.StudentType.InClass,
+            };
+            var student12 = new Student()
+            {
+                Id = 12,
+                FirstName = "Vitalik",
+                LastName = "Ponimash",
+                Email = "PonimashVitalik@gmail.com",
+                Age = 25,
+                Phone = "+375441212123",
+                Type = BLL.Models.Enum.StudentType.Online,
+            };
+            var student13 = new Student()
+            {
+                Id = 13,
+                FirstName = "Irina",
+                LastName = "Fistashka",
+                Email = "FistashkaIrina@yandex.by",
+                Age = 29,
+                Phone = "+375444444444",
+                Type = BLL.Models.Enum.StudentType.Online,
+            };
+            var student14 = new Student()
+            {
+                Id = 14,
+                FirstName = "Alena",
+                LastName = "Filimonova",
+                Email = "Filimonova@gmail.com",
+                Age = 20,
+                Phone = "+375441534545",
+                Type = BLL.Models.Enum.StudentType.Mix,
+            };
+            var student15 = new Student()
+            {
+                Id = 15,
+                FirstName = "Sergey",
+                LastName = "Efremov",
+                Email = "EfremovSergey@mail.ru",
+                Age = 25,
+                Phone = "+375441232323",
+                Type = BLL.Models.Enum.StudentType.Online,
+            };
             modelBuilder.Entity<Student>().HasData(
-                new Student()
+               student1, student2, student3,
+               student4, student5, student6,
+               student7, student8, student9,
+               student10, student11, student12,
+               student13, student14, student15);
+
+            modelBuilder.Entity<StudentRequest>().HasData(
+                new StudentRequest
                 {
                     Id = 1,
-                    FirstName = "Oleg",
-                    LastName = "Fedorov",
-                    Email = "Fedorov@gmail.com",
-                    BirthDate = new DateTime(1998, 01, 01),
-                    Phone = "+375291111111",
-                    GroupId = group1.Id,
-                    Type = BLL.Models.Enum.StudentType.Online,
-                    StartDate = DateTime.Today
+                    CourseId = course1.Id,
+                    ReadyToStartDate = new DateTime(2021, 8, 20),
+                    StudentId = student1.Id,
+                    Comments = "Хочу учиться на C# (basic) ",
+                    Status = RequestStatus.Open
                 },
-                new Student()
+                new StudentRequest
                 {
                     Id = 2,
-                    FirstName = "Andrey",
-                    LastName = "Antonov",
-                    Email = "Antonov@gmail.com",
-                    BirthDate = new DateTime(1990, 02, 02),
-                    Phone = "+375292222222",
-                    GroupId = group2.Id,
-                    Type = BLL.Models.Enum.StudentType.Mix,
-                    StartDate = new DateTime(2021, 10, 10)
-                },
-                new Student()
+                    CourseId = course1.Id,
+                    ReadyToStartDate = new DateTime(2021, 7, 11),
+                    StudentId = student2.Id,
+                    Comments = "Хочу учиться на C# (basic)",
+                    Status = RequestStatus.Open
+                }, new StudentRequest
                 {
                     Id = 3,
-                    FirstName = "Ivan",
-                    LastName = "Petrov",
-                    Email = "Petrov@gmail.com",
-                    BirthDate = new DateTime(1988, 03, 03),
-                    Phone = "+375443333333",
-                    GroupId = group3.Id,
-                    Type = BLL.Models.Enum.StudentType.InClass,
-                    StartDate = new DateTime(2023, 01, 01)
-
-                },
-                new Student()
+                    CourseId = course2.Id,
+                    ReadyToStartDate = new DateTime(2021, 7, 15),
+                    StudentId = student3.Id,
+                    Comments = "Хочу учиться на Java (basic)",
+                    Status = RequestStatus.Open
+                }, new StudentRequest
                 {
                     Id = 4,
-                    FirstName = "Sergey",
-                    LastName = "Ivashko",
-                    Email = "Ivashko@gmail.com",
-                    BirthDate = new DateTime(2000, 04, 04),
-                    Phone = "+375444444444",
-                    GroupId = group1.Id,
-                    Type = BLL.Models.Enum.StudentType.Online,
-                    StartDate = new DateTime(2022, 05, 05)
+                    CourseId = course2.Id,
+                    ReadyToStartDate = new DateTime(2021, 7, 11),
+                    StudentId = student4.Id,
+                    Comments = "Хочу учиться на Java (basic)",
+                    Status = RequestStatus.Open
                 },
-                new Student()
+                new StudentRequest
                 {
                     Id = 5,
-                    FirstName = "Arthur",
-                    LastName = "Shmigelski",
-                    Email = "Shmigelski@gmail.com",
-                    BirthDate = new DateTime(1998, 05, 05),
-                    Phone = "+375295555555",
-                    GroupId = group2.Id,
-                    Type = BLL.Models.Enum.StudentType.Online,
-                    StartDate = new DateTime(2022, 06, 06)
-                },
-                new Student()
+                    CourseId = course3.Id,
+                    ReadyToStartDate = new DateTime(2021, 9, 5),
+                    StudentId = student5.Id,
+                    Comments = "Хочу учиться на Design (basic)",
+                    Status = RequestStatus.Open
+                }, new StudentRequest
                 {
                     Id = 6,
-                    FirstName = "Maxim",
-                    LastName = "Sergeenko",
-                    Email = "Sergeenko@yandex.com",
-                    BirthDate = new DateTime(1997, 06, 06),
-                    Phone = "+375446666666",
-                    GroupId = group3.Id,
-                    Type = BLL.Models.Enum.StudentType.Mix,
-                    StartDate = new DateTime(2020, 02, 02)
-                },
-                new Student()
+                    CourseId = course3.Id,
+                    ReadyToStartDate = new DateTime(2021, 8, 15),
+                    StudentId = student6.Id,
+                    Comments = "Хочу учиться на Design (basic)",
+                    Status = RequestStatus.Open
+                }, new StudentRequest
                 {
                     Id = 7,
-                    FirstName = "Vladimir",
-                    LastName = "Micinat",
-                    Email = "Micinat@gmail.com",
-                    BirthDate = new DateTime(1994, 07, 07),
-                    Phone = "+375447777777",
-                    GroupId = group1.Id,
-                    Type = BLL.Models.Enum.StudentType.Mix,
-                    StartDate = new DateTime(2022, 05, 05)
+                    CourseId = course4.Id,
+                    ReadyToStartDate = new DateTime(2021, 9, 2),
+                    StudentId = student7.Id,
+                    Comments = "Хочу учиться на C# (средний)",
+                    Status = RequestStatus.Open
                 },
-                new Student()
+                new StudentRequest
                 {
                     Id = 8,
-                    FirstName = "Anatoliy",
-                    LastName = "Frunze",
-                    Email = "Frunze@mail.ru",
-                    BirthDate = new DateTime(1973, 08, 08),
-                    Phone = "+375448888888",
-                    GroupId = group2.Id,
-                    Type = BLL.Models.Enum.StudentType.InClass,
-                    StartDate = new DateTime(2022, 05, 05)
-                },
-                new Student()
+                    CourseId = course4.Id,
+                    ReadyToStartDate = new DateTime(2021, 8, 22),
+                    StudentId = student7.Id,
+                    Comments = "Хочу учиться на С# (средний)",
+                    Status = RequestStatus.Open
+                }, new StudentRequest
                 {
                     Id = 9,
-                    FirstName = "Polina",
-                    LastName = "Vaneeva",
-                    Email = "VaneevaPolina@gmail.com",
-                    BirthDate = new DateTime(1992, 09, 09),
-                    Phone = "+375449999999",
-                    GroupId = group3.Id,
-                    Type = BLL.Models.Enum.StudentType.Mix,
-                    StartDate = new DateTime(2021, 03, 03)
-                },
-                new Student()
+                    CourseId = course5.Id,
+                    ReadyToStartDate = new DateTime(2021, 9, 3),
+                    StudentId = student8.Id,
+                    Comments = "Хочу учиться на Java (средний)",
+                    Status = RequestStatus.Open
+                }, new StudentRequest
                 {
                     Id = 10,
-                    FirstName = "Miron",
-                    LastName = "Yakimov",
-                    Email = "YakimovMiron@gmail.com",
-                    BirthDate = new DateTime(1999, 10, 10),
-                    Phone = "+375441010101",
-                    GroupId = group1.Id,
-                    Type = BLL.Models.Enum.StudentType.InClass,
-                    StartDate = new DateTime(2023, 02, 02)
-                },
-                new Student()
-                {
-                    Id = 11,
-                    FirstName = "Nikita",
-                    LastName = "Moroz",
-                    Email = "MorozNikita@gmail.com",
-                    BirthDate = new DateTime(1999, 11, 03),
-                    Phone = "+375440110111",
-                    GroupId = group2.Id,
-                    Type = BLL.Models.Enum.StudentType.InClass,
-                    StartDate = new DateTime(2022, 07, 08)
-                },
-                new Student()
-                {
-                    Id = 12,
-                    FirstName = "Vitalik",
-                    LastName = "Ponimash",
-                    Email = "PonimashVitalik@gmail.com",
-                    BirthDate = new DateTime(1996, 02, 01),
-                    Phone = "+375441212123",
-                    GroupId = group3.Id,
-                    Type = BLL.Models.Enum.StudentType.Online,
-                    StartDate = new DateTime(2022, 05, 06)
-                },
-                new Student()
-                {
-                    Id = 13,
-                    FirstName = "Irina",
-                    LastName = "Fistashka",
-                    Email = "FistashkaIrina@yandex.by",
-                    BirthDate = new DateTime(2000, 11, 10),
-                    Phone = "+375444444444",
-                    GroupId = group1.Id,
-                    Type = BLL.Models.Enum.StudentType.Online,
-                    StartDate = new DateTime(2021, 09, 09)
-                },
-                new Student()
-                {
-                    Id = 14,
-                    FirstName = "Alena",
-                    LastName = "Filimonova",
-                    Email = "Filimonova@gmail.com",
-                    BirthDate = new DateTime(2000, 11, 11),
-                    Phone = "+375441534545",
-                    GroupId = group2.Id,
-                    Type = BLL.Models.Enum.StudentType.Mix,
-                    StartDate = new DateTime(2021, 08, 08)
-                },
-                new Student()
-                {
-                    Id = 15,
-                    FirstName = "Sergey",
-                    LastName = "Efremov",
-                    Email = "EfremovSergey@mail.ru",
-                    BirthDate = new DateTime(1988, 10, 15),
-                    Phone = "+375441232323",
-                    GroupId = group3.Id,
-                    Type = BLL.Models.Enum.StudentType.Online,
-                    StartDate = new DateTime(2021, 09, 09)
+                    CourseId = course5.Id,
+                    ReadyToStartDate = new DateTime(2021, 7, 11),
+                    StudentId = student9.Id,
+                    Comments = "Хочу учиться на Java (средний)",
+                    Status = RequestStatus.Open
                 }
             );
         }

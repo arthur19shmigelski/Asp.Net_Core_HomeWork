@@ -55,14 +55,13 @@ namespace School.DAL.EF.Repositories
         {
             var originalStudent = await _context.Students.FindAsync(item.Id);
 
-            originalStudent.BirthDate = item.BirthDate;
+            originalStudent.Age = item.Age;
             originalStudent.Email = item.Email;
             originalStudent.FirstName = item.FirstName;
             originalStudent.LastName = item.LastName;
             originalStudent.Group = item.Group;
             originalStudent.GroupId = item.GroupId;
             originalStudent.Phone = item.Phone;
-            originalStudent.StartDate = item.StartDate;
             originalStudent.Type = item.Type;
 
             await _context.SaveChangesAsync();

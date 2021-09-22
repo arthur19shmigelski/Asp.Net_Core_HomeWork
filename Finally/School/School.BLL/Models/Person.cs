@@ -14,9 +14,9 @@ namespace School.BLL.Models
         public string LastName { get; set; }
 
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime? BirthDate { get; set; }
+        [Required(ErrorMessage = "Поле <Age> не может быть пустым")]
+        [Range(16, 90, ErrorMessage = "Возраст должен быть от 16 до 90 лет!")]
+        public int? Age { get; set; }
 
         [StringLength(maximumLength: 100, MinimumLength = 3)]
         public string Email { get; set; }

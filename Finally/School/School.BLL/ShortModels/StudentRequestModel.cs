@@ -12,5 +12,7 @@ namespace School.BLL.ShortModels
         public int CourseId { get; set; }
         public string CourseTitle { get; set; }
         public string Comments { get; set; }
+        public DateTime ReadyToStartDate { get; set; }
+
     }
 }

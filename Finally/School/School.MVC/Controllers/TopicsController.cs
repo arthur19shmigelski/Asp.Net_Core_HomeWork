@@ -3,10 +3,12 @@ using ElmahCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using School.BLL.Models;
+using School.BLL.Services.Course;
 using School.BLL.Services.Topic;
 using School.BLL.ShortModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
@@ -14,16 +16,17 @@ namespace School.MVC.Controllers
     public class TopicsController : Controller
     {
         private readonly ITopicService _topicService;
+        private readonly ICourseService _courseService;
 
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         public TopicsController(IMapper mapper,
                                 ITopicService topicService,
-                                ILogger<TopicsController> logger)
+                                ILogger<TopicsController> logger, ICourseService courseService)
         {
             _mapper = mapper;
             _logger = logger;
-
+            _courseService = courseService;
             _topicService = topicService;
         }
 
@@ -90,13 +93,33 @@ namespace School.MVC.Controllers
         {
             try
             {
-                var topic = await _topicService.GetById(id);
-                if(topic.Courses.Count>0)
-                {
+                var topic = _mapper.Map<Topic>(await _topicService.GetById(id));
+                    await _topicService.Delete(id);
+                    return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
+        }
 
-                }    
-                await _topicService.Delete(id);
-                return RedirectToAction(nameof(Index));
+        [HttpGet]
+        public async Task<IActionResult> ConfirmDelete(int id)
+        {
+            try
+            {
+                var topic = _mapper.Map<Topic>(await _topicService.GetById(id));
+
+                var value = await _courseService.GetAll();
+                var newValue = value.Where(x => x.Id == id).Select(x => x);
+
+                if (newValue.Count() > 0)
+                {
+                    return View("ConfrimDelete", topic);
+                }
+                else
+                    return RedirectToAction(nameof(Delete));
             }
             catch (Exception e)
             {

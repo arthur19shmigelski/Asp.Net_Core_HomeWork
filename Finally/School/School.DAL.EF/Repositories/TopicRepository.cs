@@ -25,11 +25,6 @@ namespace School.DAL.EF.Repositories
 
         public async Task Delete(int id)
         {
-            ////Проверить, закреплена ли группа за этим топиком
-            //var studentGroup = await _context.StudentGroups.FindAsync(id);
-            //if(studentGroup != null)
-            //    _context.StudentGroups.Remove(studentGroup);
-
             var topic = await _context.Topics.FindAsync(id);
             _context.Topics.Remove(topic);
             await _context.SaveChangesAsync();

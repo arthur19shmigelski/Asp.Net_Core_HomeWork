@@ -8,7 +8,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
-            <th> Тема курса </th>
+            <th> Тема </th>
             <th> Описание </th>
             @if (ViewContext.HttpContext.User.IsInRole("admin"))
             {
@@ -45,14 +45,14 @@
     </tbody>
     <tr>
         <th>
-            <div class="text-info">Итого курсов: @Model.Count() </div>
+            <div class="text-info">Итого тем: @Model.Count() </div>
         </th>
     </tr>
 </table>
 @if (ViewContext.HttpContext.User.IsInRole("admin"))
 {
     <p>
-        <a asp-action="Edit" class="btn btn-success">Добавить новый курс</a>
+        <a asp-action="Edit" class="btn btn-success">Добавить новую тему</a>
     </p>
 
 }

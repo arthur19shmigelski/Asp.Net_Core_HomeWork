@@ -10,8 +10,8 @@ using School.DAL.EF.Contexts;
 namespace School.DAL.EF.Migrations
 {
     [DbContext(typeof(AcademyContext))]
-    [Migration("20210921163333_Update_seed_data_1")]
-    partial class Update_seed_data_1
+    [Migration("20210922120215_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -870,7 +870,7 @@ namespace School.DAL.EF.Migrations
             modelBuilder.Entity("School.BLL.Models.Course", b =>
                 {
                     b.HasOne("School.BLL.Models.Topic", "Topic")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -890,7 +890,7 @@ namespace School.DAL.EF.Migrations
             modelBuilder.Entity("School.BLL.Models.StudentGroup", b =>
                 {
                     b.HasOne("School.BLL.Models.Course", "Course")
-                        .WithMany()
+                        .WithMany("Groups")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -932,9 +932,19 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("School.BLL.Models.Course", b =>
+                {
+                    b.Navigation("Groups");
+                });
+
             modelBuilder.Entity("School.BLL.Models.StudentGroup", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("School.BLL.Models.Topic", b =>
+                {
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

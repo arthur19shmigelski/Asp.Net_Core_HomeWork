@@ -25,7 +25,6 @@ namespace School.BLL.Services.Course
 
         public async Task Create(Models.Course course)
         {
-            course.Topic = null;
             await _repository.Create(course);
         }
 

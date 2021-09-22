@@ -868,7 +868,7 @@ namespace School.DAL.EF.Migrations
             modelBuilder.Entity("School.BLL.Models.Course", b =>
                 {
                     b.HasOne("School.BLL.Models.Topic", "Topic")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -888,7 +888,7 @@ namespace School.DAL.EF.Migrations
             modelBuilder.Entity("School.BLL.Models.StudentGroup", b =>
                 {
                     b.HasOne("School.BLL.Models.Course", "Course")
-                        .WithMany()
+                        .WithMany("Groups")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -930,9 +930,19 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("School.BLL.Models.Course", b =>
+                {
+                    b.Navigation("Groups");
+                });
+
             modelBuilder.Entity("School.BLL.Models.StudentGroup", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("School.BLL.Models.Topic", b =>
+                {
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

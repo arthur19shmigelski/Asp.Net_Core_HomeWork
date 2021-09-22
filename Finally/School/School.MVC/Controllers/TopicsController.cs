@@ -73,10 +73,25 @@ namespace School.MVC.Controllers
                     else
                         await topicService.Update(topic);
 
-                    return RedirectToAction("Index", "Topics");
+                    return RedirectToAction(nameof(Index));
                 }
 
                 return View(topicModel);
+            }
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await topicService.Delete(id);
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception e)
             {

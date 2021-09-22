@@ -452,7 +452,7 @@ namespace School.DAL.EF.Contexts
                     Id = 8,
                     CourseId = course4.Id,
                     ReadyToStartDate = new DateTime(2021, 8, 22),
-                    StudentId = student7.Id,
+                    StudentId = student8.Id,
                     Comments = "Хочу учиться на С# (средний)",
                     Status = RequestStatus.Open
                 }, new StudentRequest
@@ -460,7 +460,7 @@ namespace School.DAL.EF.Contexts
                     Id = 9,
                     CourseId = course5.Id,
                     ReadyToStartDate = new DateTime(2021, 9, 3),
-                    StudentId = student8.Id,
+                    StudentId = student9.Id,
                     Comments = "Хочу учиться на Java (средний)",
                     Status = RequestStatus.Open
                 }, new StudentRequest
@@ -468,7 +468,7 @@ namespace School.DAL.EF.Contexts
                     Id = 10,
                     CourseId = course5.Id,
                     ReadyToStartDate = new DateTime(2021, 7, 11),
-                    StudentId = student9.Id,
+                    StudentId = student10.Id,
                     Comments = "Хочу учиться на Java (средний)",
                     Status = RequestStatus.Open
                 }

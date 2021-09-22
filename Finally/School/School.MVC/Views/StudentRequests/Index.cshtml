@@ -15,27 +15,39 @@
                     @Html.DisplayNameFor(model => model.Id)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Created)
+                    Создан от
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CourseId)
+                    Запрос на курс
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.StudentId)
+                    Имя студента
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Comments)
+                    Комментарий
                 </th>
-                <th></th>
+                <th>Действие</th>
             </tr>
 
             @foreach (var request in Model.OrderBy(r => r.CourseTitle).ThenBy(r => r.StudentName))
             {
                 <tr>
+                    <td>@request.Id</td>
                     <td><a asp-controller="StudentRequests" asp-action="Edit" asp-route-id="@request.Id">@request.Created.ToShortDateString()</a></td>
                     <td><a asp-controller="Courses" asp-action="Edit" asp-route-id="@request.CourseId">@request.CourseTitle</a></td>
                     <td><a asp-controller="Students" asp-action="Edit" asp-route-id="@request.StudentId">@request.StudentName</a></td>
                     <td>@request.Comments</td>
+                    <td>
+                        <button type="submit" class="btn btn-outline-warning">
+                            Принять (пока не работает)
+                        </button>
+                        <a asp-action="Edit" asp-route-id="@request.Id" class="btn btn-outline-info">
+                            Изменить
+                        </a>
+                        <button type="submit" class="btn btn-outline-danger">
+                            @Html.ActionLink("Отклонить", "Delete", new { id = request.Id })
+                        </button>
+                    </td>
                 </tr>
             }
 

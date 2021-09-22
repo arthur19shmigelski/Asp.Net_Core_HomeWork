@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         <label asp-for="Age">Полных лет</label>
-        <input class="form-control" type="date" asp-for="Age" />
+        <input class="form-control" type="number" asp-for="Age" />
         @Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">

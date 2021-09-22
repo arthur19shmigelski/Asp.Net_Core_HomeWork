@@ -21,6 +21,6 @@ namespace School.BLL.Models
         public DateTime? StartDate { get; set; }
 
         public GroupStatus Status { get; set; }
-        public IEnumerable<Student> Students { get; set; }
+        public List<Student> Students { get; set; } = new List<Student>();
     }
 }

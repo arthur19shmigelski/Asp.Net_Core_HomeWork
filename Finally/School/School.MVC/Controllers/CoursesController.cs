@@ -82,8 +82,6 @@ namespace AcademyCRM.MVC.Controllers
                 ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(await _topicService.GetAll());
                 return View(model);
             }
-
-
             catch (Exception e)
             {
                 ElmahExtensions.RiseError(new Exception(e.Message));
@@ -105,8 +103,6 @@ namespace AcademyCRM.MVC.Controllers
                     await _courseService.Create(course);
                 return RedirectToAction("Index");
             }
-
-
             catch (Exception e)
             {
                 ElmahExtensions.RiseError(new Exception(e.Message));
@@ -114,7 +110,20 @@ namespace AcademyCRM.MVC.Controllers
             }
         }
 
-
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _courseService.Delete(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

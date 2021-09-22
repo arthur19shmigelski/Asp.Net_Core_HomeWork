@@ -7,10 +7,10 @@ namespace School.BLL.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Field <FirstName> can't be empty")]
+        [Required(ErrorMessage = "Поле <FirstName> не может быть пустым")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Field <LastName> can't be empty")]
+        [Required(ErrorMessage = "Поле <LastName> не может быть пустым")]
         public string LastName { get; set; }
 
 

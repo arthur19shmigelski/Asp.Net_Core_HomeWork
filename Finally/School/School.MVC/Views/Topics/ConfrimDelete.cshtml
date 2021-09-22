@@ -1,28 +1,33 @@
 ﻿@model Topic
 <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
-<h1 class="text text-center alert-info"><u> Данная тема обучения <i> @Model.Title</i> содержит следующие курсы:</u></h1>
-    @foreach (var item in Model.Courses)
-    {
-    <div id="accordion">
-        <div class="card">
-            <div class="card-header" id="headingOne">
-                <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        @item.Title
-                    </button>
-                </h5>
-            </div>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <p class="lead">Данная тема обучения <i> @Model.Title</i> содержит следующие курсы:</p>
+        @foreach (var item in Model.Courses)
+        {
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                @item.Title
+                            </button>
+                        </h5>
+                    </div>
 
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="card-body">
-                    @item.Description
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            @item.Description
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    }
+        }
 
+    </div>
+</div>
+    
 <h1 class="text text-center alert-info"><u>В случае нажатия, всё удалится!</u></h1>
 <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
     Удалить

@@ -8,15 +8,13 @@
 <h1 class="text text-center alert-info"> <i>Список наших студентов</i></h1>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<table class="table table-bordered table-striped">
+<table id="sortingTable" class="table table-bordered table-striped table-sm">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
             <th>Полное имя</th>
             <th>Группа</th>
-            <th>Дата рождения</th>
+            <th>Возраст</th>
             <th>Email</th>
             <th></th>
         </tr>

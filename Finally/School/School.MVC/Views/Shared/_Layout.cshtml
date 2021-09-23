@@ -7,6 +7,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.2/b-2.0.0/fc-3.3.3/sc-2.0.5/sb-1.2.1/sp-1.4.0/sl-1.3.3/datatables.min.css" />
+
+
+
     <title>School Managment</title>
 
     <!-- Custom fonts for this template-->
@@ -41,90 +45,90 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Для студентов и учителей
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                   aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Информация про:</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-controller="Teachers" asp-action="Index">Учителей</a>
+                        <a class="collapse-item" asp-controller="Courses" asp-action="Index">Курсы</a>
+                        <a class="collapse-item" asp-controller="Topics" asp-action="Index">Темы для обучения</a>
+                        <a class="collapse-item" asp-controller="StudentRequests" asp-action="Index">Запросы</a>
+                    </div>
+                </div>
+            </li>
+            <div class="sidebar-heading">
+                Для учителей
+            </div>
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                   aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Информация про:</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                     data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-controller="Students" asp-action="Index">Студентов</a>
+                        <a class="collapse-item" asp-controller="StudentGroups" asp-action="Index">Группы</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            @if (ViewContext.HttpContext.User.IsInRole("admin"))
+            {
                 <!-- Heading -->
                 <div class="sidebar-heading">
-                    Для студентов и учителей
+                    Для администратора
                 </div>
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                       aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                       aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-fw fa-folder"></i>
                         <span>Информация про:</span>
                     </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" asp-controller="Teachers" asp-action="Index">Учителей</a>
-                            <a class="collapse-item" asp-controller="Courses" asp-action="Index">Курсы</a>
-                            <a class="collapse-item" asp-controller="Topics" asp-action="Index">Темы для обучения</a>
-                            <a class="collapse-item" asp-controller="StudentRequests" asp-action="Index">Запросы</a>
+                            <a class="collapse-item" asp-controller="Roles" asp-action="RolesList" asp-route-bool="@true">Роли</a>
+                            <a class="collapse-item" asp-controller="Roles" asp-action="UserList" asp-route-bool="@true">Пользователей</a>
+                            <div class="collapse-divider"></div>
+
                         </div>
                     </div>
                 </li>
-                <div class="sidebar-heading">
-                    Для учителей
-                </div>
-                <!-- Nav Item - Utilities Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                       aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-wrench"></i>
-                        <span>Информация про:</span>
-                    </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" asp-controller="Students" asp-action="Index">Студентов</a>
-                            <a class="collapse-item" asp-controller="StudentGroups" asp-action="Index">Группы</a>
-                        </div>
-                    </div>
-                </li>
+            }
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts</span>
+                </a>
+            </li>
 
-                <!-- Divider -->
-                <hr class="sidebar-divider">
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tables</span>
+                </a>
+            </li>
 
-                @if (ViewContext.HttpContext.User.IsInRole("admin"))
-                {
-                    <!-- Heading -->
-                    <div class="sidebar-heading">
-                        Для администратора
-                    </div>
 
-                    <!-- Nav Item - Pages Collapse Menu -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                           aria-expanded="true" aria-controls="collapsePages">
-                            <i class="fas fa-fw fa-folder"></i>
-                            <span>Информация про:</span>
-                        </a>
-                        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" asp-controller="Roles" asp-action="RolesList" asp-route-bool="@true">Роли</a>
-                                <a class="collapse-item" asp-controller="Roles" asp-action="UserList" asp-route-bool="@true">Пользователей</a>
-                                <div class="collapse-divider"></div>
-
-                            </div>
-                        </div>
-                    </li>
-                }
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Charts</span>
-                    </a>
-                </li>
-
-                <!-- Nav Item - Tables -->
-                <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
-                        <i class="fas fa-fw fa-table"></i>
-                        <span>Tables</span>
-                    </a>
-                </li>
-
-            
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -244,6 +248,8 @@
     <script src=" ~/Content/AdminTemplate/js/demo/chart-area-demo.js"></script>
     <script src=" ~/Content/AdminTemplate/js/demo/chart-pie-demo.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.11.2/b-2.0.0/fc-3.3.3/sc-2.0.5/sb-1.2.1/sp-1.4.0/sl-1.3.3/datatables.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

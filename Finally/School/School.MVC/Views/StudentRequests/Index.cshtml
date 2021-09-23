@@ -1,64 +1,55 @@
 ﻿@model IEnumerable<StudentRequestModel>
 @{
     ViewData["Title"] = "Student Requests";
-
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 <h1 class="text text-center alert-info"> <i>Список запросов</i></h1>
 
-<div id="container">
+<table id="sortingTable" class="table table-bordered table-striped ">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th> Создан </th>
+            <th> Запрос на курс </th>
+            <th> Имя студента </th>
+            <th> Комментарий </th>
+            <th> Действие</th>
+        </tr>
+    </thead>
 
-    <div class="row mt-2">
-        <table class="table table-bordered table-striped">
-
+    <tbody>
+        @foreach (var request in Model.OrderBy(r => r.CourseTitle).ThenBy(r => r.StudentName))
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    Создан от
-                </th>
-                <th>
-                    Запрос на курс
-                </th>
-                <th>
-                    Имя студента
-                </th>
-                <th>
-                    Комментарий
-                </th>
-                <th>Действие</th>
+                <td>@request.Id</td>
+                <td><a asp-controller="StudentRequests" asp-action="Edit" asp-route-id="@request.Id">@request.Created.ToShortDateString()</a></td>
+                <td><a asp-controller="Courses" asp-action="Edit" asp-route-id="@request.CourseId">@request.CourseTitle</a></td>
+                <td><a asp-controller="Students" asp-action="Edit" asp-route-id="@request.StudentId">@request.StudentName</a></td>
+                <td>@request.Comments</td>
+                <td>
+                    <button type="submit" class="btn btn-outline-warning">
+                        Принять (пока не работает)
+                    </button>
+                    <a asp-action="Edit" asp-route-id="@request.Id" class="btn btn-outline-info">
+                        Изменить
+                    </a>
+                    <button type="submit" class="btn btn-outline-danger">
+                        @Html.ActionLink("Отклонить", "Delete", new { id = request.Id })
+                    </button>
+                </td>
             </tr>
-
-            @foreach (var request in Model.OrderBy(r => r.CourseTitle).ThenBy(r => r.StudentName))
-            {
-                <tr>
-                    <td>@request.Id</td>
-                    <td><a asp-controller="StudentRequests" asp-action="Edit" asp-route-id="@request.Id">@request.Created.ToShortDateString()</a></td>
-                    <td><a asp-controller="Courses" asp-action="Edit" asp-route-id="@request.CourseId">@request.CourseTitle</a></td>
-                    <td><a asp-controller="Students" asp-action="Edit" asp-route-id="@request.StudentId">@request.StudentName</a></td>
-                    <td>@request.Comments</td>
-                    <td>
-                        <button type="submit" class="btn btn-outline-warning">
-                            Принять (пока не работает)
-                        </button>
-                        <a asp-action="Edit" asp-route-id="@request.Id" class="btn btn-outline-info">
-                            Изменить
-                        </a>
-                        <button type="submit" class="btn btn-outline-danger">
-                            @Html.ActionLink("Отклонить", "Delete", new { id = request.Id })
-                        </button>
-                    </td>
-                </tr>
-            }
-
-            <tr>
-                <th>
-                    <div class="text-info">Итого запросов: @Model.Count()</div>
-                </th>
-            </tr>
-        </table>
-        <p>
-            <a asp-action="Edit" class="btn btn-success">Добавить новый запрос</a>
-        </p>
-    </div>
-</div>
+        }
+    </tbody>
+    <tr>
+        <th>
+            <div class="text-info">Итого запросов: @Model.Count()</div>
+        </th>
+    </tr>
+</table>
+<p>
+    <a asp-action="Edit" class="btn btn-success">Добавить новый запрос</a>
+</p>

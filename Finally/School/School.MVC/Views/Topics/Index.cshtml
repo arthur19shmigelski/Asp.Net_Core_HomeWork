@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "Topic";
 }
-<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+<h1 class="text text-center alert-info"> <i>Список наших тем для обучения</i></h1>
 
-<table class="table table-bordered table-striped">
+<table id="sortingTable" class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>
@@ -56,8 +56,8 @@
     <p>
         <a asp-action="Edit" class="btn btn-success">Добавить новую тему</a>
     </p>
-
 }
+
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial.cshtml")
 }

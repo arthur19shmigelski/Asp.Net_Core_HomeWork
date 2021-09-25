@@ -8,7 +8,19 @@
 <h1 class="text text-center alert-info"> <i>Список наших студентов</i></h1>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<table id="sortingTable" class="table table-bordered table-striped table-sm">
+<div class="input-group">
+    <div class="form-outline">
+        <input type="search" id="form1" class="form-control" />
+        <label class="form-label" for="form1">Search</label>
+    </div>
+    <div>
+        <button type="button" class="btn btn-primary btn-sm">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+</div>
+
+<table  class="table table-bordered table-striped table-sm">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Id)</th>

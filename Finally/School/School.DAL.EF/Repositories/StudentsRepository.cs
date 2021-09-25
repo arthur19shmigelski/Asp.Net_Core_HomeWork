@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.BLL.Models;
+using School.BLL.Repository;
 using School.DAL.EF.Contexts;
-using School.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
-    public class StudentsRepository : IRepository<Student>
+    public class StudentsRepository : IStudentRepository
     {
         private readonly AcademyContext _context;
 
@@ -49,6 +49,47 @@ namespace School.DAL.EF.Repositories
         public async Task<Student> GetById(int id)
         {
             return await _context.Students.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Student>> Search(string searchStringFirstName, 
+            string searchStringLastName, 
+            int skip = 0, 
+            int? take = null, 
+            bool? orderAsc = null)
+        {
+            IQueryable<Student> result = ApplyOrder(orderAsc);
+                
+            result = ApplyWhere(result, searchStringFirstName, searchStringLastName);
+
+            result = result.Skip(skip);
+
+            if (take.HasValue)
+                result = result.Take(take.Value);
+
+            return await result.ToListAsync();
+        }
+
+        private IQueryable<Student> ApplyOrder(bool? orderAsc)
+        {
+            var result = _context.Students.AsQueryable();
+
+            if (!orderAsc.HasValue)
+                return result;
+
+            return orderAsc.Value ? result.OrderBy(f => f.FirstName) : result.OrderByDescending(f => f.FirstName);
+        }
+
+        private IQueryable<Student> ApplyWhere(IQueryable<Student> students, string searchStringFirstName, string searchStringLastName)
+        {
+            IQueryable<Student> result = students.Include(g=>g.Group).ThenInclude(c=>c.Course);
+
+            if (!string.IsNullOrWhiteSpace(searchStringFirstName))
+                result = result.Where(s => s.FirstName.Contains(searchStringFirstName, System.StringComparison.OrdinalIgnoreCase));
+
+            if (!string.IsNullOrWhiteSpace(searchStringLastName))
+                result = result.Where(s => s.LastName.Contains(searchStringLastName, System.StringComparison.OrdinalIgnoreCase));
+
+            return result;
         }
 
         public async Task Update(Student item)

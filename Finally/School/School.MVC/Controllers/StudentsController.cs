@@ -28,11 +28,12 @@ namespace School.MVC.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchStringLastName, int skip = 1)
         {
             try
             {
-                var students = await _studentsService.GetAll();
+                var students = await _studentsService.GetPage(null, searchStringLastName, true, skip);
+
                 return View(_mapper.Map<IEnumerable<StudentModel>>(students));
             }
 

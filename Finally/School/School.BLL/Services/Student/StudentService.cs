@@ -1,14 +1,16 @@
-﻿using School.DAL.Interfaces;
+﻿using School.BLL.Repository;
+using School.DAL.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.BLL.Services.Student
 {
     public class StudentService : IStudentService
     {
-        private readonly IRepository<Models.Student> _repository;
+        private readonly IStudentRepository _repository;
 
-        public StudentService(IRepository<Models.Student> repository)
+        public StudentService(IStudentRepository repository)
         {
             _repository = repository;
         }
@@ -36,6 +38,15 @@ namespace School.BLL.Services.Student
         public async Task Delete(int id)
         {
             await _repository.Delete(id);
+        }
+
+        public async Task<IEnumerable<Models.Student>> GetPage(string searchStringInFirstName,
+            string searchStringInLastName,
+            bool? orderAsc, 
+            int pageNumber = 1, 
+            int pageSize = 20)
+        {
+            return await _repository.Search(searchStringInFirstName, searchStringInLastName, (pageNumber - 1) * pageSize, pageSize, orderAsc);
         }
     }
 }

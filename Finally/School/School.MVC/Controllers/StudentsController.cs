@@ -3,6 +3,7 @@ using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Models;
+using School.BLL.Models.Enum;
 using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;
 using School.BLL.ShortModels;
@@ -28,11 +29,15 @@ namespace School.MVC.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index(string searchStringLastName, int skip = 1)
+        public async Task<IActionResult> Index(string sortRecords, string searchString, int skip, int take, EnumPageActions action, EnumSearchParametersStudent searchParameter)
         {
             try
             {
-                var students = await _studentsService.GetPage(null, searchStringLastName, true, skip);
+                ViewData["searchString"] = searchString;
+                ViewData["searchParameter"] = searchParameter;
+
+
+                var students = await _studentsService.DisplayingIndex(action, searchString, (EnumSearchParameters)(int)searchParameter, take, skip);
 
                 return View(_mapper.Map<IEnumerable<StudentModel>>(students));
             }

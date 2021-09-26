@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.BLL.Models;
+using School.BLL.Models.Enum;
 using School.BLL.Repository;
 using School.DAL.EF.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
@@ -12,6 +14,8 @@ namespace School.DAL.EF.Repositories
     public class StudentsRepository : IStudentRepository
     {
         private readonly AcademyContext _context;
+        private readonly int skipById = 20;
+        private readonly int takeByCount = 10;
 
         public StudentsRepository(AcademyContext context)
         {
@@ -106,6 +110,31 @@ namespace School.DAL.EF.Repositories
             originalStudent.Type = item.Type;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Student>> SearchAllAsync(string searchString, EnumSearchParameters searchParametr, EnumPageActions action, int take, int skip = 0)
+        {
+            if (string.IsNullOrEmpty(searchString) || searchParametr == EnumSearchParameters.none)
+                return null;
+            if (action == EnumPageActions.add)
+                return await _context.Students.AsQueryable().Include(s => s.Group).ThenInclude(g => g.Course)
+                .Where($"{searchParametr.ToString().Replace('_', '.')}.Contains(@0)", searchString).Skip(skip).Take(take + takeByCount).ToListAsync();
+
+            return await _context.Students.AsQueryable().Include(s => s.Group).ThenInclude(g => g.Course)
+             .Where($"{searchParametr.ToString().Replace('_', '.')}.Contains(@0)", searchString).Skip(skip).Take(take).ToListAsync();
+        }
+        public async Task<IEnumerable<Student>> GetAllTakeSkipAsync(int take, EnumPageActions action, int skip = 0)
+        {
+            if (action == EnumPageActions.next)
+                return await _context.Students.AsQueryable().Include(s => s.Group).ThenInclude(g => g.Course).Skip(skip).Take(take).ToListAsync();
+
+            if (action == EnumPageActions.back)
+            {
+                skip = (skip < skipById) ? 20 : skip;
+                return await _context.Students.AsQueryable().Include(s => s.Group).ThenInclude(g => g.Course).Skip(skip - skipById).Take(take).ToListAsync();
+            }
+
+            return await _context.Students.AsQueryable().Include(s => s.Group).ThenInclude(g => g.Course).Skip(skip).Take(take).ToListAsync();
         }
     }
 }

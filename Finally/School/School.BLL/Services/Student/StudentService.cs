@@ -1,5 +1,7 @@
-﻿using School.BLL.Repository;
+﻿using School.BLL.Models.Enum;
+using School.BLL.Repository;
 using School.DAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,13 +42,24 @@ namespace School.BLL.Services.Student
             await _repository.Delete(id);
         }
 
-        public async Task<IEnumerable<Models.Student>> GetPage(string searchStringInFirstName,
-            string searchStringInLastName,
-            bool? orderAsc, 
-            int pageNumber = 1, 
-            int pageSize = 20)
+        public async Task<IEnumerable<Models.Student>> DisplayingIndex(EnumPageActions action, string searchString, EnumSearchParameters searchParametr, int take, int skip = 0)
         {
-            return await _repository.Search(searchStringInFirstName, searchStringInLastName, (pageNumber - 1) * pageSize, pageSize, orderAsc);
+            take = (take == 0) ? 10 : take;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                return await SearchAllAsync(searchString, searchParametr, action, take, skip);
+            }
+            return await GetAllTakeSkipAsync(take, action, skip);
+        }
+
+        public async Task<IEnumerable<Models.Student>> GetAllTakeSkipAsync(int take, EnumPageActions action, int skip = 0)
+        {
+            return await _repository.GetAllTakeSkipAsync(take, action, skip);
+        }
+
+        public async Task<IEnumerable<Models.Student>> SearchAllAsync(string searchString, EnumSearchParameters searchParametr, EnumPageActions action, int take, int skip = 0)
+        {
+            return await _repository.SearchAllAsync(searchString, searchParametr, action, take, skip);
         }
     }
 }

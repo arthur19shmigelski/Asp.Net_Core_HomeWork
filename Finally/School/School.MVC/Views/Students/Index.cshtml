@@ -1,72 +1,84 @@
 ﻿@model IEnumerable<StudentModel>
-
+@using School.BLL.Models.Enum
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 }
 
 <h1 class="text text-center alert-info"> <i>Список наших студентов</i></h1>
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<div class="input-group">
-    <div class="form-outline">
-        <input type="search" id="form1" class="form-control" />
-        <label class="form-label" for="form1">Search</label>
-    </div>
-    <div>
-        <button type="button" class="btn btn-primary btn-sm">
-            <i class="fas fa-search"></i>
-        </button>
-    </div>
-</div>
+<body>
 
-<table  class="table table-bordered table-striped table-sm">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Id)</th>
-            <th>Полное имя</th>
-            <th>Группа</th>
-            <th>Возраст</th>
-            <th>Email</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    @{
+        int skip = 0;
+        if (Model.Count() > 0)
+            skip = Model.Max(s => s.Id);
+        int take = Model.Count();
+    }
+    <form method="post" asp-controller="Students">
+        <p>
+            <select name="searchParameter"
+                    class="form-control"
+                    asp-items="Html.GetEnumSelectList<EnumSearchParametersStudent>()">
+            </select>
+            <p>
+            <input type="text" name="searchString" size="40" value="@ViewData["searchString"]" />
+            <input type="hidden" name="serachParameter" value="@ViewData["searchParameter"]" />
+            <input type="hidden" name="take" value="10" />
+            <input class="btn btn-outline-dark btn-sm"
+                   type="submit" value="Поиск" />
+        </p>
+    </form>
+   
+    <table class="table table-bordered table-striped table-sm">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Group.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Age)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">
-                        Изменить
-                    </a>
-                    <button type="submit" class="btn btn-outline-warning">
-                        @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
-                    </button>
-                </td>
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>Полное имя</th>
+                <th>Группа</th>
+                <th>Возраст</th>
+                <th>Email</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-    <tr>
-        <th>
-            <div class="text-info">Итого студентов: @Model.Count()</div>
-        </th>
-    </tr>
-</table>
-<p>
-    <a asp-action="Edit" class="btn btn-success">Добавить нового студента</a>
-</p>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Group.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Age)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">
+                            Изменить
+                        </a>
+                        <button type="submit" class="btn btn-outline-warning">
+                            @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <th>
+                <div class="text-info">Итого студентов: @Model.Count()</div>
+            </th>
+        </tr>
+    </table>
+    <p>
+        <a asp-action="Edit" class="btn btn-success">Добавить нового студента</a>
+    </p>
+</body>

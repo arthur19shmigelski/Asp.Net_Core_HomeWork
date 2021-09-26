@@ -2,13 +2,15 @@
 @{
     ViewData["Title"] = "Topic";
 }
-<table class="table table-bordered table-striped">
+<h1 class="text text-center alert-info"> <i>Список наших тем для обучения</i></h1>
+
+<table id="sortingTable" class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
-            <th> Тема курса </th>
+            <th> Тема </th>
             <th> Описание </th>
             @if (ViewContext.HttpContext.User.IsInRole("admin"))
             {
@@ -36,7 +38,7 @@
                             Изменить
                         </a>
                         <button type="submit" class="btn btn-outline-warning">
-                            @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+                            @Html.ActionLink("Удалить", "ConfirmDelete", new { id = item.Id })
                         </button>
                     </td>
                 }
@@ -45,17 +47,17 @@
     </tbody>
     <tr>
         <th>
-            <div class="text-info">Итого курсов: @Model.Count() </div>
+            <div class="text-info">Итого тем: @Model.Count() </div>
         </th>
     </tr>
 </table>
 @if (ViewContext.HttpContext.User.IsInRole("admin"))
 {
     <p>
-        <a asp-action="Edit" class="btn btn-success">Добавить новый курс</a>
+        <a asp-action="Edit" class="btn btn-success">Добавить новую тему</a>
     </p>
-
 }
+
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial.cshtml")
 }

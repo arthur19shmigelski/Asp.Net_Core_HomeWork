@@ -20,7 +20,7 @@ namespace School.DAL.EF.Repositories
 
         public async Task Create(StudentRequest item)
         {
-            await _context.StudentRequests.AddAsync(item);
+            _context.StudentRequests.Add(item);
             await _context.SaveChangesAsync();
         }
 
@@ -57,11 +57,9 @@ namespace School.DAL.EF.Repositories
             var originalStudentRequest = await _context.StudentRequests.FindAsync(item.Id);
 
             originalStudentRequest.Comments = item.Comments;
-            originalStudentRequest.Course = item.Course;
             originalStudentRequest.CourseId = item.CourseId;
             originalStudentRequest.Created = item.Created;
             originalStudentRequest.Status = item.Status;
-            originalStudentRequest.Student = item.Student;
             originalStudentRequest.StudentId = item.StudentId;
             originalStudentRequest.Updated = item.Updated;
 

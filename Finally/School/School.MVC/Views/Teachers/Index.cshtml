@@ -1,24 +1,21 @@
 ﻿@model IEnumerable<TeacherModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Teacher";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
 <h1 class="text text-center alert-info"> <i>Список наших учителей</i></h1>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-
-
-<table class="table table-bordered table-striped">
+<table id="sortingTable" class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th> Полное имя </th>
-            <th> Дата рождения </th>
+            <th> Возраст </th>
             <th> Email</th>
             <th> Телефон </th>
             @if (ViewContext.HttpContext.User.IsInRole("admin"))
@@ -38,7 +35,7 @@
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BirthDate)
+                @Html.DisplayFor(modelItem => item.Age)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)

@@ -68,14 +68,12 @@ namespace School.MVC.Controllers
                 {
                     model = new StudentGroupModel
                     {
-                        CourseId = courseId,
-                        Students = _mapper.Map<IEnumerable<StudentModel>>(
-                            _requestService.GetStudentsByCourse(courseId.Value))
+                        StartDate = DateTime.Today
                     };
                 }
 
-                ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherModel>>(_teacherService.GetAll());
-                ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(_courseService.GetAll());
+                ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherModel>>(await _teacherService.GetAll());
+                ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(await _courseService.GetAll());
                 ViewBag.IsAdmin = HttpContext.User.IsInRole("admin");
 
                 return View(model);

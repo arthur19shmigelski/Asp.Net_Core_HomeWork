@@ -25,8 +25,8 @@ namespace School.DAL.EF.Repositories
 
         public async Task Delete(int id)
         {
-            var item = await _context.StudentGroups.FindAsync(id);
-            _context.StudentGroups.Remove(item);
+            var topic = await _context.Topics.FindAsync(id);
+            _context.Topics.Remove(topic);
             await _context.SaveChangesAsync();
         }
 
@@ -41,7 +41,6 @@ namespace School.DAL.EF.Repositories
         public async Task<IEnumerable<Topic>> GetAll()
         {
             return await _context.Topics.ToListAsync();
-
         }
 
         public async Task<Topic> GetById(int id)

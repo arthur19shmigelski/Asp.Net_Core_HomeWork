@@ -64,7 +64,7 @@ namespace School.DAL.EF.Repositories
             var originalTeacher = await _context.Teachers.FindAsync(item.Id);
 
             originalTeacher.Bio = item.Bio;
-            originalTeacher.BirthDate = item.BirthDate;
+            originalTeacher.Age = item.Age;
             originalTeacher.Email = item.Email;
             originalTeacher.FirstName = item.FirstName;
             originalTeacher.LastName = item.LastName;

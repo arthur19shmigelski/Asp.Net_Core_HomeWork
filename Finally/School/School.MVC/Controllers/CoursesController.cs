@@ -56,7 +56,8 @@ namespace AcademyCRM.MVC.Controllers
 
                 foreach (var model in models)
                 {
-                    model.RequestsCount = await _requestService.GetOpenRequestsCountByCourse(model.Id);
+                    var value = await _requestService.GetOpenRequestsCountByCourse(model.Id);
+                    model.RequestsCount = value;
                 }
 
                 return View(models);
@@ -66,7 +67,6 @@ namespace AcademyCRM.MVC.Controllers
                 ElmahExtensions.RiseError(new Exception(e.Message));
                 return RedirectToAction(nameof(Error));
             }
-
         }
 
         [HttpGet]
@@ -82,8 +82,6 @@ namespace AcademyCRM.MVC.Controllers
                 ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(await _topicService.GetAll());
                 return View(model);
             }
-
-
             catch (Exception e)
             {
                 ElmahExtensions.RiseError(new Exception(e.Message));
@@ -98,15 +96,19 @@ namespace AcademyCRM.MVC.Controllers
             {
                 if (!ModelState.IsValid) return View(courseModel);
 
+                //Плохо мапируется... Почему?
                 var course = _mapper.Map<Course>(courseModel);
+
+                var topicForCourse = await _topicService.GetById(courseModel.TopicId);
+
+                course.Topic = topicForCourse;
+
                 if (courseModel.Id > 0)
                     await _courseService.Update(course);
                 else
                     await _courseService.Create(course);
                 return RedirectToAction("Index");
             }
-
-
             catch (Exception e)
             {
                 ElmahExtensions.RiseError(new Exception(e.Message));
@@ -114,7 +116,22 @@ namespace AcademyCRM.MVC.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
 
+                await _courseService.Delete(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
+        }
+       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

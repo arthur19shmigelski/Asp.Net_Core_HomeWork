@@ -13,7 +13,7 @@ namespace School.BLL.Services.Base
             _repository = repository;
         }
 
-        public  async Task<IEnumerable<TEntity>> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAll()
         {
             return await _repository.GetAll();
         }
@@ -35,7 +35,7 @@ namespace School.BLL.Services.Base
 
         public async Task Delete(int id)
         {
-           await _repository.Delete(id);
+            await _repository.Delete(id);
         }
     }
 }

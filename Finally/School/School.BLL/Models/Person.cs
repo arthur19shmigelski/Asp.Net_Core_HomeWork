@@ -7,16 +7,16 @@ namespace School.BLL.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Field <FirstName> can't be empty")]
+        [Required(ErrorMessage = "Поле <FirstName> не может быть пустым")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Field <LastName> can't be empty")]
+        [Required(ErrorMessage = "Поле <LastName> не может быть пустым")]
         public string LastName { get; set; }
 
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime? BirthDate { get; set; }
+        [Required(ErrorMessage = "Поле <Age> не может быть пустым")]
+        [Range(16, 90, ErrorMessage = "Возраст должен быть от 16 до 90 лет!")]
+        public int? Age { get; set; }
 
         [StringLength(maximumLength: 100, MinimumLength = 3)]
         public string Email { get; set; }

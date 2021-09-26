@@ -1,4 +1,6 @@
-﻿namespace School.BLL.Models
+﻿using System.Collections.Generic;
+
+namespace School.BLL.Models
 {
     public class Course
     {
@@ -8,5 +10,7 @@
         public string Program { get; set; }
         public int TopicId { get; set; }
         public Topic Topic { get; set; }
+        public List<StudentGroup> Groups { get; set; } = new List<StudentGroup>();
+
     }
 }

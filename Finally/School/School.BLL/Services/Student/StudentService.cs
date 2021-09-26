@@ -1,14 +1,18 @@
-﻿using School.DAL.Interfaces;
+﻿using School.BLL.Models.Enum;
+using School.BLL.Repository;
+using School.DAL.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.BLL.Services.Student
 {
     public class StudentService : IStudentService
     {
-        private readonly IRepository<Models.Student> _repository;
+        private readonly IStudentRepository _repository;
 
-        public StudentService(IRepository<Models.Student> repository)
+        public StudentService(IStudentRepository repository)
         {
             _repository = repository;
         }
@@ -36,6 +40,26 @@ namespace School.BLL.Services.Student
         public async Task Delete(int id)
         {
             await _repository.Delete(id);
+        }
+
+        public async Task<IEnumerable<Models.Student>> DisplayingIndex(EnumPageActions action, string searchString, EnumSearchParameters searchParametr, int take, int skip = 0)
+        {
+            take = (take == 0) ? 10 : take;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                return await SearchAllAsync(searchString, searchParametr, action, take, skip);
+            }
+            return await GetAllTakeSkipAsync(take, action, skip);
+        }
+
+        public async Task<IEnumerable<Models.Student>> GetAllTakeSkipAsync(int take, EnumPageActions action, int skip = 0)
+        {
+            return await _repository.GetAllTakeSkipAsync(take, action, skip);
+        }
+
+        public async Task<IEnumerable<Models.Student>> SearchAllAsync(string searchString, EnumSearchParameters searchParametr, EnumPageActions action, int take, int skip = 0)
+        {
+            return await _repository.SearchAllAsync(searchString, searchParametr, action, take, skip);
         }
     }
 }

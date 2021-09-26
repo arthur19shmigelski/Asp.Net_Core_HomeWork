@@ -1,4 +1,6 @@
-﻿namespace School.BLL.Models
+﻿using System.Collections.Generic;
+
+namespace School.BLL.Models
 {
     public class Topic
     {
@@ -9,5 +11,7 @@
 
         public int? ParentId { get; set; }
         public Topic Parent { get; set; }
+
+        public List<Course> Courses { get; set; } = new List<Course>();
     }
 }

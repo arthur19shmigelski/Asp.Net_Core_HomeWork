@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<CourseModel>
 @{
     ViewData["Title"] = "Courses";
-
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="container">
-
     <h1 class="text text-center alert-info"> <i>Список наших курсов</i></h1>
 
-
-    <table class="table table-bordered table-striped">
+    <table id="sortingTable" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>
@@ -43,6 +40,7 @@
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">
                                 Изменить
                             </a>
+
                             <button type="submit" class="btn btn-outline-warning">
                                 @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
                             </button>
@@ -69,4 +67,3 @@
             <a asp-action="Write" class="btn btn-success">Записаться на курс</a>
         </p>
     }
-</div>

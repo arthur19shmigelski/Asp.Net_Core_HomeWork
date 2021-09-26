@@ -244,25 +244,73 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "	C# (си шарп) – объектно-ориентированный язык программирования, разработанный компанией Microsoft. Прямой интерес такой крупной корпорации к языку гарантирует, что он продолжит развиваться и находить применение в различных отраслях.\n	C Sharp впитал лучшие качества, а также унаследовал особенности синтаксиса Java и C++. Применяется язык для веб-разработки, создания настольных и мобильных приложений. Если вы записались на курс по C# в Минске для того, чтобы научиться создавать web-проекты, то в дальнейшем вам необходимо освоить инструментарий .NET.",
-                            Program = "1. Вводное. Установка окружения(C#, Visual Studio). Запуск первой программы Console Application.2. Типы данных. Переменные. Операторы.3. Операторы if/switch4. Циклы5. И многое другое",
-                            Title = "Introduction to C#",
+                            Description = "Базовый уровень",
+                            Program = "1. Вводное. Установка окружения(C#, Visual Studio). Запуск первой программы Console Application.\n2. Типы данных. Переменные. Операторы.\n3. Операторы if/switch.\n4. Циклы.\n5. И многое другое...",
+                            Title = "C#",
                             TopicId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Язык программирования Java находится в числе лидеров во многих рейтингах: TIOBE – на основе подсчёта результатов поисковых запросов, PYPL – по анализу популярности в поисковике Google, IEEE – по комплексу показателей, таких как упоминание в проектах, статьях, вакансиях и других. Такая популярность обусловлена практически безграничными его возможностями и областями применения. Java не зависит от определённой платформы, его называют безопасным, портативным, высокопроизводительным и динамичным языком.",
-                            Program = "1. Вводное. Установка окружения(Java, Intellij IDEA). Запуск первой программы.2. Типы данных. Переменные. Операторы.3. Операторы if/switch4. Циклы5. И многое другое",
-                            Title = "Introduction to Java",
+                            Description = "Базовый уровень",
+                            Program = "1. Вводное. Установка окружения(Java, Intellij IDEA). Запуск первой программы.\n2. Типы данных. Переменные. Операторы.\n3. Операторы if/switch.\n4. Циклы.\n5. И многое другое...",
+                            Title = "Java",
                             TopicId = 2
                         },
                         new
                         {
                             Id = 3,
-                            Description = "UI/UX и web-дизайн ориентирован на создание внешне привлекательных, удобных в использовании и функциональных пользовательских интерфейсов. Чтобы достичь успеха в этой сфере, необходимо обладать художественным вкусом, быть внимательным к деталям, понимать принципы компьютерной графики и визуального дизайна, уметь работать с инструментами (например, Adobe Photoshop, Adobe Illustrator, Sketch, Figma).",
-                            Program = "1. Принципы визуального дизайна2. Особенности UI/UX/web дизайна3. Основы композиции4. Правила работы со шрифтамин5. И много другой информации",
+                            Description = "Базовый уровень",
+                            Program = "1. Принципы визуального дизайна.\n2. Особенности UI/UX/web дизайна.\n3. Основы композиции.\n4. Правила работы со шрифтами.\n5. И многое другое...",
                             Title = "Web Design",
+                            TopicId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Средний уровень",
+                            Program = "1. Основы MVC: -Паттерн MVC, MVC контроллеры, разработка представлений.\n2. Основы WebApi: -Архитектура REST; -Проектирование RESTful сервисов, Self-Hosted приложения\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики; -DI и паттерн IoC\n4. Работа с данными: -Понятие ORM, Entity Framework; -Основные подходы к проектированию БД: CodeFirst, DatabaseFirst, ModelFirst\n5. И многое другое...",
+                            Title = "Промышленная разработка ПО на ASP.NET",
+                            TopicId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Средний уровень",
+                            Program = "1. Основы Apache Maven.\n2. Инженерные техники при работе с Apache Maven.\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики, паттерн DAO; -Практика.\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL.\n5. И многое другое...",
+                            Title = "Промышленная разработка ПО на Java",
+                            TopicId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Средний уровень",
+                            Program = "1. Знакомство с библиотекой React.\n2. Настройка Git и Webpack.\n3. Глубокое изучение JavaScript.\n4. Твоя первая большая курсовая работа в команде (простой суши-магазин).\n5. И многое другое...",
+                            Title = "Веб-разработка на языках HTML, CSS и JavaScript ",
+                            TopicId = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Высокий уровень",
+                            Program = "1. Введение в Unity. Hello world с Unity.\n2. Scripts (Cкрипты). Part 1: -Методология; -Игровые объекты и компоненты; -Cлои, ввод данных, теги.\n3. Scripts (Скрипты). Part 2: -Manual: Immediate Mode GUI (IMGUI); -Сопрограммы.\n4. Инструментарий для разработки 2D-игр.\n5. И многое другое...",
+                            Title = "Unity",
+                            TopicId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Высокий уровень",
+                            Program = "1. JQuery.\n2. EscmaScript6.\n3. Расширенные возможность JavaScript\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL\n5. И многое другое...",
+                            Title = "Full-stack developer",
+                            TopicId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "Высокий уровень",
+                            Program = "1. Знакомство с библиотекой React\n2.Знакомство с библиотекой Angular\n3. Знакомство с библиотекой Vue\n4. Твоя первая большая курсовая работа в команде (3 проекта на каждом фрэймворке - магазин доставки цветов)\n5. И многое другое...",
+                            Title = "Angular, React, Vue",
                             TopicId = 3
                         });
                 });
@@ -274,8 +322,9 @@ namespace School.DAL.EF.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int?>("Age")
+                        .IsRequired()
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(100)
@@ -295,9 +344,6 @@ namespace School.DAL.EF.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -311,181 +357,151 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 1,
-                            BirthDate = new DateTime(1998, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 22,
                             Email = "Fedorov@gmail.com",
                             FirstName = "Oleg",
-                            GroupId = 1,
                             LastName = "Fedorov",
                             Phone = "+375291111111",
-                            StartDate = new DateTime(2021, 9, 13, 0, 0, 0, 0, DateTimeKind.Local),
                             Type = 0
                         },
                         new
                         {
                             Id = 2,
-                            BirthDate = new DateTime(1990, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 26,
                             Email = "Antonov@gmail.com",
                             FirstName = "Andrey",
-                            GroupId = 2,
                             LastName = "Antonov",
                             Phone = "+375292222222",
-                            StartDate = new DateTime(2021, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2
                         },
                         new
                         {
                             Id = 3,
-                            BirthDate = new DateTime(1988, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 17,
                             Email = "Petrov@gmail.com",
                             FirstName = "Ivan",
-                            GroupId = 3,
                             LastName = "Petrov",
                             Phone = "+375443333333",
-                            StartDate = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             Id = 4,
-                            BirthDate = new DateTime(2000, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 19,
                             Email = "Ivashko@gmail.com",
                             FirstName = "Sergey",
-                            GroupId = 1,
                             LastName = "Ivashko",
                             Phone = "+375444444444",
-                            StartDate = new DateTime(2022, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             Id = 5,
-                            BirthDate = new DateTime(1998, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 25,
                             Email = "Shmigelski@gmail.com",
                             FirstName = "Arthur",
-                            GroupId = 2,
                             LastName = "Shmigelski",
                             Phone = "+375295555555",
-                            StartDate = new DateTime(2022, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             Id = 6,
-                            BirthDate = new DateTime(1997, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 25,
                             Email = "Sergeenko@yandex.com",
                             FirstName = "Maxim",
-                            GroupId = 3,
                             LastName = "Sergeenko",
                             Phone = "+375446666666",
-                            StartDate = new DateTime(2020, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2
                         },
                         new
                         {
                             Id = 7,
-                            BirthDate = new DateTime(1994, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 50,
                             Email = "Micinat@gmail.com",
                             FirstName = "Vladimir",
-                            GroupId = 1,
                             LastName = "Micinat",
                             Phone = "+375447777777",
-                            StartDate = new DateTime(2022, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2
                         },
                         new
                         {
                             Id = 8,
-                            BirthDate = new DateTime(1973, 8, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 46,
                             Email = "Frunze@mail.ru",
                             FirstName = "Anatoliy",
-                            GroupId = 2,
                             LastName = "Frunze",
                             Phone = "+375448888888",
-                            StartDate = new DateTime(2022, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             Id = 9,
-                            BirthDate = new DateTime(1992, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 40,
                             Email = "VaneevaPolina@gmail.com",
                             FirstName = "Polina",
-                            GroupId = 3,
                             LastName = "Vaneeva",
                             Phone = "+375449999999",
-                            StartDate = new DateTime(2021, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2
                         },
                         new
                         {
                             Id = 10,
-                            BirthDate = new DateTime(1999, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 39,
                             Email = "YakimovMiron@gmail.com",
                             FirstName = "Miron",
-                            GroupId = 1,
                             LastName = "Yakimov",
                             Phone = "+375441010101",
-                            StartDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             Id = 11,
-                            BirthDate = new DateTime(1999, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 22,
                             Email = "MorozNikita@gmail.com",
                             FirstName = "Nikita",
-                            GroupId = 2,
                             LastName = "Moroz",
                             Phone = "+375440110111",
-                            StartDate = new DateTime(2022, 7, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 1
                         },
                         new
                         {
                             Id = 12,
-                            BirthDate = new DateTime(1996, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 25,
                             Email = "PonimashVitalik@gmail.com",
                             FirstName = "Vitalik",
-                            GroupId = 3,
                             LastName = "Ponimash",
                             Phone = "+375441212123",
-                            StartDate = new DateTime(2022, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             Id = 13,
-                            BirthDate = new DateTime(2000, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 29,
                             Email = "FistashkaIrina@yandex.by",
                             FirstName = "Irina",
-                            GroupId = 1,
                             LastName = "Fistashka",
                             Phone = "+375444444444",
-                            StartDate = new DateTime(2021, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         },
                         new
                         {
                             Id = 14,
-                            BirthDate = new DateTime(2000, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 20,
                             Email = "Filimonova@gmail.com",
                             FirstName = "Alena",
-                            GroupId = 2,
                             LastName = "Filimonova",
                             Phone = "+375441534545",
-                            StartDate = new DateTime(2021, 8, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 2
                         },
                         new
                         {
                             Id = 15,
-                            BirthDate = new DateTime(1988, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 25,
                             Email = "EfremovSergey@mail.ru",
                             FirstName = "Sergey",
-                            GroupId = 3,
                             LastName = "Efremov",
                             Phone = "+375441232323",
-                            StartDate = new DateTime(2021, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = 0
                         });
                 });
@@ -520,35 +536,6 @@ namespace School.DAL.EF.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("StudentGroups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CourseId = 1,
-                            StartDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            TeacherId = 1,
-                            Title = "Basic_C#_01.01"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CourseId = 2,
-                            StartDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            TeacherId = 2,
-                            Title = "Java_02_02"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CourseId = 3,
-                            StartDate = new DateTime(2024, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            TeacherId = 3,
-                            Title = "Motion Design_03_03"
-                        });
                 });
 
             modelBuilder.Entity("School.BLL.Models.StudentRequest", b =>
@@ -567,6 +554,9 @@ namespace School.DAL.EF.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("ReadyToStartDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -583,6 +573,108 @@ namespace School.DAL.EF.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("StudentRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Comments = "Хочу учиться на C# (basic) ",
+                            CourseId = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReadyToStartDate = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            StudentId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Comments = "Хочу учиться на C# (basic)",
+                            CourseId = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReadyToStartDate = new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            StudentId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Comments = "Хочу учиться на Java (basic)",
+                            CourseId = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReadyToStartDate = new DateTime(2021, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            StudentId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Comments = "Хочу учиться на Java (basic)",
+                            CourseId = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReadyToStartDate = new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            StudentId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Comments = "Хочу учиться на Design (basic)",
+                            CourseId = 3,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReadyToStartDate = new DateTime(2021, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            StudentId = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Comments = "Хочу учиться на Design (basic)",
+                            CourseId = 3,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReadyToStartDate = new DateTime(2021, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            StudentId = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Comments = "Хочу учиться на C# (средний)",
+                            CourseId = 4,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReadyToStartDate = new DateTime(2021, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            StudentId = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Comments = "Хочу учиться на С# (средний)",
+                            CourseId = 4,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReadyToStartDate = new DateTime(2021, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            StudentId = 7
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Comments = "Хочу учиться на Java (средний)",
+                            CourseId = 5,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReadyToStartDate = new DateTime(2021, 9, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            StudentId = 8
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Comments = "Хочу учиться на Java (средний)",
+                            CourseId = 5,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReadyToStartDate = new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            StudentId = 9
+                        });
                 });
 
             modelBuilder.Entity("School.BLL.Models.Teacher", b =>
@@ -592,11 +684,12 @@ namespace School.DAL.EF.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("Age")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.Property<string>("Bio")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasMaxLength(100)
@@ -624,8 +717,8 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Bio = "My name is Vadim Korotkov.",
-                            BirthDate = new DateTime(1977, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 30,
+                            Bio = "My name is Vadim Korotkov. I'am full-stack developer. I know all language, frameworks",
                             Email = "Korotkov@mail.ru",
                             FirstName = "Vadim",
                             LastName = "Korotkov",
@@ -635,8 +728,8 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 2,
-                            Bio = "My name is Sergey Gromov.",
-                            BirthDate = new DateTime(1944, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 32,
+                            Bio = "My name is Sergey Gromov. I'am a back-end developer on .Net Framework + Java (JS).",
                             Email = "Gromov@yandex.ru",
                             FirstName = "Sergey",
                             LastName = "Gromov",
@@ -646,13 +739,35 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 3,
-                            Bio = "My name is Andrew Kamilov.",
-                            BirthDate = new DateTime(1956, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 36,
+                            Bio = "My name is Andrew Kamilov. I'am front-end developer, know some modern frameworks (Angular, Vue, React)",
                             Email = "Kamilov@yandex.ru",
                             FirstName = "Andrew",
                             LastName = "Kamilov",
                             LinkToProfile = "https://www.linkedin.com/feed/Kamilov",
                             Phone = "+375293333333"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Age = 34,
+                            Bio = "My name is Marina Kuzmina. I am a Design teacher",
+                            Email = "Kuzmina@yandex.ru",
+                            FirstName = "Marina",
+                            LastName = "Kuzmina",
+                            LinkToProfile = "https://www.linkedin.com/feed/Kuzmina",
+                            Phone = "+375296561723"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Age = 27,
+                            Bio = "My name is Vladimir Vorobei. I am a C# language teacher",
+                            Email = "Vorobei@yandex.ru",
+                            FirstName = "Vladimir",
+                            LastName = "Vorobei",
+                            LinkToProfile = "https://www.linkedin.com/feed/Vorobei",
+                            Phone = "+375290989093"
                         });
                 });
 
@@ -682,19 +797,19 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Description = ".Net (ASP.NET, Unity)",
+                            Description = "	C# (си шарп) – объектно-ориентированный язык программирования, разработанный компанией Microsoft. Прямой интерес такой крупной корпорации к языку гарантирует, что он продолжит развиваться и находить применение в различных отраслях.\n	C Sharp впитал лучшие качества, а также унаследовал особенности синтаксиса Java и C++. Применяется язык для веб-разработки, создания настольных и мобильных приложений. Если вы записались на курс по C# в Минске для того, чтобы научиться создавать web-проекты, то в дальнейшем вам необходимо освоить инструментарий .NET.",
                             Title = ".Net"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Full-stack, JS, Spring",
+                            Description = "	Язык программирования Java находится в числе лидеров во многих рейтингах: TIOBE – на основе подсчёта результатов поисковых запросов, PYPL – по анализу популярности в поисковике Google, IEEE – по комплексу показателей, таких как упоминание в проектах, статьях, вакансиях и других. Такая популярность обусловлена практически безграничными его возможностями и областями применения.\n	Java не зависит от определённой платформы, его называют безопасным, портативным, высокопроизводительным и динамичным языком.",
                             Title = "Java"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "UI/UX, Motion Design, 3D Design",
+                            Description = "	UI/UX и web-дизайн ориентирован на создание внешне привлекательных, удобных в использовании и функциональных пользовательских интерфейсов. Чтобы достичь успеха в этой сфере, необходимо обладать художественным вкусом, быть внимательным к деталям, понимать принципы компьютерной графики и визуального дизайна, уметь работать с инструментами (например, Adobe Photoshop, Adobe Illustrator, Sketch, Figma).",
                             Title = "Design"
                         });
                 });
@@ -753,7 +868,7 @@ namespace School.DAL.EF.Migrations
             modelBuilder.Entity("School.BLL.Models.Course", b =>
                 {
                     b.HasOne("School.BLL.Models.Topic", "Topic")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -773,7 +888,7 @@ namespace School.DAL.EF.Migrations
             modelBuilder.Entity("School.BLL.Models.StudentGroup", b =>
                 {
                     b.HasOne("School.BLL.Models.Course", "Course")
-                        .WithMany()
+                        .WithMany("Groups")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -815,9 +930,19 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("School.BLL.Models.Course", b =>
+                {
+                    b.Navigation("Groups");
+                });
+
             modelBuilder.Entity("School.BLL.Models.StudentGroup", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("School.BLL.Models.Topic", b =>
+                {
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

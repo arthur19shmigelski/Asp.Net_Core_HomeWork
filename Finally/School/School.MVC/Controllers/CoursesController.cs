@@ -18,7 +18,6 @@ using System.Threading.Tasks;
 
 namespace AcademyCRM.MVC.Controllers
 {
-    [Authorize(Roles = "admin, manager, student")]
     public class CoursesController : Controller
     {
         private readonly ICourseService _courseService;

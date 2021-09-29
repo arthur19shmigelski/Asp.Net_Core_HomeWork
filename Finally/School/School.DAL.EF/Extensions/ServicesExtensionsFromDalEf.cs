@@ -11,7 +11,7 @@ namespace School.DAL.EF.Extensions
         public static IServiceCollection AddBusinessLogicServicesFromDalEF(this IServiceCollection services)
         {
             services.AddScoped<IRepository<Topic>, TopicRepository>();
-            services.AddScoped<IRepository<Course>, CoursesRepository>();
+            services.AddScoped<ICourseRepository, CoursesRepository>();
             services.AddScoped<IRepository<Teacher>, TeachersRepository>();
             services.AddScoped<IStudentRepository, StudentsRepository>();
             services.AddScoped<IRepository<StudentGroup>, StudentGroupsRepository>();

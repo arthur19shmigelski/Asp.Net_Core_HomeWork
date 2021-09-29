@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using School.BLL.Models;
+using School.Core.Models;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using School.BLL.Models;
 using School.BLL.Repository;
+using School.Core.Models;
 using School.DAL.EF.Repositories;
 using School.DAL.Interfaces;
 

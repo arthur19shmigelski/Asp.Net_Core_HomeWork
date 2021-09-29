@@ -2,10 +2,10 @@
 using ElmahCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using School.BLL.Models;
 using School.BLL.Services.Course;
 using School.BLL.Services.Topic;
-using School.BLL.ShortModels;
+using School.Core.Models;
+using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

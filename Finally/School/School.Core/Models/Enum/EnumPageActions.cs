@@ -1,4 +1,4 @@
-﻿namespace School.BLL.Models.Enum
+﻿namespace School.Core.Models.Enum
 {
     public enum EnumPageActions
     {

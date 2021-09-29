@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using School.BLL.Models;
-using School.BLL.Models.Enum;
+using School.Core.Models;
+using School.Core.Models.Enum;
 using System;
 
 namespace School.DAL.EF.Contexts
@@ -238,7 +238,7 @@ namespace School.DAL.EF.Contexts
                 Email = "Fedorov@gmail.com",
                 Age = 22,
                 Phone = "+375291111111",
-                Type = BLL.Models.Enum.StudentType.Online,
+                Type = StudentType.Online,
             };
             var student2 = new Student()
             {
@@ -248,7 +248,7 @@ namespace School.DAL.EF.Contexts
                 Email = "Antonov@gmail.com",
                 Age = 26,
                 Phone = "+375292222222",
-                Type = BLL.Models.Enum.StudentType.Mix,
+                Type = StudentType.Mix,
             };
             var student3 = new Student()
             {
@@ -258,7 +258,7 @@ namespace School.DAL.EF.Contexts
                 Email = "Petrov@gmail.com",
                 Age = 17,
                 Phone = "+375443333333",
-                Type = BLL.Models.Enum.StudentType.InClass,
+                Type = StudentType.InClass,
             };
             var student4 = new Student()
             {
@@ -268,7 +268,7 @@ namespace School.DAL.EF.Contexts
                 Email = "Ivashko@gmail.com",
                 Age = 19,
                 Phone = "+375444444444",
-                Type = BLL.Models.Enum.StudentType.Online,
+                Type = StudentType.Online,
             };
             var student5 = new Student()
             {
@@ -278,7 +278,7 @@ namespace School.DAL.EF.Contexts
                 Email = "Shmigelski@gmail.com",
                 Age = 25,
                 Phone = "+375295555555",
-                Type = BLL.Models.Enum.StudentType.Online,
+                Type = StudentType.Online,
             };
             var student6 = new Student()
             {
@@ -288,7 +288,7 @@ namespace School.DAL.EF.Contexts
                 Email = "Sergeenko@yandex.com",
                 Age = 25,
                 Phone = "+375446666666",
-                Type = BLL.Models.Enum.StudentType.Mix,
+                Type = StudentType.Mix,
             };
             var student7 = new Student()
             {
@@ -298,7 +298,7 @@ namespace School.DAL.EF.Contexts
                 Email = "Micinat@gmail.com",
                 Age = 50,
                 Phone = "+375447777777",
-                Type = BLL.Models.Enum.StudentType.Mix,
+                Type = StudentType.Mix,
             };
             var student8 = new Student()
             {
@@ -308,7 +308,7 @@ namespace School.DAL.EF.Contexts
                 Email = "Frunze@mail.ru",
                 Age = 46,
                 Phone = "+375448888888",
-                Type = BLL.Models.Enum.StudentType.InClass,
+                Type = StudentType.InClass,
             };
             var student9 = new Student()
             {
@@ -318,7 +318,7 @@ namespace School.DAL.EF.Contexts
                 Email = "VaneevaPolina@gmail.com",
                 Age = 40,
                 Phone = "+375449999999",
-                Type = BLL.Models.Enum.StudentType.Mix,
+                Type = StudentType.Mix,
             };
             var student10 = new Student()
             {
@@ -328,7 +328,7 @@ namespace School.DAL.EF.Contexts
                 Email = "YakimovMiron@gmail.com",
                 Age = 39,
                 Phone = "+375441010101",
-                Type = BLL.Models.Enum.StudentType.InClass,
+                Type = StudentType.InClass,
             };
             var student11 = new Student()
             {
@@ -338,7 +338,7 @@ namespace School.DAL.EF.Contexts
                 Email = "MorozNikita@gmail.com",
                 Age = 22,
                 Phone = "+375440110111",
-                Type = BLL.Models.Enum.StudentType.InClass,
+                Type = StudentType.InClass,
             };
             var student12 = new Student()
             {
@@ -348,7 +348,7 @@ namespace School.DAL.EF.Contexts
                 Email = "PonimashVitalik@gmail.com",
                 Age = 25,
                 Phone = "+375441212123",
-                Type = BLL.Models.Enum.StudentType.Online,
+                Type = StudentType.Online,
             };
             var student13 = new Student()
             {
@@ -358,7 +358,7 @@ namespace School.DAL.EF.Contexts
                 Email = "FistashkaIrina@yandex.by",
                 Age = 29,
                 Phone = "+375444444444",
-                Type = BLL.Models.Enum.StudentType.Online,
+                Type = StudentType.Online,
             };
             var student14 = new Student()
             {
@@ -368,7 +368,7 @@ namespace School.DAL.EF.Contexts
                 Email = "Filimonova@gmail.com",
                 Age = 20,
                 Phone = "+375441534545",
-                Type = BLL.Models.Enum.StudentType.Mix,
+                Type = StudentType.Mix,
             };
             var student15 = new Student()
             {
@@ -378,7 +378,7 @@ namespace School.DAL.EF.Contexts
                 Email = "EfremovSergey@mail.ru",
                 Age = 25,
                 Phone = "+375441232323",
-                Type = BLL.Models.Enum.StudentType.Online,
+                Type = StudentType.Online,
             };
             modelBuilder.Entity<Student>().HasData(
                student1, student2, student3,

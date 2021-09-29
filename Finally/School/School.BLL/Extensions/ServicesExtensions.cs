@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using School.BLL.Models;
-using School.BLL.Services.Base;
 using School.BLL.Services.Course;
 using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;

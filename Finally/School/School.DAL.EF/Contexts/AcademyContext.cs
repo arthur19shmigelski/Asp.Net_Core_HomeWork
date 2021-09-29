@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using School.BLL.Models;
+using School.Core.Models;
 
 namespace School.DAL.EF.Contexts
 {

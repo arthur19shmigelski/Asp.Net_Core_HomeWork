@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace School.BLL.Models
+namespace School.Core.Models
 {
     public abstract class Person
     {

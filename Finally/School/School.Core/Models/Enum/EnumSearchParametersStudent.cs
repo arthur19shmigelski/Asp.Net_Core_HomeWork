@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace School.BLL.Models.Enum
+namespace School.Core.Models.Enum
 {
     public enum EnumSearchParametersStudent
     {

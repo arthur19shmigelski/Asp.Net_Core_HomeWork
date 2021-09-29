@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace School.BLL.ShortModels
+namespace School.Core.ShortModels
 {
     public class PersonModel
     {
@@ -18,7 +18,7 @@ namespace School.BLL.ShortModels
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Поле -Age- не может быть пустым")]
-        [Range(16,90,ErrorMessage ="Возраст должен быть от 16 до 90 лет!")]
+        [Range(16, 90, ErrorMessage = "Возраст должен быть от 16 до 90 лет!")]
         public int? Age { get; set; }
 
         [Required(ErrorMessage = "Поле -Email- не может быть пустым")]

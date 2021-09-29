@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using School.BLL.Models;
-using School.BLL.Models.Enum;
 using School.BLL.Repository;
+using School.Core.Models;
+using School.Core.Models.Enum;
 using School.DAL.EF.Contexts;
 using System;
 using System.Collections.Generic;

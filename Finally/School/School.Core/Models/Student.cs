@@ -1,7 +1,7 @@
-﻿using School.BLL.Models.Enum;
+﻿using School.Core.Models.Enum;
 using System;
 
-namespace School.BLL.Models
+namespace School.Core.Models
 {
     public class Student : Person
     {

@@ -1,6 +1,6 @@
-﻿using School.BLL.Models.Enum;
+﻿using School.Core.Models.Enum;
 
-namespace School.BLL.ShortModels
+namespace School.Core.ShortModels
 {
     public class StudentModel : PersonModel
     {

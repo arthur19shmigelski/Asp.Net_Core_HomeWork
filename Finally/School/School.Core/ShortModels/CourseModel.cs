@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace School.BLL.ShortModels
+namespace School.Core.ShortModels
 {
     public class CourseModel
     {

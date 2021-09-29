@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using School.Angular.Dto;
-using School.BLL.Models;
+using School.Core.Models;
 
 namespace School.Angular.Mapper
 {

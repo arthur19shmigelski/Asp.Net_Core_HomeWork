@@ -1,9 +1,9 @@
-﻿using School.BLL.Models.Enum;
+﻿using School.Core.Models.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace School.BLL.Models
+namespace School.Core.Models
 {
     public class StudentGroup
     {

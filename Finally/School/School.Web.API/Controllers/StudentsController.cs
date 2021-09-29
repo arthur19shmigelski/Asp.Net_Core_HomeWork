@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using School.BLL.Models;
 using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;
+using School.Core.Models;
 using School.Web.API.Dto;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;

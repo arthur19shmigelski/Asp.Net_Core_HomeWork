@@ -1,5 +1,5 @@
-﻿using School.BLL.Models;
-using School.BLL.Models.Enum;
+﻿using School.Core.Models;
+using School.Core.Models.Enum;
 using School.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -1,4 +1,4 @@
-namespace School.BLL.ShortModels
+namespace School.Core.ShortModels
 {
     public class ErrorViewModel
     {

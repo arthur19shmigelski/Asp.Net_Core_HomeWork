@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace School.BLL.Models
+namespace School.Core.Models
 {
     public class Topic
     {

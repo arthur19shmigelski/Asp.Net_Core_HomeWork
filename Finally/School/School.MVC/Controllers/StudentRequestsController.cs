@@ -2,11 +2,11 @@
 using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using School.BLL.Models;
 using School.BLL.Services.Course;
 using School.BLL.Services.Student;
 using School.BLL.Services.StudentRequest;
-using School.BLL.ShortModels;
+using School.Core.Models;
+using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

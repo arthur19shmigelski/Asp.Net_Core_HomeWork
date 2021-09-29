@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using School.Core.Models.Enum;
+using System.Collections.Generic;
 
-namespace School.BLL.Models
+namespace School.Core.Models
 {
     public class Course
     {
@@ -11,6 +12,8 @@ namespace School.BLL.Models
         public int TopicId { get; set; }
         public Topic Topic { get; set; }
         public List<StudentGroup> Groups { get; set; } = new List<StudentGroup>();
-
+        public double? Price { get; set; }
+        public CourseLevel Level { get; set; }
+        public int DurationWeeks { get; set; }
     }
 }

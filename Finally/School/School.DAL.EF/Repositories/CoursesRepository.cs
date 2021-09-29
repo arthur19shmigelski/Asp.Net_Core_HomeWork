@@ -45,10 +45,8 @@ namespace School.DAL.EF.Repositories
 
         public async Task<IEnumerable<Course>> Find(Func<Course, bool> predicate)
         {
-            return await _context.Courses
-                            .Where(predicate)
-                            .AsQueryable()
-                            .ToListAsync();
+            return _context.Courses
+                            .AsEnumerable().Where(predicate).ToList();
         }
 
         public async Task Update(Course item)

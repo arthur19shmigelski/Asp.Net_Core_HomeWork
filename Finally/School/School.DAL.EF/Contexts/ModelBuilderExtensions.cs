@@ -138,7 +138,8 @@ namespace School.DAL.EF.Contexts
             {
                 Id = 6,
                 Title = "Веб-разработка на языках HTML, CSS и JavaScript ",
-                Description = "Средний уровень",
+                Description = "Этот курс предназначен для тех, кто хочет познакомится поближе с языком JavaScript + языком разметки HTML5 + CCS3." +
+                "Таким образом, ты станешь Front-end разработчиком с большим уклоном в дизайн.",
                 Level = CourseLevel.Advanced,
                 Price = 1440,
                 DurationWeeks = 8,

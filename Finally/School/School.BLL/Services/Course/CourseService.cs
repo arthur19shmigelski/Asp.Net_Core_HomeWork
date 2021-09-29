@@ -54,7 +54,7 @@ namespace School.BLL.Services.Course
         {
             var filteredCourses = await _repository.Filter(filter);
 
-            throw new NotImplementedException();
+            return filteredCourses;
         }
     }
 }

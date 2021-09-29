@@ -10,8 +10,9 @@ namespace School.Core.ShortModels
         public string ProgramContains { get; set; }
         public string TopicNameContains { get; set; }
 
-        [Display(Name = "Price Should Be From")]
+        [Display(Name = "Цена от")]
         public double? PriceFrom { get; set; }
+        [Display(Name = "Цена до")]
         public double? PriceTo { get; set; }
         public CourseLevel? Level { get; set; }
         public int? DurationWeeksFrom { get; set; }

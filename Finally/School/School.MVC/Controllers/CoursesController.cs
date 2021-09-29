@@ -132,10 +132,9 @@ namespace AcademyCRM.MVC.Controllers
             }
         }
 
-        public IActionResult Search(string search)
+        public async Task<IActionResult> Search(string search)
         {
-            var courses = _courseService.Search(search);
-
+            var courses = await _courseService.Search(search);
             return View(nameof(Index), _mapper.Map<IEnumerable<CourseModel>>(courses));
         }
 
@@ -146,10 +145,9 @@ namespace AcademyCRM.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Filter(CourseFilterModel model)
+        public async Task<IActionResult> Filter(CourseFilterModel model)
         {
-            var modelMapping = _mapper.Map<CourseFilter>(model);
-            var courses = _courseService.Filter(modelMapping);
+            var courses = await _courseService.Filter(_mapper.Map<CourseFilter>(model));
 
             return View(nameof(Index), _mapper.Map<IEnumerable<CourseModel>>(courses));
         }

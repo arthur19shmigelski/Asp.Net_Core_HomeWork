@@ -52,7 +52,11 @@ namespace School.DAL.EF.Contexts
             {
                 Id = 1,
                 Title = "C#",
-                Description = "Базовый уровень",
+                Description = ".NET разработчик создаёт приложения, игры на языке программирования C# на платформе .NET, которую поддерживает Microsoft." +
+                "\tКурс поможет с нуля освоить востребованную специальность .NET-разработчика",
+                Level = CourseLevel.Beginner,
+                Price = 1350,
+                DurationWeeks = 8,
                 Program = "1. Вводное. Установка окружения(C#, Visual Studio). Запуск первой программы Console Application." +
                 "\n2. Типы данных. Переменные. Операторы." +
                 "\n3. Операторы if/switch." +
@@ -65,7 +69,12 @@ namespace School.DAL.EF.Contexts
             {
                 Id = 2,
                 Title = "Java",
-                Description = "Базовый уровень",
+                Description = "Курс поможет с нуля освоить востребованную специальность Java-разработчика. " +
+                "\tПрограмма построена таким образом, что вы не просто познакомитесь с основами Java и объектно-ориентированным программированием на нем," +
+                " \tа научитесь разбираться в типах данных, использовать алгоритмы и коллекции Java. ",
+                Level = CourseLevel.Beginner,
+                Price = 1420,
+                DurationWeeks = 8,
                 Program = "1. Вводное. Установка окружения(Java, Intellij IDEA). Запуск первой программы." +
                 "\n2. Типы данных. Переменные. Операторы." +
                 "\n3. Операторы if/switch." +
@@ -78,7 +87,12 @@ namespace School.DAL.EF.Contexts
             {
                 Id = 3,
                 Title = "Web Design",
-                Description = "Базовый уровень",
+                Description = "Современный дизайн — обширная область, которая тесно соприкасается с ИТ-сферой, а UX/UI-дизайнеры, " +
+                "веб-дизайнеры и дизайнеры интерфейсов — одновременно и художники, и технически подкованные специалисты, востребованные в индустрии." +
+                "\t Курс поможет с нуля освоить востребованную специальность Design-разработчика",
+                Level = CourseLevel.Beginner,
+                Price = 1250,
+                DurationWeeks = 6,
                 Program = "1. Принципы визуального дизайна." +
                           "\n2. Особенности UI/UX/web дизайна." +
                           "\n3. Основы композиции." +
@@ -86,11 +100,15 @@ namespace School.DAL.EF.Contexts
                           "\n5. И многое другое...",
                 TopicId = 3
             };
+
             var course4 = new Course()
             {
                 Id = 4,
                 Title = "Промышленная разработка ПО на ASP.NET",
-                Description = "Средний уровень",
+                Level = CourseLevel.Advanced,
+                Price = 1610,
+                DurationWeeks = 10,
+                Description = "ASP.NET разработчик создаёт приложения и игры на языке программирования C# на платформе .NET, которую поддерживает Microsoft.",
                 Program = "1. Основы MVC: -Паттерн MVC, MVC контроллеры, разработка представлений." +
                 "\n2. Основы WebApi: -Архитектура REST; -Проектирование RESTful сервисов, Self-Hosted приложения" +
                 "\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики; -DI и паттерн IoC" +
@@ -103,7 +121,11 @@ namespace School.DAL.EF.Contexts
             {
                 Id = 5,
                 Title = "Промышленная разработка ПО на Java",
-                Description = "Средний уровень",
+                Description = "Курс подойдет как студентам технических ВУЗов и специалистам, которым интересно освоить новый язык, " +
+                "так и новичкам в программировании. Но для зачисления необходимо будет сдать тесты по логике и английскому языку.",
+                Level = CourseLevel.Advanced,
+                Price = 1650,
+                DurationWeeks = 10,
                 Program = "1. Основы Apache Maven." +
                 "\n2. Инженерные техники при работе с Apache Maven." +
                 "\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики, паттерн DAO; -Практика." +
@@ -117,6 +139,9 @@ namespace School.DAL.EF.Contexts
                 Id = 6,
                 Title = "Веб-разработка на языках HTML, CSS и JavaScript ",
                 Description = "Средний уровень",
+                Level = CourseLevel.Advanced,
+                Price = 1440,
+                DurationWeeks = 8,
                 Program = "1. Знакомство с библиотекой React." +
                           "\n2. Настройка Git и Webpack." +
                           "\n3. Глубокое изучение JavaScript." +
@@ -124,11 +149,16 @@ namespace School.DAL.EF.Contexts
                           "\n5. И многое другое...",
                 TopicId = 3
             };
+
             var course7 = new Course()
             {
                 Id = 7,
                 Title = "Unity",
-                Description = "Высокий уровень",
+                Description = "Unity - это современный и мощный игровой движок, позволяющий делать игры любого уровня." +
+                "\tUnity-разработчик создаёт игры и приложения почти под все игровые платформы.",
+                Level = CourseLevel.Expert,
+                Price = 2040,
+                DurationWeeks = 14,
                 Program = "1. Введение в Unity. Hello world с Unity." +
                 "\n2. Scripts (Cкрипты). Part 1: -Методология; -Игровые объекты и компоненты; -Cлои, ввод данных, теги." +
                 "\n3. Scripts (Скрипты). Part 2: -Manual: Immediate Mode GUI (IMGUI); -Сопрограммы." +
@@ -141,7 +171,13 @@ namespace School.DAL.EF.Contexts
             {
                 Id = 8,
                 Title = "Full-stack developer",
-                Description = "Высокий уровень",
+                Description = "В одном супер-курсе мы собрали не только все главные технологии с двух сторон (Front-end и Back-end)," +
+                " которые сегодня активно используются в разработке веб-приложений: HTML, CSS, JavaScript, PHP, SQL; но и изучение " +
+                "основ веб-дизайна, общих принципов клиент-серверной архитектуры веб-приложений, ООП, фреймворков ReactJs и Laravel, " +
+                "системы контроля версий Git и сервиса GitHub.",
+                Level = CourseLevel.Expert,
+                Price = 2570,
+                DurationWeeks = 15,
                 Program = "1. JQuery." +
                 "\n2. EscmaScript6." +
                 "\n3. Расширенные возможность JavaScript" +
@@ -154,7 +190,10 @@ namespace School.DAL.EF.Contexts
             {
                 Id = 9,
                 Title = "Angular, React, Vue",
-                Description = "Высокий уровень",
+                Description = "Этот курс Angular, React, Vue для тех, кто хочет стать программистом и работать в сфере веб-разработки. 2,5 месяца теории и практического опыта.",
+                Level = CourseLevel.Expert,
+                Price = 2300,
+                DurationWeeks = 12,
                 Program = "1. Знакомство с библиотекой React" +
                           "\n2.Знакомство с библиотекой Angular" +
                           "\n3. Знакомство с библиотекой Vue" +

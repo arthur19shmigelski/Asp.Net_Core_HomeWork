@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using School.Core.Models.Enum;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace School.Core.ShortModels
@@ -22,5 +23,8 @@ namespace School.Core.ShortModels
         public string TopicName { get; set; }
         public int RequestsCount { get; set; }
         public IEnumerable<StudentRequestModel> Requests { get; set; }
+        public double? Price { get; set; }
+        public CourseLevel Level { get; set; }
+        public int DurationWeeks { get; set; }
     }
 }

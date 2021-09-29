@@ -9,6 +9,7 @@ using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
 using School.BLL.Services.Topic;
 using School.Core.Models;
+using School.Core.Models.Filters;
 using School.Core.ShortModels;
 using School.MVC.Configuration;
 using System;
@@ -130,7 +131,29 @@ namespace AcademyCRM.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
-       
+
+        public IActionResult Search(string search)
+        {
+            var courses = _courseService.Search(search);
+
+            return View(nameof(Index), _mapper.Map<IEnumerable<CourseModel>>(courses));
+        }
+
+        [HttpGet]
+        public IActionResult Filter()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Filter(CourseFilterModel model)
+        {
+            var modelMapping = _mapper.Map<CourseFilter>(model);
+            var courses = _courseService.Filter(modelMapping);
+
+            return View(nameof(Index), _mapper.Map<IEnumerable<CourseModel>>(courses));
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

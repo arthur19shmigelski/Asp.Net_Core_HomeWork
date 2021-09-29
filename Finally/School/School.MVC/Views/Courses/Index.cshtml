@@ -13,6 +13,10 @@
                 </th>
                 <th>Название</th>
                 <th>Описание курса</th>
+                <th>Уровень курса</th>
+                <th>Длительность (недели)</th>
+                <th>Цена (BYN)</th>
+
                 @if (ViewContext.HttpContext.User.IsInRole("admin"))
                 {
                     <th>Действие</th>
@@ -20,32 +24,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.OrderBy(c => c.Title))
+            @if (Model.Any())
+            {
+                @foreach (var course in Model.OrderBy(c => c.Title))
+                {
+                    <tr>
+                        <td><a asp-controller="Courses" asp-action="Edit" asp-route-id="@course.Id">@course.Title (@course.RequestsCount)</a></td>
+                        <td>@course.Description</td>
+                        <td>@course.Level</td>
+                        <td>@course.DurationWeeks</td>
+                        <td>@course.Price</td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        <i>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </i>
-                    </td>
-                    @if (ViewContext.HttpContext.User.IsInRole("admin"))
-                    {
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">
-                                Изменить
-                            </a>
-
-                            <button type="submit" class="btn btn-outline-warning">
-                                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
-                            </button>
-                        </td>
-                    }
+                    <td colspan="10">Курсы отсутствуют!</td>
                 </tr>
             }
         </tbody>
@@ -59,11 +54,5 @@
     {
         <p>
             <a asp-action="Edit" class="btn btn-success">Добавить новый курс</a>
-        </p>
-    }
-    @if (ViewContext.HttpContext.User.IsInRole("student"))
-    {
-        <p>
-            <a asp-action="Write" class="btn btn-success">Записаться на курс</a>
         </p>
     }

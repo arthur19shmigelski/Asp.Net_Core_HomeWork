@@ -2,6 +2,7 @@
 using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using School.BLL.Services.Course;
 using School.BLL.Services.Student;
 using School.BLL.Services.StudentRequest;
@@ -38,6 +39,10 @@ namespace AcademyCRM.MVC.Controllers
         {
             try
             {
+                if (User.IsInRole("student"))
+                {
+
+                }
                 var requests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
                 return View(_mapper.Map<IEnumerable<StudentRequestModel>>(requests));
             }

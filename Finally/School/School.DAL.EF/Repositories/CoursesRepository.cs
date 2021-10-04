@@ -56,8 +56,10 @@ namespace School.DAL.EF.Repositories
             originalCourse.Description = item.Description;
             originalCourse.Program = item.Program;
             originalCourse.Title = item.Title;
-            originalCourse.Topic = item.Topic;
             originalCourse.TopicId = item.TopicId;
+            originalCourse.Level = item.Level;
+            originalCourse.Price = item.Price;
+            originalCourse.DurationWeeks = item.DurationWeeks;
 
             await _context.SaveChangesAsync();
         }

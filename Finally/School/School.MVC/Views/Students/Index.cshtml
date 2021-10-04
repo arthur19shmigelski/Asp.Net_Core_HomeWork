@@ -7,30 +7,9 @@
 }
 
 <h1 class="text text-center alert-info"> <i>Список наших студентов</i></h1>
+@await Html.PartialAsync("Partial/_Search")
 
 <body>
-
-    @{
-        int skip = 0;
-        if (Model.Count() > 0)
-            skip = Model.Max(s => s.Id);
-        int take = Model.Count();
-    }
-    <form method="post" asp-controller="Students">
-        <p>
-            <select name="searchParameter"
-                    class="form-control"
-                    asp-items="Html.GetEnumSelectList<EnumSearchParametersStudent>()">
-            </select>
-            <p>
-            <input type="text" name="searchString" size="40" value="@ViewData["searchString"]" />
-            <input type="hidden" name="serachParameter" value="@ViewData["searchParameter"]" />
-            <input type="hidden" name="take" value="10" />
-            <input class="btn btn-outline-dark btn-sm"
-                   type="submit" value="Поиск" />
-        </p>
-    </form>
-   
     <table class="table table-bordered table-striped table-sm">
         <thead>
             <tr>

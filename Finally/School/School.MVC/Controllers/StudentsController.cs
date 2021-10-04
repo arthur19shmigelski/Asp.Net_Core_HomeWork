@@ -10,7 +10,6 @@ using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
@@ -37,7 +36,7 @@ namespace School.MVC.Controllers
                 ViewData["searchParameter"] = searchParameter;
 
 
-                var students = await _studentsService.DisplayingIndex(action, searchString, (EnumSearchParameters)(int)searchParameter, take, skip);
+                var students = await _studentsService.GetAll();
 
                 return View(_mapper.Map<IEnumerable<StudentModel>>(students));
             }
@@ -111,6 +110,11 @@ namespace School.MVC.Controllers
                 ElmahExtensions.RiseError(new Exception(e.Message));
                 return RedirectToAction(nameof(Error));
             }
+        }
+        public async Task<IActionResult> Search(string search)
+        {
+            var students = await _studentsService.Search(search);
+            return View(nameof(Index), _mapper.Map<IEnumerable<StudentModel>>(students));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

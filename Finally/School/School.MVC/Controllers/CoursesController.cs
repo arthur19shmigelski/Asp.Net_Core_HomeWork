@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ElmahCore;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -121,7 +120,6 @@ namespace AcademyCRM.MVC.Controllers
         {
             try
             {
-
                 await _courseService.Delete(id);
                 return RedirectToAction("Index");
             }

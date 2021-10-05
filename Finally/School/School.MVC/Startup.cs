@@ -87,7 +87,7 @@ namespace School.MVC
                 endpoints.MapRazorPages();
             });
 
-            CreateRoles(serviceProvider, securityOptions).Wait();
+            //CreateRoles(serviceProvider, securityOptions).Wait();
 
             app.UseStatusCodePages("text/html", "<h1 style='color:red;'>Error. Code: {0} </h1>");
             app.UseElmah();

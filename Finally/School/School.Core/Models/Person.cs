@@ -23,6 +23,8 @@ namespace School.Core.Models
 
         public string Phone { get; set; }
 
+        public string UserId { get; set; }
+
         public string FullName => $"{LastName} {FirstName}";
     }
 }

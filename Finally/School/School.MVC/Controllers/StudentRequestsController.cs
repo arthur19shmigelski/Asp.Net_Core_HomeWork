@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using School.BLL.Services.Course;
@@ -23,16 +24,19 @@ namespace AcademyCRM.MVC.Controllers
         private readonly ICourseService _courseService;
         private readonly IStudentService _studentService;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public StudentRequestsController(IMapper mapper,
             IStudentService studentService,
             ICourseService courseService,
-            IStudentRequestService requestService)
+            IStudentRequestService requestService,
+            UserManager<IdentityUser> userManager)
         {
             _mapper = mapper;
             _studentService = studentService;
             _courseService = courseService;
             _requestService = requestService;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index(bool? includeClosed)
@@ -41,10 +45,34 @@ namespace AcademyCRM.MVC.Controllers
             {
                 if (User.IsInRole("student"))
                 {
+                    var allRequests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
 
+                    IdentityUser currentSystemUser = await _userManager.GetUserAsync(User);
+
+                    var getAllStudents = await _studentService.GetAll();
+
+                    Student getCurrentStudentBySystemUserId = getAllStudents.FirstOrDefault(student => student.UserId == currentSystemUser.Id);
+
+                    var selectRequestsCurrentStudent = allRequests.Where(studentReq => studentReq.StudentId == getCurrentStudentBySystemUserId.Id);
+                    return View(_mapper.Map<IEnumerable<StudentRequestModel>>(selectRequestsCurrentStudent));
                 }
-                var requests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
-                return View(_mapper.Map<IEnumerable<StudentRequestModel>>(requests));
+                else if(User.IsInRole("manager"))
+                {
+                    //Дописать - взять манагера, посмотреть всех его учеников и посмотреть все их заявки
+                    return RedirectToAction(nameof(Error));
+                }
+
+                else if (User.IsInRole("admin"))
+                {
+                    var requests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
+                    return View(_mapper.Map<IEnumerable<StudentRequestModel>>(requests));
+                }
+
+                else
+                {
+                    return RedirectToAction(nameof(Error));
+                }
+
             }
             catch (Exception e)
             {

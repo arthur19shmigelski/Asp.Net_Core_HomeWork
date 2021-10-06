@@ -13,6 +13,6 @@ namespace School.Core.ShortModels
         public string CourseTitle { get; set; }
         public string Comments { get; set; }
         public DateTime ReadyToStartDate { get; set; }
-
+        public int? GroupId { get; set; }
     }
 }

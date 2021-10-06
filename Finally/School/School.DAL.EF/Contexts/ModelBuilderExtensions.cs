@@ -1,7 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using School.Core.Models;
 using School.Core.Models.Enum;
+using School.DAL.EF.Contexts.Generate;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace School.DAL.EF.Contexts
 {
@@ -9,6 +15,8 @@ namespace School.DAL.EF.Contexts
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            GenerateTestData GenerateTestdata = new();
+           
             /*------------------------------------------------------------------------------------------------------------------------*/
             /*Seed for 3 Topics*/
             var topic1 = new Topic()

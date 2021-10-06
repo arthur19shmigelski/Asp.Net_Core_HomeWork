@@ -56,25 +56,28 @@
             }
         </select>
     </div>
+    @if (Model.Students != null)
+    {
+        <div class="form-group">
+            <label asp-for="Students"></label>
+            <table class="table table-borderless table-sm">
 
-    <div class="form-group">
-        <label asp-for="Students"></label>
-        <table class="table table-borderless table-sm">
+                @foreach (var student in Model.Students)
+                {
+                    <tr>
+                        <td><a asp-controller="Students" asp-action="Edit" asp-route-id="@student.Id">@student.FullName</a></td>
+                    </tr>
+                }
 
-            @foreach (var student in Model.Students)
-            {
                 <tr>
-                    <td><a asp-controller="Students" asp-action="Edit" asp-route-id="@student.Id">@student.FullName</a></td>
+                    <th>
+                        <div class="text-info">Total: @Model.Students.Count()</div>
+                    </th>
                 </tr>
-            }
+            </table>
+        </div>
 
-            <tr>
-                <th>
-                    <div class="text-info">Total: @Model.Students.Count()</div>
-                </th>
-            </tr>
-        </table>
-    </div>
+    }
 
     <div class="form-group">
         @if (ViewBag.IsAdmin)

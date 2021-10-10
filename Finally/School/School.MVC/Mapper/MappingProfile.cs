@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using School.BLL.Models;
-using School.BLL.ShortModels;
+using School.Core.Models;
+using School.Core.Models.Filters;
+using School.Core.ShortModels;
 
 namespace School.MVC.Mapper
 {
@@ -26,6 +27,8 @@ namespace School.MVC.Mapper
                 .ForMember(model => model.StudentName, map => map.MapFrom(r => r.Student.FullName))
                 .ForMember(model => model.CourseTitle, map => map.MapFrom(r => r.Course.Title))
                 .ReverseMap();
+            CreateMap<CourseFilter, CourseFilterModel>()
+               .ReverseMap();
         }
     }
 }

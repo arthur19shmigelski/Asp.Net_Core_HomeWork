@@ -1,9 +1,8 @@
-﻿using School.BLL.Models.Enum;
-using School.BLL.Repository;
+﻿using School.BLL.Extensions;
+using School.Core.Models.Enum;
 using School.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.BLL.Services.Student
@@ -17,22 +16,22 @@ namespace School.BLL.Services.Student
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Models.Student>> GetAll()
+        public async Task<IEnumerable<Core.Models.Student>> GetAll()
         {
             return await _repository.GetAll();
         }
 
-        public async Task<Models.Student> GetById(int id)
+        public async Task<Core.Models.Student> GetById(int id)
         {
             return await _repository.GetById(id);
         }
 
-        public async Task Create(Models.Student student)
+        public async Task Create(Core.Models.Student student)
         {
             await _repository.Create(student);
         }
 
-        public async Task Update(Models.Student student)
+        public async Task Update(Core.Models.Student student)
         {
             await _repository.Update(student);
         }
@@ -42,24 +41,14 @@ namespace School.BLL.Services.Student
             await _repository.Delete(id);
         }
 
-        public async Task<IEnumerable<Models.Student>> DisplayingIndex(EnumPageActions action, string searchString, EnumSearchParameters searchParametr, int take, int skip = 0)
+        public async Task<IEnumerable<Core.Models.Student>> Search(string search)
         {
-            take = (take == 0) ? 10 : take;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                return await SearchAllAsync(searchString, searchParametr, action, take, skip);
-            }
-            return await GetAllTakeSkipAsync(take, action, skip);
-        }
-
-        public async Task<IEnumerable<Models.Student>> GetAllTakeSkipAsync(int take, EnumPageActions action, int skip = 0)
-        {
-            return await _repository.GetAllTakeSkipAsync(take, action, skip);
-        }
-
-        public async Task<IEnumerable<Models.Student>> SearchAllAsync(string searchString, EnumSearchParameters searchParametr, EnumPageActions action, int take, int skip = 0)
-        {
-            return await _repository.SearchAllAsync(searchString, searchParametr, action, take, skip);
+            if (string.IsNullOrWhiteSpace(search))
+                return await _repository.GetAll();
+            return await _repository.Find(c =>
+                c.FirstName.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase) ||
+                c.LastName.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase) ||
+                c.Email.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase));
         }
     }
 }

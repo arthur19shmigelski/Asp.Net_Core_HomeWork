@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using School.BLL.Models;
+using School.Core.Models;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
@@ -20,7 +20,10 @@ namespace School.DAL.EF.Repositories
 
         public async Task Create(StudentRequest item)
         {
-            _context.StudentRequests.Add(item);
+            item.Course = null;
+            item.Student = null;
+
+            await _context.StudentRequests.AddAsync(item);
             await _context.SaveChangesAsync();
         }
 

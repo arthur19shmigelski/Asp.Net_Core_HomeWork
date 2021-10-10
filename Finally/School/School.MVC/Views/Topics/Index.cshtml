@@ -4,12 +4,9 @@
 }
 <h1 class="text text-center alert-info"> <i>Список наших тем для обучения</i></h1>
 
-<table id="sortingTable" class="table table-bordered table-striped">
+<table  class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
             <th> Тема </th>
             <th> Описание </th>
             @if (ViewContext.HttpContext.User.IsInRole("admin"))
@@ -22,9 +19,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>

@@ -12,7 +12,9 @@ using School.BLL.Extensions;
 using School.DAL.EF.Contexts;
 using School.DAL.EF.Extensions;
 using School.MVC.Configuration;
+using School.MVC.Filters;
 using School.MVC.Mapper;
+using School.MVC.Middleware;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,14 +59,19 @@ namespace School.MVC
             services.AddRazorPages();
 
             services.AddElmah();
+
+            services.AddMvc(options =>
+                            options.Filters.Add<GlobalExceptionFilter>()
+                        );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)
         {
+            app.UseMiddleware<CustomExceptionMiddleware>();
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseMigrationsEndPoint();
+                //app.UseDeveloperExceptionPage();
+                //app.UseMigrationsEndPoint();
             }
             else
             {
@@ -87,9 +94,8 @@ namespace School.MVC
                 endpoints.MapRazorPages();
             });
 
-            CreateRoles(serviceProvider, securityOptions).Wait();
+            //CreateRoles(serviceProvider, securityOptions).Wait();
 
-            app.UseStatusCodePages("text/html", "<h1 style='color:red;'>Error. Code: {0} </h1>");
             app.UseElmah();
         }
 
@@ -122,7 +128,8 @@ namespace School.MVC
                 await userManager.AddToRoleAsync(managerUser, "MANAGER");
             }
 
-            var value = userManager.Users.Where(email => email.Email != Configuration["Security:ManagerUserEmail"] && email.Email != Configuration["Security:AdminUserEmail"]).Select(users => users).ToList();
+            var value = userManager.Users.Where(email => email.Email != Configuration["Security:ManagerUserEmail"] 
+            && email.Email != Configuration["Security:AdminUserEmail"]).Select(users => users).ToList();
             foreach (var student in value)
             {
                 await userManager.AddToRoleAsync(student, "STUDENT");

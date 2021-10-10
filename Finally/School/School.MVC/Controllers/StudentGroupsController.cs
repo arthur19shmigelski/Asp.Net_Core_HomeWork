@@ -2,12 +2,12 @@
 using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using School.BLL.Models;
 using School.BLL.Services.Course;
 using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
 using School.BLL.Services.Teacher;
-using School.BLL.ShortModels;
+using School.Core.Models;
+using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -55,8 +55,6 @@ namespace School.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int? id, int? courseId)
         {
-            try
-            {
                 StudentGroupModel model;
                 if (id.HasValue)
                 {
@@ -77,13 +75,6 @@ namespace School.MVC.Controllers
                 ViewBag.IsAdmin = HttpContext.User.IsInRole("admin");
 
                 return View(model);
-            }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
         }
 
         [HttpPost]

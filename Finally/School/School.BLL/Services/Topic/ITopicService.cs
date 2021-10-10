@@ -2,7 +2,7 @@
 
 namespace School.BLL.Services.Topic
 {
-    public interface ITopicService : IEntityService<Models.Topic>
+    public interface ITopicService : IEntityService<Core.Models.Topic>
     {
     }
 }

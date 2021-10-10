@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using School.BLL.Models;
+using School.Core.Models;
+using School.Core.Models.Filters;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
-    public class CoursesRepository : IRepository<Course>
+    public class CoursesRepository :  ICourseRepository
     {
         private readonly AcademyContext _context;
 
@@ -44,10 +45,8 @@ namespace School.DAL.EF.Repositories
 
         public async Task<IEnumerable<Course>> Find(Func<Course, bool> predicate)
         {
-            return await _context.Courses
-                            .Where(predicate)
-                            .AsQueryable()
-                            .ToListAsync();
+            return _context.Courses
+                            .AsEnumerable().Where(predicate).ToList();
         }
 
         public async Task Update(Course item)
@@ -57,10 +56,43 @@ namespace School.DAL.EF.Repositories
             originalCourse.Description = item.Description;
             originalCourse.Program = item.Program;
             originalCourse.Title = item.Title;
-            originalCourse.Topic = item.Topic;
             originalCourse.TopicId = item.TopicId;
+            originalCourse.Level = item.Level;
+            originalCourse.Price = item.Price;
+            originalCourse.DurationWeeks = item.DurationWeeks;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Course>> Filter(CourseFilter filter)
+        {
+            var filteredCourses = _context.Courses.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filter.TitleContains))
+                filteredCourses = filteredCourses.Where(c =>
+                c.Title.Contains(filter.TitleContains));
+
+            if (!string.IsNullOrWhiteSpace(filter.DescriptionContains))
+                filteredCourses = filteredCourses.Where(c =>
+                c.Description.Contains(filter.DescriptionContains));
+
+            if (!string.IsNullOrWhiteSpace(filter.ProgramContains))
+                filteredCourses = filteredCourses.Where(c =>
+                c.Program.Contains(filter.ProgramContains));
+
+            if (filter.PriceFrom.HasValue)
+                filteredCourses = filteredCourses.Where(c => c.Price >= filter.PriceFrom.Value);
+
+            if (filter.PriceTo.HasValue)
+                filteredCourses = filteredCourses.Where(c => c.Price <= filter.PriceTo.Value);
+
+            if (filter.DurationWeeksFrom.HasValue)
+                filteredCourses = filteredCourses.Where(c => c.DurationWeeks >= filter.DurationWeeksFrom.Value);
+
+            if (filter.DurationWeeksTo.HasValue)
+                filteredCourses = filteredCourses.Where(c => c.DurationWeeks <= filter.DurationWeeksTo.Value);
+
+            return await filteredCourses.ToListAsync();
         }
     }
 }

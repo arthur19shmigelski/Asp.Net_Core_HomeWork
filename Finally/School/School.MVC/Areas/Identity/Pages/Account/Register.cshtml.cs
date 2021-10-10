@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using School.BLL.Services.Student;
+using School.Core.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +20,7 @@ namespace School.MVC.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        private readonly IStudentService _studentService;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
@@ -25,7 +28,7 @@ namespace School.MVC.Areas.Identity.Pages.Account
 
 
 
-        public RegisterModel(
+        public RegisterModel(IStudentService studentService,
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
@@ -35,6 +38,7 @@ namespace School.MVC.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _studentService = studentService;
         }
 
         [BindProperty]
@@ -48,19 +52,35 @@ namespace School.MVC.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "Почта")]
             public string Email { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Пароль")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "Подтвердите пароль")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Имя")]
+            public string FirstName { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Фамилия")]
+            public string LastName { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Возвраст")]
+            public int? Age { get; set; }
+
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Телефон")]
+            public string Phone { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -95,6 +115,18 @@ namespace School.MVC.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
+                        Student student = new Student();
+                        student.FirstName = Input.FirstName;
+                        student.LastName = Input.LastName;
+                        student.Age = Input.Age;
+                        student.Email = Input.Email;
+                        student.UserId = user.Id;
+                        student.Phone = Input.Phone;
+
+                        await _studentService.Create(student);
+
+                        await _userManager.AddToRoleAsync(user, "STUDENT");
+
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else

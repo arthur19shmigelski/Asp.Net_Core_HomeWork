@@ -215,7 +215,7 @@ namespace School.DAL.EF.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("School.BLL.Models.Course", b =>
+            modelBuilder.Entity("School.Core.Models.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -224,6 +224,15 @@ namespace School.DAL.EF.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DurationWeeks")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
 
                     b.Property<string>("Program")
                         .HasColumnType("nvarchar(max)");
@@ -244,7 +253,10 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Базовый уровень",
+                            Description = ".NET разработчик создаёт приложения, игры на языке программирования C# на платформе .NET, которую поддерживает Microsoft.	Курс поможет с нуля освоить востребованную специальность .NET-разработчика",
+                            DurationWeeks = 8,
+                            Level = 0,
+                            Price = 1350.0,
                             Program = "1. Вводное. Установка окружения(C#, Visual Studio). Запуск первой программы Console Application.\n2. Типы данных. Переменные. Операторы.\n3. Операторы if/switch.\n4. Циклы.\n5. И многое другое...",
                             Title = "C#",
                             TopicId = 1
@@ -252,7 +264,10 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 2,
-                            Description = "Базовый уровень",
+                            Description = "Курс поможет с нуля освоить востребованную специальность Java-разработчика. 	Программа построена таким образом, что вы не просто познакомитесь с основами Java и объектно-ориентированным программированием на нем, 	а научитесь разбираться в типах данных, использовать алгоритмы и коллекции Java. ",
+                            DurationWeeks = 8,
+                            Level = 0,
+                            Price = 1420.0,
                             Program = "1. Вводное. Установка окружения(Java, Intellij IDEA). Запуск первой программы.\n2. Типы данных. Переменные. Операторы.\n3. Операторы if/switch.\n4. Циклы.\n5. И многое другое...",
                             Title = "Java",
                             TopicId = 2
@@ -260,7 +275,10 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 3,
-                            Description = "Базовый уровень",
+                            Description = "Современный дизайн — обширная область, которая тесно соприкасается с ИТ-сферой, а UX/UI-дизайнеры, веб-дизайнеры и дизайнеры интерфейсов — одновременно и художники, и технически подкованные специалисты, востребованные в индустрии.	 Курс поможет с нуля освоить востребованную специальность Design-разработчика",
+                            DurationWeeks = 6,
+                            Level = 0,
+                            Price = 1250.0,
                             Program = "1. Принципы визуального дизайна.\n2. Особенности UI/UX/web дизайна.\n3. Основы композиции.\n4. Правила работы со шрифтами.\n5. И многое другое...",
                             Title = "Web Design",
                             TopicId = 3
@@ -268,7 +286,10 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 4,
-                            Description = "Средний уровень",
+                            Description = "ASP.NET разработчик создаёт приложения и игры на языке программирования C# на платформе .NET, которую поддерживает Microsoft.",
+                            DurationWeeks = 10,
+                            Level = 1,
+                            Price = 1610.0,
                             Program = "1. Основы MVC: -Паттерн MVC, MVC контроллеры, разработка представлений.\n2. Основы WebApi: -Архитектура REST; -Проектирование RESTful сервисов, Self-Hosted приложения\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики; -DI и паттерн IoC\n4. Работа с данными: -Понятие ORM, Entity Framework; -Основные подходы к проектированию БД: CodeFirst, DatabaseFirst, ModelFirst\n5. И многое другое...",
                             Title = "Промышленная разработка ПО на ASP.NET",
                             TopicId = 1
@@ -276,7 +297,10 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 5,
-                            Description = "Средний уровень",
+                            Description = "Курс подойдет как студентам технических ВУЗов и специалистам, которым интересно освоить новый язык, так и новичкам в программировании. Но для зачисления необходимо будет сдать тесты по логике и английскому языку.",
+                            DurationWeeks = 10,
+                            Level = 1,
+                            Price = 1650.0,
                             Program = "1. Основы Apache Maven.\n2. Инженерные техники при работе с Apache Maven.\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики, паттерн DAO; -Практика.\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL.\n5. И многое другое...",
                             Title = "Промышленная разработка ПО на Java",
                             TopicId = 2
@@ -284,7 +308,10 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 6,
-                            Description = "Средний уровень",
+                            Description = "Этот курс предназначен для тех, кто хочет познакомится поближе с языком JavaScript + языком разметки HTML5 + CCS3.Таким образом, ты станешь Front-end разработчиком с большим уклоном в дизайн.",
+                            DurationWeeks = 8,
+                            Level = 1,
+                            Price = 1440.0,
                             Program = "1. Знакомство с библиотекой React.\n2. Настройка Git и Webpack.\n3. Глубокое изучение JavaScript.\n4. Твоя первая большая курсовая работа в команде (простой суши-магазин).\n5. И многое другое...",
                             Title = "Веб-разработка на языках HTML, CSS и JavaScript ",
                             TopicId = 3
@@ -292,7 +319,10 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 7,
-                            Description = "Высокий уровень",
+                            Description = "Unity - это современный и мощный игровой движок, позволяющий делать игры любого уровня.	Unity-разработчик создаёт игры и приложения почти под все игровые платформы.",
+                            DurationWeeks = 14,
+                            Level = 2,
+                            Price = 2040.0,
                             Program = "1. Введение в Unity. Hello world с Unity.\n2. Scripts (Cкрипты). Part 1: -Методология; -Игровые объекты и компоненты; -Cлои, ввод данных, теги.\n3. Scripts (Скрипты). Part 2: -Manual: Immediate Mode GUI (IMGUI); -Сопрограммы.\n4. Инструментарий для разработки 2D-игр.\n5. И многое другое...",
                             Title = "Unity",
                             TopicId = 1
@@ -300,7 +330,10 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 8,
-                            Description = "Высокий уровень",
+                            Description = "В одном супер-курсе мы собрали не только все главные технологии с двух сторон (Front-end и Back-end), которые сегодня активно используются в разработке веб-приложений: HTML, CSS, JavaScript, PHP, SQL; но и изучение основ веб-дизайна, общих принципов клиент-серверной архитектуры веб-приложений, ООП, фреймворков ReactJs и Laravel, системы контроля версий Git и сервиса GitHub.",
+                            DurationWeeks = 15,
+                            Level = 2,
+                            Price = 2570.0,
                             Program = "1. JQuery.\n2. EscmaScript6.\n3. Расширенные возможность JavaScript\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL\n5. И многое другое...",
                             Title = "Full-stack developer",
                             TopicId = 2
@@ -308,14 +341,17 @@ namespace School.DAL.EF.Migrations
                         new
                         {
                             Id = 9,
-                            Description = "Высокий уровень",
+                            Description = "Этот курс Angular, React, Vue для тех, кто хочет стать программистом и работать в сфере веб-разработки. 2,5 месяца теории и практического опыта.",
+                            DurationWeeks = 12,
+                            Level = 2,
+                            Price = 2300.0,
                             Program = "1. Знакомство с библиотекой React\n2.Знакомство с библиотекой Angular\n3. Знакомство с библиотекой Vue\n4. Твоя первая большая курсовая работа в команде (3 проекта на каждом фрэймворке - магазин доставки цветов)\n5. И многое другое...",
                             Title = "Angular, React, Vue",
                             TopicId = 3
                         });
                 });
 
-            modelBuilder.Entity("School.BLL.Models.Student", b =>
+            modelBuilder.Entity("School.Core.Models.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -346,6 +382,9 @@ namespace School.DAL.EF.Migrations
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -506,7 +545,7 @@ namespace School.DAL.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("School.BLL.Models.StudentGroup", b =>
+            modelBuilder.Entity("School.Core.Models.StudentGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -538,7 +577,7 @@ namespace School.DAL.EF.Migrations
                     b.ToTable("StudentGroups");
                 });
 
-            modelBuilder.Entity("School.BLL.Models.StudentRequest", b =>
+            modelBuilder.Entity("School.Core.Models.StudentRequest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -653,7 +692,7 @@ namespace School.DAL.EF.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReadyToStartDate = new DateTime(2021, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 0,
-                            StudentId = 7
+                            StudentId = 8
                         },
                         new
                         {
@@ -663,7 +702,7 @@ namespace School.DAL.EF.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReadyToStartDate = new DateTime(2021, 9, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 0,
-                            StudentId = 8
+                            StudentId = 9
                         },
                         new
                         {
@@ -673,11 +712,11 @@ namespace School.DAL.EF.Migrations
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReadyToStartDate = new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 0,
-                            StudentId = 9
+                            StudentId = 10
                         });
                 });
 
-            modelBuilder.Entity("School.BLL.Models.Teacher", b =>
+            modelBuilder.Entity("School.Core.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -707,6 +746,9 @@ namespace School.DAL.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -771,7 +813,7 @@ namespace School.DAL.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("School.BLL.Models.Topic", b =>
+            modelBuilder.Entity("School.Core.Models.Topic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -865,9 +907,9 @@ namespace School.DAL.EF.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("School.BLL.Models.Course", b =>
+            modelBuilder.Entity("School.Core.Models.Course", b =>
                 {
-                    b.HasOne("School.BLL.Models.Topic", "Topic")
+                    b.HasOne("School.Core.Models.Topic", "Topic")
                         .WithMany("Courses")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -876,24 +918,24 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Topic");
                 });
 
-            modelBuilder.Entity("School.BLL.Models.Student", b =>
+            modelBuilder.Entity("School.Core.Models.Student", b =>
                 {
-                    b.HasOne("School.BLL.Models.StudentGroup", "Group")
+                    b.HasOne("School.Core.Models.StudentGroup", "Group")
                         .WithMany("Students")
                         .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("School.BLL.Models.StudentGroup", b =>
+            modelBuilder.Entity("School.Core.Models.StudentGroup", b =>
                 {
-                    b.HasOne("School.BLL.Models.Course", "Course")
+                    b.HasOne("School.Core.Models.Course", "Course")
                         .WithMany("Groups")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("School.BLL.Models.Teacher", "Teacher")
+                    b.HasOne("School.Core.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId");
 
@@ -902,15 +944,15 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("School.BLL.Models.StudentRequest", b =>
+            modelBuilder.Entity("School.Core.Models.StudentRequest", b =>
                 {
-                    b.HasOne("School.BLL.Models.Course", "Course")
+                    b.HasOne("School.Core.Models.Course", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("School.BLL.Models.Student", "Student")
+                    b.HasOne("School.Core.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -921,26 +963,26 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("School.BLL.Models.Topic", b =>
+            modelBuilder.Entity("School.Core.Models.Topic", b =>
                 {
-                    b.HasOne("School.BLL.Models.Topic", "Parent")
+                    b.HasOne("School.Core.Models.Topic", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("School.BLL.Models.Course", b =>
+            modelBuilder.Entity("School.Core.Models.Course", b =>
                 {
                     b.Navigation("Groups");
                 });
 
-            modelBuilder.Entity("School.BLL.Models.StudentGroup", b =>
+            modelBuilder.Entity("School.Core.Models.StudentGroup", b =>
                 {
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("School.BLL.Models.Topic", b =>
+            modelBuilder.Entity("School.Core.Models.Topic", b =>
                 {
                     b.Navigation("Courses");
                 });

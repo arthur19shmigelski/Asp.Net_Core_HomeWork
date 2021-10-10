@@ -1,24 +1,25 @@
 ﻿using AutoMapper;
 using ElmahCore;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using School.BLL.Models;
 using School.BLL.Services.Course;
 using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
 using School.BLL.Services.Topic;
-using School.BLL.ShortModels;
+using School.Core.Models;
+using School.Core.Models.Filters;
+using School.Core.ShortModels;
 using School.MVC.Configuration;
+using School.MVC.Filters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace AcademyCRM.MVC.Controllers
+namespace School.MVC.Controllers
 {
-    [Authorize(Roles = "admin, manager, student")]
+    [TypeFilter(typeof(LocalExceptionFilter), Order = int.MinValue)]
     public class CoursesController : Controller
     {
         private readonly ICourseService _courseService;
@@ -72,8 +73,7 @@ namespace AcademyCRM.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
-            try
-            {
+
                 var model = id.HasValue ? _mapper.Map<CourseModel>(await _courseService.GetById(id.Value)) : new CourseModel();
 
                 if (id.HasValue)
@@ -81,12 +81,8 @@ namespace AcademyCRM.MVC.Controllers
 
                 ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(await _topicService.GetAll());
                 return View(model);
-            }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+
+
         }
 
         [HttpPost]
@@ -121,7 +117,6 @@ namespace AcademyCRM.MVC.Controllers
         {
             try
             {
-
                 await _courseService.Delete(id);
                 return RedirectToAction("Index");
             }
@@ -131,7 +126,27 @@ namespace AcademyCRM.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
-       
+
+        public async Task<IActionResult> Search(string search)
+        {
+            var courses = await _courseService.Search(search);
+            return View(nameof(Index), _mapper.Map<IEnumerable<CourseModel>>(courses));
+        }
+
+        [HttpGet]
+        public IActionResult Filter()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Filter(CourseFilterModel model)
+        {
+            var courses = await _courseService.Filter(_mapper.Map<CourseFilter>(model));
+
+            return View(nameof(Index), _mapper.Map<IEnumerable<CourseModel>>(courses));
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

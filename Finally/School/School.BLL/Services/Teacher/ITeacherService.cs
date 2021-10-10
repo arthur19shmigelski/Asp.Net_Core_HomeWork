@@ -2,7 +2,7 @@
 
 namespace School.BLL.Services.Teacher
 {
-    public interface ITeacherService : IEntityService<Models.Teacher>
+    public interface ITeacherService : IEntityService<Core.Models.Teacher>
     {
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using School.BLL.Models;
+using School.Core.Models;
 using School.Web.API.Dto;
 
 namespace School.Web.API.Mapper

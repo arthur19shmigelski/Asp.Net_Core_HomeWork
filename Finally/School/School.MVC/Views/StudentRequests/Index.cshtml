@@ -7,32 +7,32 @@
 
 <h1 class="text text-center alert-info"> <i>Список запросов</i></h1>
 
-<table id="sortingTable" class="table table-bordered table-striped ">
+<table  class="table table-bordered table-striped ">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
+
             <th> Создан </th>
             <th> Запрос на курс </th>
             <th> Имя студента </th>
             <th> Комментарий </th>
-            <th> Действие</th>
+            @if (ViewContext.HttpContext.User.IsInRole("admin"))
+            {<th> Действие</th>}
         </tr>
     </thead>
 
     <tbody>
         @foreach (var request in Model.OrderBy(r => r.CourseTitle).ThenBy(r => r.StudentName))
         {
-            <tr>
-                <td>@request.Id</td>
-                <td><a asp-controller="StudentRequests" asp-action="Edit" asp-route-id="@request.Id">@request.Created.ToShortDateString()</a></td>
-                <td><a asp-controller="Courses" asp-action="Edit" asp-route-id="@request.CourseId">@request.CourseTitle</a></td>
-                <td><a asp-controller="Students" asp-action="Edit" asp-route-id="@request.StudentId">@request.StudentName</a></td>
-                <td>@request.Comments</td>
+        <tr>
+            <td><a asp-controller="StudentRequests" asp-action="Edit" asp-route-id="@request.Id">@request.Created.ToShortDateString()</a></td>
+            <td><a asp-controller="Courses" asp-action="Edit" asp-route-id="@request.CourseId">@request.CourseTitle</a></td>
+            <td><a asp-controller="Students" asp-action="Edit" asp-route-id="@request.StudentId">@request.StudentName</a></td>
+            <td>@request.Comments</td>
+            @if (ViewContext.HttpContext.User.IsInRole("admin"))
+            {
                 <td>
                     <button type="submit" class="btn btn-outline-warning">
-                        Принять (пока не работает)
+                        @Html.ActionLink("Принять", "AcceptRequest", new { id = request.Id })
                     </button>
                     <a asp-action="Edit" asp-route-id="@request.Id" class="btn btn-outline-info">
                         Изменить
@@ -41,7 +41,8 @@
                         @Html.ActionLink("Отклонить", "Delete", new { id = request.Id })
                     </button>
                 </td>
-            </tr>
+            }
+        </tr>
         }
     </tbody>
     <tr>

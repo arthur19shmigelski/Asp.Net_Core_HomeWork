@@ -2,7 +2,7 @@
 
 namespace School.BLL.Services.StudentGroup
 {
-    public interface IStudentGroupService : IEntityService<Models.StudentGroup>
+    public interface IStudentGroupService : IEntityService<Core.Models.StudentGroup>
     {
 
     }

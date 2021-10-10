@@ -36,11 +36,10 @@ namespace School.BLL.Services.StudentGroup
             await _repository.Create(entity);
 
             //find all requests related to new group
-            var requests = await _requestService.GetOpenRequestsByCourse(entity.CourseId);
+            var requests = (await _requestService.GetOpenRequestsByCourse(entity.CourseId)).ToList();
 
-            var requestsToList = requests.ToList();
             //add students from requests to group
-            var studentsToGroup = requestsToList.Select(r => r.Student);
+            var studentsToGroup = requests.Select(r => r.Student);
             foreach (var student in studentsToGroup)
             {
                 student.GroupId = entity.Id;

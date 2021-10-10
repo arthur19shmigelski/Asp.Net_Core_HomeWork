@@ -74,15 +74,13 @@ namespace School.MVC.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
 
-                var model = id.HasValue ? _mapper.Map<CourseModel>(await _courseService.GetById(id.Value)) : new CourseModel();
+            var model = id.HasValue ? _mapper.Map<CourseModel>(await _courseService.GetById(id.Value)) : new CourseModel();
 
-                if (id.HasValue)
-                    model.Requests = _mapper.Map<IEnumerable<StudentRequestModel>>(await _requestService.GetOpenRequestsByCourse(id.Value));
+            if (id.HasValue)
+                model.Requests = _mapper.Map<IEnumerable<StudentRequestModel>>(await _requestService.GetOpenRequestsByCourse(id.Value));
 
-                ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(await _topicService.GetAll());
-                return View(model);
-
-
+            ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(await _topicService.GetAll());
+            return View(model);
         }
 
         [HttpPost]

@@ -55,8 +55,6 @@ namespace School.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int? id, int? courseId)
         {
-            try
-            {
                 StudentGroupModel model;
                 if (id.HasValue)
                 {
@@ -77,13 +75,6 @@ namespace School.MVC.Controllers
                 ViewBag.IsAdmin = HttpContext.User.IsInRole("admin");
 
                 return View(model);
-            }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
         }
 
         [HttpPost]

@@ -16,7 +16,7 @@ using System.Linq;
 using School.Core.Models.Enum;
 using System.Threading.Tasks;
 
-namespace AcademyCRM.MVC.Controllers
+namespace School.MVC.Controllers
 {
     [Authorize(Roles = "admin, manager, student")]
     public class StudentRequestsController : Controller

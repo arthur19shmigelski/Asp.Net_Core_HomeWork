@@ -11,13 +11,15 @@ using School.Core.Models;
 using School.Core.Models.Filters;
 using School.Core.ShortModels;
 using School.MVC.Configuration;
+using School.MVC.Filters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace AcademyCRM.MVC.Controllers
+namespace School.MVC.Controllers
 {
+    [TypeFilter(typeof(LocalExceptionFilter), Order = int.MinValue)]
     public class CoursesController : Controller
     {
         private readonly ICourseService _courseService;
@@ -71,8 +73,7 @@ namespace AcademyCRM.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
-            try
-            {
+
                 var model = id.HasValue ? _mapper.Map<CourseModel>(await _courseService.GetById(id.Value)) : new CourseModel();
 
                 if (id.HasValue)
@@ -80,12 +81,8 @@ namespace AcademyCRM.MVC.Controllers
 
                 ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(await _topicService.GetAll());
                 return View(model);
-            }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+
+
         }
 
         [HttpPost]

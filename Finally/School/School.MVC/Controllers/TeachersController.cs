@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
 {
-    [Authorize(Roles = "admin, manager")]
+    [Authorize(Roles = "admin, manager, student")]
     public class TeachersController : Controller
     {
         private readonly ITeacherService _teacherService;

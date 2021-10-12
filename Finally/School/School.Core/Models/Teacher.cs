@@ -6,6 +6,6 @@ namespace School.Core.Models
     {
         public string Bio { get; set; }
         public string LinkToProfile { get; set; }
-        public List<StudentGroup> Groups = new List<StudentGroup>();
+        public List<Group> Groups = new List<Group>();
     }
 }

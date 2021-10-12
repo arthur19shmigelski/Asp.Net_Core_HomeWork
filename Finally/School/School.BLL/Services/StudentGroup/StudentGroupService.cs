@@ -10,28 +10,28 @@ namespace School.BLL.Services.StudentGroup
 {
     public class StudentGroupService : IStudentGroupService
     {
-        private readonly IRepository<Core.Models.StudentGroup> _repository;
+        private readonly IRepository<Core.Models.Group> _repository;
         private readonly IStudentRequestService _requestService;
         private readonly IStudentService _studentService;
 
-        public StudentGroupService(IRepository<Core.Models.StudentGroup> repository, IStudentRequestService requestService, IStudentService studentService)
+        public StudentGroupService(IRepository<Core.Models.Group> repository, IStudentRequestService requestService, IStudentService studentService)
         {
             _repository = repository;
             _requestService = requestService;
             _studentService = studentService;
         }
 
-        public async Task<IEnumerable<Core.Models.StudentGroup>> GetAll()
+        public async Task<IEnumerable<Core.Models.Group>> GetAll()
         {
             return await _repository.GetAll();
         }
 
-        public async Task<Core.Models.StudentGroup> GetById(int id)
+        public async Task<Core.Models.Group> GetById(int id)
         {
             return await _repository.GetById(id);
         }
 
-        public async Task Create(Core.Models.StudentGroup entity)
+        public async Task Create(Core.Models.Group entity)
         {
             await _repository.Create(entity);
 
@@ -54,7 +54,7 @@ namespace School.BLL.Services.StudentGroup
             }
         }
 
-        public async Task Update(Core.Models.StudentGroup group)
+        public async Task Update(Core.Models.Group group)
         {
             await _repository.Update(group);
         }

@@ -26,6 +26,7 @@ namespace School.DAL.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -44,25 +45,6 @@ namespace School.DAL.EF.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Teachers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LinkToProfile = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Teachers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -193,6 +175,58 @@ namespace School.DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Manager",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Manager", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Manager_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teachers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LinkToProfile = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teachers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Teachers_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Courses",
                 columns: table => new
                 {
@@ -201,7 +235,10 @@ namespace School.DAL.EF.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Program = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TopicId = table.Column<int>(type: "int", nullable: false)
+                    TopicId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: true),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    DurationWeeks = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -224,7 +261,8 @@ namespace School.DAL.EF.Migrations
                     CourseId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    ManagerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -235,6 +273,12 @@ namespace School.DAL.EF.Migrations
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentGroups_Manager_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "Manager",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentGroups_Teachers_TeacherId",
                         column: x => x.TeacherId,
@@ -251,15 +295,23 @@ namespace School.DAL.EF.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Type = table.Column<int>(type: "int", nullable: false),
                     GroupId = table.Column<int>(type: "int", nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Students_StudentGroups_GroupId",
                         column: x => x.GroupId,
@@ -297,83 +349,6 @@ namespace School.DAL.EF.Migrations
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Students",
-                columns: new[] { "Id", "Age", "Email", "FirstName", "GroupId", "LastName", "Phone", "Type" },
-                values: new object[,]
-                {
-                    { 1, 22, "Fedorov@gmail.com", "Oleg", null, "Fedorov", "+375291111111", 0 },
-                    { 15, 25, "EfremovSergey@mail.ru", "Sergey", null, "Efremov", "+375441232323", 0 },
-                    { 14, 20, "Filimonova@gmail.com", "Alena", null, "Filimonova", "+375441534545", 2 },
-                    { 13, 29, "FistashkaIrina@yandex.by", "Irina", null, "Fistashka", "+375444444444", 0 },
-                    { 11, 22, "MorozNikita@gmail.com", "Nikita", null, "Moroz", "+375440110111", 1 },
-                    { 10, 39, "YakimovMiron@gmail.com", "Miron", null, "Yakimov", "+375441010101", 1 },
-                    { 9, 40, "VaneevaPolina@gmail.com", "Polina", null, "Vaneeva", "+375449999999", 2 },
-                    { 12, 25, "PonimashVitalik@gmail.com", "Vitalik", null, "Ponimash", "+375441212123", 0 },
-                    { 7, 50, "Micinat@gmail.com", "Vladimir", null, "Micinat", "+375447777777", 2 },
-                    { 6, 25, "Sergeenko@yandex.com", "Maxim", null, "Sergeenko", "+375446666666", 2 },
-                    { 5, 25, "Shmigelski@gmail.com", "Arthur", null, "Shmigelski", "+375295555555", 0 },
-                    { 4, 19, "Ivashko@gmail.com", "Sergey", null, "Ivashko", "+375444444444", 0 },
-                    { 3, 17, "Petrov@gmail.com", "Ivan", null, "Petrov", "+375443333333", 1 },
-                    { 2, 26, "Antonov@gmail.com", "Andrey", null, "Antonov", "+375292222222", 2 },
-                    { 8, 46, "Frunze@mail.ru", "Anatoliy", null, "Frunze", "+375448888888", 1 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Teachers",
-                columns: new[] { "Id", "Age", "Bio", "Email", "FirstName", "LastName", "LinkToProfile", "Phone" },
-                values: new object[,]
-                {
-                    { 1, 30, "My name is Vadim Korotkov. I'am full-stack developer. I know all language, frameworks", "Korotkov@mail.ru", "Vadim", "Korotkov", "https://www.linkedin.com/feed/Korotkov", "+375291111111" },
-                    { 2, 32, "My name is Sergey Gromov. I'am a back-end developer on .Net Framework + Java (JS).", "Gromov@yandex.ru", "Sergey", "Gromov", "https://www.linkedin.com/feed/Gromov", "+375292222222" },
-                    { 3, 36, "My name is Andrew Kamilov. I'am front-end developer, know some modern frameworks (Angular, Vue, React)", "Kamilov@yandex.ru", "Andrew", "Kamilov", "https://www.linkedin.com/feed/Kamilov", "+375293333333" },
-                    { 4, 34, "My name is Marina Kuzmina. I am a Design teacher", "Kuzmina@yandex.ru", "Marina", "Kuzmina", "https://www.linkedin.com/feed/Kuzmina", "+375296561723" },
-                    { 5, 27, "My name is Vladimir Vorobei. I am a C# language teacher", "Vorobei@yandex.ru", "Vladimir", "Vorobei", "https://www.linkedin.com/feed/Vorobei", "+375290989093" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Topics",
-                columns: new[] { "Id", "Description", "ParentId", "Title" },
-                values: new object[,]
-                {
-                    { 2, "	Язык программирования Java находится в числе лидеров во многих рейтингах: TIOBE – на основе подсчёта результатов поисковых запросов, PYPL – по анализу популярности в поисковике Google, IEEE – по комплексу показателей, таких как упоминание в проектах, статьях, вакансиях и других. Такая популярность обусловлена практически безграничными его возможностями и областями применения.\n	Java не зависит от определённой платформы, его называют безопасным, портативным, высокопроизводительным и динамичным языком.", null, "Java" },
-                    { 1, "	C# (си шарп) – объектно-ориентированный язык программирования, разработанный компанией Microsoft. Прямой интерес такой крупной корпорации к языку гарантирует, что он продолжит развиваться и находить применение в различных отраслях.\n	C Sharp впитал лучшие качества, а также унаследовал особенности синтаксиса Java и C++. Применяется язык для веб-разработки, создания настольных и мобильных приложений. Если вы записались на курс по C# в Минске для того, чтобы научиться создавать web-проекты, то в дальнейшем вам необходимо освоить инструментарий .NET.", null, ".Net" },
-                    { 3, "	UI/UX и web-дизайн ориентирован на создание внешне привлекательных, удобных в использовании и функциональных пользовательских интерфейсов. Чтобы достичь успеха в этой сфере, необходимо обладать художественным вкусом, быть внимательным к деталям, понимать принципы компьютерной графики и визуального дизайна, уметь работать с инструментами (например, Adobe Photoshop, Adobe Illustrator, Sketch, Figma).", null, "Design" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Courses",
-                columns: new[] { "Id", "Description", "Program", "Title", "TopicId" },
-                values: new object[,]
-                {
-                    { 1, "Базовый уровень", "1. Вводное. Установка окружения(C#, Visual Studio). Запуск первой программы Console Application.\n2. Типы данных. Переменные. Операторы.\n3. Операторы if/switch.\n4. Циклы.\n5. И многое другое...", "C#", 1 },
-                    { 4, "Средний уровень", "1. Основы MVC: -Паттерн MVC, MVC контроллеры, разработка представлений.\n2. Основы WebApi: -Архитектура REST; -Проектирование RESTful сервисов, Self-Hosted приложения\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики; -DI и паттерн IoC\n4. Работа с данными: -Понятие ORM, Entity Framework; -Основные подходы к проектированию БД: CodeFirst, DatabaseFirst, ModelFirst\n5. И многое другое...", "Промышленная разработка ПО на ASP.NET", 1 },
-                    { 7, "Высокий уровень", "1. Введение в Unity. Hello world с Unity.\n2. Scripts (Cкрипты). Part 1: -Методология; -Игровые объекты и компоненты; -Cлои, ввод данных, теги.\n3. Scripts (Скрипты). Part 2: -Manual: Immediate Mode GUI (IMGUI); -Сопрограммы.\n4. Инструментарий для разработки 2D-игр.\n5. И многое другое...", "Unity", 1 },
-                    { 2, "Базовый уровень", "1. Вводное. Установка окружения(Java, Intellij IDEA). Запуск первой программы.\n2. Типы данных. Переменные. Операторы.\n3. Операторы if/switch.\n4. Циклы.\n5. И многое другое...", "Java", 2 },
-                    { 5, "Средний уровень", "1. Основы Apache Maven.\n2. Инженерные техники при работе с Apache Maven.\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики, паттерн DAO; -Практика.\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL.\n5. И многое другое...", "Промышленная разработка ПО на Java", 2 },
-                    { 8, "Высокий уровень", "1. JQuery.\n2. EscmaScript6.\n3. Расширенные возможность JavaScript\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL\n5. И многое другое...", "Full-stack developer", 2 },
-                    { 3, "Базовый уровень", "1. Принципы визуального дизайна.\n2. Особенности UI/UX/web дизайна.\n3. Основы композиции.\n4. Правила работы со шрифтами.\n5. И многое другое...", "Web Design", 3 },
-                    { 6, "Средний уровень", "1. Знакомство с библиотекой React.\n2. Настройка Git и Webpack.\n3. Глубокое изучение JavaScript.\n4. Твоя первая большая курсовая работа в команде (простой суши-магазин).\n5. И многое другое...", "Веб-разработка на языках HTML, CSS и JavaScript ", 3 },
-                    { 9, "Высокий уровень", "1. Знакомство с библиотекой React\n2.Знакомство с библиотекой Angular\n3. Знакомство с библиотекой Vue\n4. Твоя первая большая курсовая работа в команде (3 проекта на каждом фрэймворке - магазин доставки цветов)\n5. И многое другое...", "Angular, React, Vue", 3 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "StudentRequests",
-                columns: new[] { "Id", "Comments", "CourseId", "Created", "ReadyToStartDate", "Status", "StudentId", "Updated" },
-                values: new object[,]
-                {
-                    { 1, "Хочу учиться на C# (basic) ", 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 1, null },
-                    { 2, "Хочу учиться на C# (basic)", 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 2, null },
-                    { 7, "Хочу учиться на C# (средний)", 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 7, null },
-                    { 8, "Хочу учиться на С# (средний)", 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 7, null },
-                    { 3, "Хочу учиться на Java (basic)", 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 3, null },
-                    { 4, "Хочу учиться на Java (basic)", 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 4, null },
-                    { 9, "Хочу учиться на Java (средний)", 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 9, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 8, null },
-                    { 10, "Хочу учиться на Java (средний)", 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 9, null },
-                    { 5, "Хочу учиться на Design (basic)", 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 5, null },
-                    { 6, "Хочу учиться на Design (basic)", 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 6, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -421,9 +396,19 @@ namespace School.DAL.EF.Migrations
                 column: "TopicId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Manager_ApplicationUserId",
+                table: "Manager",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StudentGroups_CourseId",
                 table: "StudentGroups",
                 column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentGroups_ManagerId",
+                table: "StudentGroups",
+                column: "ManagerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentGroups_TeacherId",
@@ -441,9 +426,19 @@ namespace School.DAL.EF.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Students_ApplicationUserId",
+                table: "Students",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Students_GroupId",
                 table: "Students",
                 column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teachers_ApplicationUserId",
+                table: "Teachers",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Topics_ParentId",
@@ -475,9 +470,6 @@ namespace School.DAL.EF.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Students");
 
             migrationBuilder.DropTable(
@@ -487,10 +479,16 @@ namespace School.DAL.EF.Migrations
                 name: "Courses");
 
             migrationBuilder.DropTable(
+                name: "Manager");
+
+            migrationBuilder.DropTable(
                 name: "Teachers");
 
             migrationBuilder.DropTable(
                 name: "Topics");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

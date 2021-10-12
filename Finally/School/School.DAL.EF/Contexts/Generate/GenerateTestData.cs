@@ -9,16 +9,16 @@ namespace School.DAL.EF.Contexts.Generate
         #region FirstName and LastName
         //50 element in first name
         public string[] firstName = {
-            "Август", "Августин", "Авраам", "Аврора", "Агата",
-            "Агафон", "Агнесса", "Агния", "Ада", "Аделаида",
-            "Аделина", "Адонис", "Акайо", "Акулина", "Алан",
-            "Алевтина", "Александр", "Александра", "Алексей", "Алена",
-            "Алина", "Алиса", "Алла", "Алсу", "Альберт",
-            "Альбина", "Альфия", "Альфред", "Амалия", "Амелия",
-            "Анастасий", "Анастасия", "Анатолий", "Ангелина", "Андрей",
-            "Анжела", "Анжелика", "Анисий", "Анна", "Антон",
-            "Антонина", "Анфиса", "Аполлинарий", "Аполлон", "Ариадна",
-            "Арина", "Аристарх", "Аркадий", "Арсен", "Арсений",
+            "Август", "Августин", "Авраам", "Миклуха", "Свирид",
+            "Агафон", "Николай", "Агний", "Степан", "Аделаид",
+            "Аделин", "Адонис", "Акайо", "Акулин", "Алан",
+            "Алевтин", "Александр", "Александр", "Алексей", "Алексей",
+            "Махбет", "Виталий", "Сергей", "Алсу", "Альберт",
+            "Виктор", "Дмитрий", "Альфред", "Кузьма", "Артур",
+            "Ян", "Михаил", "Анатолий", "Артём", "Андрей",
+            "Евкакий", "Митрофан", "Анисий", "Анна", "Антон",
+            "Митя", "Евдаким", "Аполлинарий", "Аполлон", "Хасбик",
+            "Аннатолий", "Аристарх", "Аркадий", "Арсен", "Арсений",
            };
 
         //50 element in last name
@@ -36,7 +36,7 @@ namespace School.DAL.EF.Contexts.Generate
             };
         #endregion
         #region Phone 
-        public static List<string> GenerateListPhone(int count)
+        public static List<string> PhoneListGenerate(int count)
         {
             List<string> Phone = new();
             string[] Code =
@@ -101,16 +101,14 @@ namespace School.DAL.EF.Contexts.Generate
         }
         #endregion
         #region Age
-        public static List<int> DateListGenerate(int size)
+        public static int AgeGenerate()
         {
-            List<int> ages = new();
-            Random rnd = new();
-            for (int i = 0; i < size; i++)
-            {
-                ages.Add(rnd.Next(16, 80));
-            }
-            
-            return ages;
+            byte minAgePerson = 16;
+            byte maxAgePerson = 80;
+
+            Random rnd = new Random();
+
+            return rnd.Next(minAgePerson, maxAgePerson);
         }
         #endregion
     }

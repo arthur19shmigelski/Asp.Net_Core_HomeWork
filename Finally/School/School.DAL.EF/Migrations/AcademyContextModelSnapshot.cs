@@ -82,6 +82,10 @@ namespace School.DAL.EF.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -133,6 +137,8 @@ namespace School.DAL.EF.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -351,6 +357,82 @@ namespace School.DAL.EF.Migrations
                         });
                 });
 
+            modelBuilder.Entity("School.Core.Models.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("ManagerId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("StudentGroups");
+                });
+
+            modelBuilder.Entity("School.Core.Models.Manager", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("Age")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Manager");
+                });
+
             modelBuilder.Entity("School.Core.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -361,6 +443,9 @@ namespace School.DAL.EF.Migrations
                     b.Property<int?>("Age")
                         .IsRequired()
                         .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(100)
@@ -387,6 +472,8 @@ namespace School.DAL.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("GroupId");
 
@@ -545,38 +632,6 @@ namespace School.DAL.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("School.Core.Models.StudentGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("StudentGroups");
-                });
-
             modelBuilder.Entity("School.Core.Models.StudentRequest", b =>
                 {
                     b.Property<int>("Id")
@@ -727,6 +782,9 @@ namespace School.DAL.EF.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Bio")
                         .HasColumnType("nvarchar(max)");
 
@@ -752,6 +810,8 @@ namespace School.DAL.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Teachers");
 
@@ -856,6 +916,13 @@ namespace School.DAL.EF.Migrations
                         });
                 });
 
+            modelBuilder.Entity("School.Core.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -918,22 +985,17 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Topic");
                 });
 
-            modelBuilder.Entity("School.Core.Models.Student", b =>
-                {
-                    b.HasOne("School.Core.Models.StudentGroup", "Group")
-                        .WithMany("Students")
-                        .HasForeignKey("GroupId");
-
-                    b.Navigation("Group");
-                });
-
-            modelBuilder.Entity("School.Core.Models.StudentGroup", b =>
+            modelBuilder.Entity("School.Core.Models.Group", b =>
                 {
                     b.HasOne("School.Core.Models.Course", "Course")
                         .WithMany("Groups")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("School.Core.Models.Manager", null)
+                        .WithMany("Groups")
+                        .HasForeignKey("ManagerId");
 
                     b.HasOne("School.Core.Models.Teacher", "Teacher")
                         .WithMany()
@@ -942,6 +1004,26 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("School.Core.Models.Manager", b =>
+                {
+                    b.HasOne("School.Core.Models.ApplicationUser", null)
+                        .WithMany("Manager")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("School.Core.Models.Student", b =>
+                {
+                    b.HasOne("School.Core.Models.ApplicationUser", null)
+                        .WithMany("Student")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("School.Core.Models.Group", "Group")
+                        .WithMany("Students")
+                        .HasForeignKey("GroupId");
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("School.Core.Models.StudentRequest", b =>
@@ -963,6 +1045,13 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("School.Core.Models.Teacher", b =>
+                {
+                    b.HasOne("School.Core.Models.ApplicationUser", null)
+                        .WithMany("Teacher")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
             modelBuilder.Entity("School.Core.Models.Topic", b =>
                 {
                     b.HasOne("School.Core.Models.Topic", "Parent")
@@ -977,14 +1066,28 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Groups");
                 });
 
-            modelBuilder.Entity("School.Core.Models.StudentGroup", b =>
+            modelBuilder.Entity("School.Core.Models.Group", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("School.Core.Models.Manager", b =>
+                {
+                    b.Navigation("Groups");
                 });
 
             modelBuilder.Entity("School.Core.Models.Topic", b =>
                 {
                     b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("School.Core.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Manager");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Teacher");
                 });
 #pragma warning restore 612, 618
         }

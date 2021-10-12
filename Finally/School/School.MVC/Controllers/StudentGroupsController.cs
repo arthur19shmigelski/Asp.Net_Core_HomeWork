@@ -86,7 +86,7 @@ namespace School.MVC.Controllers
                 if (!ModelState.IsValid)
                     return View(groupModel);
 
-                var group = _mapper.Map<StudentGroup>(groupModel);
+                var group = _mapper.Map<Group>(groupModel);
                 if (groupModel.Id > 0)
                     await _groupService.Update(group);
                 else

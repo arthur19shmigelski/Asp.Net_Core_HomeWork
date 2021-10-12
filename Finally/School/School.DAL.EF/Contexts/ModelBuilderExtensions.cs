@@ -1,25 +1,116 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using School.Core.Models;
 using School.Core.Models.Enum;
-using School.DAL.EF.Contexts.Generate;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.DAL.EF.Contexts
 {
     public static class ModelBuilderExtensions
     {
+        public static async Task Initialize(AcademyContext context,
+            IServiceProvider serviceProvider, 
+            UserManager<IdentityUser> userManager)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            var roles = new[] { "admin", "manager", "student" };
+
+            foreach (var roleName in roles)
+            {
+                roleManager.CreateAsync(new IdentityRole
+                {
+                    Name = roleName,
+                    NormalizedName = roleName.ToUpper()
+                }).Wait();
+            }
+
+            string email = "admin@email.com";
+            string password = "ASDqwe!@3";
+
+            if (userManager.FindByEmailAsync(email).Result == null)
+            {
+                IdentityUser user = new();
+                user.UserName = email;
+                user.Email = email;
+                user.EmailConfirmed = true;
+
+                IdentityResult result = userManager.CreateAsync(user, password).Result;
+
+                if(result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "admin").Wait();
+                }
+            }
+
+
+            #region Привязка студент - пользователь_системы_student
+            var students = context.Students.ToList();
+
+            if(students.Count > 0)
+            {
+                foreach (var student in students)
+                { 
+                    if (userManager.FindByEmailAsync(student.Email).Result == null)
+                    {
+                        IdentityUser user = new();
+
+                        user.UserName = student.Email;
+                        user.Email = student.Email;
+                        user.EmailConfirmed = true;
+
+                        string studentPassword = student.Email + "!@3QWe";
+                        student.UserId = user.Id;
+
+                        IdentityResult result = userManager.CreateAsync(user, studentPassword).Result;
+
+                        if (result.Succeeded)
+                        {
+                            userManager.AddToRoleAsync(user, "student").Wait();
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region Привязка учитель - пользователь_системы_manager
+            var teachers = context.Teachers.ToList();
+
+            if (teachers.Count > 0)
+            {
+                foreach (var teacher in teachers)
+                {
+                    if (userManager.FindByEmailAsync(teacher.Email).Result == null)
+                    {
+                        IdentityUser user = new();
+
+                        user.UserName = teacher.Email;
+                        user.Email = teacher.Email;
+                        user.EmailConfirmed = true;
+
+                        string teacherPassword = teacher.Email + "!@3QWe";
+                        teacher.UserId = user.Id;
+
+                        IdentityResult result = userManager.CreateAsync(user, teacherPassword).Result;
+
+                        if (result.Succeeded)
+                        {
+                            userManager.AddToRoleAsync(user, "manager").Wait();
+                        }
+                    }
+                }
+            }
+            #endregion
+        }
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            GenerateTestData GenerateTestdata = new();
            
-            /*------------------------------------------------------------------------------------------------------------------------*/
-            /*Seed for 3 Topics*/
-            var topic1 = new Topic()
+          /*------------------------------------------------------------------------------------------------------------------------*/
+          /*Seed for 3 Topics*/
+          var topic1 = new Topic()
             {
                 Id = 1,
                 Title = ".Net",
@@ -224,7 +315,7 @@ namespace School.DAL.EF.Contexts
                 Bio = "My name is Vadim Korotkov. I'am full-stack developer. I know all language, frameworks",
                 Age = 30,
                 Email = "Korotkov@mail.ru",
-                Phone = "+375291111111"
+                Phone = "+375291111111",
             };
             var teacher2 = new Teacher()
             {

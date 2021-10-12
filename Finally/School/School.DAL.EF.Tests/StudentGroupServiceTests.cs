@@ -16,7 +16,7 @@ namespace School.DAL.EF.Tests
     {
         private Mock<IStudentService> studentService;
         private Mock<IStudentRequestService> requestService;
-        private Mock<IRepository<StudentGroup>> repository;
+        private Mock<IRepository<Group>> repository;
 
         private StudentGroupService underTest;
         [SetUp]
@@ -24,7 +24,7 @@ namespace School.DAL.EF.Tests
         {
             studentService = new Mock<IStudentService>();
             requestService = new Mock<IStudentRequestService>();
-            repository = new Mock<IRepository<StudentGroup>>();
+            repository = new Mock<IRepository<Group>>();
 
             underTest = new StudentGroupService(repository.Object,
                 requestService.Object, studentService.Object);
@@ -37,7 +37,7 @@ namespace School.DAL.EF.Tests
             var testGroupId = 1;
 
             Student student = new();
-            var group = new StudentGroup {Id = testGroupId, CourseId = testCourseId };
+            var group = new Group {Id = testGroupId, CourseId = testCourseId };
 
             var requests = GenerateRequests(testCourseId, student);
 
@@ -60,7 +60,7 @@ namespace School.DAL.EF.Tests
             var testGroupId = 1;
 
             var student = new Student() { GroupId = null };
-            var group = new StudentGroup { Id = testGroupId, CourseId = testCourseId };
+            var group = new Group { Id = testGroupId, CourseId = testCourseId };
             List<StudentRequest> requests = GenerateRequests(testCourseId, student);
 
             requestService

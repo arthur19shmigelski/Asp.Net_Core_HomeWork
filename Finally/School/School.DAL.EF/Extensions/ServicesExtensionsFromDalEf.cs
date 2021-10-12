@@ -13,7 +13,7 @@ namespace School.DAL.EF.Extensions
             services.AddScoped<ICourseRepository, CoursesRepository>();
             services.AddScoped<IRepository<Teacher>, TeachersRepository>();
             services.AddScoped<IStudentRepository, StudentsRepository>();
-            services.AddScoped<IRepository<StudentGroup>, StudentGroupsRepository>();
+            services.AddScoped<IRepository<Group>, StudentGroupsRepository>();
             services.AddScoped<IRepository<StudentRequest>, StudentRequestsRepository>();
 
             return services;

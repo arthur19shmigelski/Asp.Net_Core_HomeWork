@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace School.Core.Models
 {
-    public class StudentGroup
+    public class Group
     {
         public int Id { get; set; }
 

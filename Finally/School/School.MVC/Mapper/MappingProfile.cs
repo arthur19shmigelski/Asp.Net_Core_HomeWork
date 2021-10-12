@@ -15,7 +15,7 @@ namespace School.MVC.Mapper
                 .ReverseMap();
             CreateMap<Student, StudentModel>()
                 .ReverseMap();
-            CreateMap<StudentGroup, StudentGroupModel>()
+            CreateMap<Group, StudentGroupModel>()
                 //.ForMember(model => model.TeacherName, map => map.MapFrom(g => $"{g.Teacher.FirstName} {g.Teacher.LastName}"))
                 .ReverseMap();
             CreateMap<Topic, TopicModel>()

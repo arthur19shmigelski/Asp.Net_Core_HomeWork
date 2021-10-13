@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StudentModel>
+﻿@model IEnumerable<Student>
 @using School.Core.Models.Enum
 @{
     ViewData["Title"] = "Index";
@@ -61,3 +61,4 @@
         <a asp-action="Edit" class="btn btn-success">Добавить нового студента</a>
     </p>
 </body>
+@await Html.PartialAsync("Partial/Pages", Model)

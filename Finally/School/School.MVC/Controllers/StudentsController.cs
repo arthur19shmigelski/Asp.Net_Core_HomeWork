@@ -6,10 +6,12 @@ using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;
 using School.Core.Models;
 using School.Core.Models.Enum;
+using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
@@ -28,17 +30,20 @@ namespace School.MVC.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index(string sortRecords, string searchString, int skip, int take, EnumPageActions action, EnumSearchParametersStudent searchParameter)
+        public async Task<IActionResult> Index(QueryOptions options,string sortRecords, string searchString, int skip, int take, EnumPageActions action, EnumSearchParametersStudent searchParameter)
         {
             try
             {
                 ViewData["searchString"] = searchString;
                 ViewData["searchParameter"] = searchParameter;
 
+                var newStudents = await _studentsService.GetByPages(options);
 
-                var students = await _studentsService.GetAll();
 
-                return View(_mapper.Map<IEnumerable<StudentModel>>(students));
+                //var students = await _studentsService.GetAll();
+                var value = _mapper.Map<IEnumerable<StudentModel>>(newStudents);
+                value = value.ToList();
+                return View(newStudents);
             }
 
             catch (Exception e)

@@ -94,8 +94,8 @@ namespace School.MVC.Controllers
             try
             {
                 var topic = _mapper.Map<Topic>(await _topicService.GetById(id));
-                    await _topicService.Delete(id);
-                    return RedirectToAction(nameof(Index));
+                await _topicService.Delete(id);
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception e)
             {

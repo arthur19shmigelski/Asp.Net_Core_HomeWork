@@ -1,6 +1,5 @@
 ﻿using School.Core.Models;
 using School.Core.Models.Pages;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace School.DAL.Interfaces

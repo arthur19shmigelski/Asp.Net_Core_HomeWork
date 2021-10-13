@@ -30,7 +30,7 @@ namespace School.MVC.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index(QueryOptions options,string sortRecords, string searchString, int skip, int take, EnumPageActions action, EnumSearchParametersStudent searchParameter)
+        public async Task<IActionResult> Index(QueryOptions options, string sortRecords, string searchString, int skip, int take, EnumPageActions action, EnumSearchParametersStudent searchParameter)
         {
             try
             {

@@ -24,7 +24,7 @@ namespace School.DAL.EF.Repositories
         }
         public async Task<IEnumerable<Group>> GetAll()
         {
-            return  await _context.StudentGroups.Include(g => g.Teacher).ToListAsync();
+            return await _context.StudentGroups.Include(g => g.Teacher).ToListAsync();
         }
 
         public async Task Update(Group item)

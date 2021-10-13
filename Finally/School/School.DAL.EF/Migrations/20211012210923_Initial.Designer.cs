@@ -10,7 +10,7 @@ using School.DAL.EF.Contexts;
 namespace School.DAL.EF.Migrations
 {
     [DbContext(typeof(AcademyContext))]
-    [Migration("20211012191753_Initial")]
+    [Migration("20211012210923_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,10 +84,6 @@ namespace School.DAL.EF.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -139,8 +135,6 @@ namespace School.DAL.EF.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -268,9 +262,6 @@ namespace School.DAL.EF.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ManagerId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -288,50 +279,9 @@ namespace School.DAL.EF.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("ManagerId");
-
                     b.HasIndex("TeacherId");
 
                     b.ToTable("StudentGroups");
-                });
-
-            modelBuilder.Entity("School.Core.Models.Manager", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("Age")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Manager");
                 });
 
             modelBuilder.Entity("School.Core.Models.Student", b =>
@@ -344,9 +294,6 @@ namespace School.DAL.EF.Migrations
                     b.Property<int?>("Age")
                         .IsRequired()
                         .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(100)
@@ -373,8 +320,6 @@ namespace School.DAL.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("GroupId");
 
@@ -429,9 +374,6 @@ namespace School.DAL.EF.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Bio")
                         .HasColumnType("nvarchar(max)");
 
@@ -458,8 +400,6 @@ namespace School.DAL.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.ToTable("Teachers");
                 });
 
@@ -484,13 +424,6 @@ namespace School.DAL.EF.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("Topics");
-                });
-
-            modelBuilder.Entity("School.Core.Models.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -563,10 +496,6 @@ namespace School.DAL.EF.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("School.Core.Models.Manager", null)
-                        .WithMany("Groups")
-                        .HasForeignKey("ManagerId");
-
                     b.HasOne("School.Core.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId");
@@ -576,19 +505,8 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("School.Core.Models.Manager", b =>
-                {
-                    b.HasOne("School.Core.Models.ApplicationUser", null)
-                        .WithMany("Manager")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
             modelBuilder.Entity("School.Core.Models.Student", b =>
                 {
-                    b.HasOne("School.Core.Models.ApplicationUser", null)
-                        .WithMany("Student")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("School.Core.Models.Group", "Group")
                         .WithMany("Students")
                         .HasForeignKey("GroupId");
@@ -615,13 +533,6 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("School.Core.Models.Teacher", b =>
-                {
-                    b.HasOne("School.Core.Models.ApplicationUser", null)
-                        .WithMany("Teacher")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
             modelBuilder.Entity("School.Core.Models.Topic", b =>
                 {
                     b.HasOne("School.Core.Models.Topic", "Parent")
@@ -641,23 +552,9 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("School.Core.Models.Manager", b =>
-                {
-                    b.Navigation("Groups");
-                });
-
             modelBuilder.Entity("School.Core.Models.Topic", b =>
                 {
                     b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("School.Core.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Manager");
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Teacher");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,12 +8,12 @@ using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
 using School.Core.Models;
+using School.Core.Models.Enum;
 using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using School.Core.Models.Enum;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers

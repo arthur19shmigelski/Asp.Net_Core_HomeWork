@@ -12,7 +12,7 @@ namespace School.DAL.EF.Contexts
     public static class ModelBuilderExtensions
     {
         public static async Task Initialize(AcademyContext context,
-            IServiceProvider serviceProvider, 
+            IServiceProvider serviceProvider,
             UserManager<IdentityUser> userManager)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -40,7 +40,7 @@ namespace School.DAL.EF.Contexts
 
                 IdentityResult result = userManager.CreateAsync(user, password).Result;
 
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     userManager.AddToRoleAsync(user, "admin").Wait();
                 }
@@ -50,10 +50,10 @@ namespace School.DAL.EF.Contexts
             #region Привязка студент - пользователь_системы_student
             var students = context.Students.ToList();
 
-            if(students.Count > 0)
+            if (students.Count > 0)
             {
                 foreach (var student in students)
-                { 
+                {
                     if (userManager.FindByEmailAsync(student.Email).Result == null)
                     {
                         IdentityUser user = new();
@@ -107,20 +107,20 @@ namespace School.DAL.EF.Contexts
         }
         public static void Seed(this ModelBuilder modelBuilder)
         {
-           
-          /*------------------------------------------------------------------------------------------------------------------------*/
-          /*Seed for 3 Topics*/
-          var topic1 = new Topic()
+
+            /*------------------------------------------------------------------------------------------------------------------------*/
+            /*Seed for 3 Topics*/
+            var topic1 = new Topic()
             {
                 Id = 1,
                 Title = ".Net",
                 Description = "\tC# (си шарп) – объектно-ориентированный язык программирования, разработанный " +
-                "компанией Microsoft. Прямой интерес такой крупной корпорации к языку гарантирует, что он " +
-                "продолжит развиваться и находить применение в различных отраслях." + "\n\t" +
-                "C Sharp впитал лучшие качества, а также унаследовал особенности " +
-                "синтаксиса Java и C++. Применяется язык для веб-разработки, создания настольных и " +
-                "мобильных приложений. Если вы записались на курс по C# в Минске для того, чтобы научиться " +
-                "создавать web-проекты, то в дальнейшем вам необходимо освоить инструментарий .NET."
+                  "компанией Microsoft. Прямой интерес такой крупной корпорации к языку гарантирует, что он " +
+                  "продолжит развиваться и находить применение в различных отраслях." + "\n\t" +
+                  "C Sharp впитал лучшие качества, а также унаследовал особенности " +
+                  "синтаксиса Java и C++. Применяется язык для веб-разработки, создания настольных и " +
+                  "мобильных приложений. Если вы записались на курс по C# в Минске для того, чтобы научиться " +
+                  "создавать web-проекты, то в дальнейшем вам необходимо освоить инструментарий .NET."
 
             };
             var topic2 = new Topic()

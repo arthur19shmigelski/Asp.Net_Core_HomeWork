@@ -55,26 +55,26 @@ namespace School.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int? id, int? courseId)
         {
-                StudentGroupModel model;
-                if (id.HasValue)
+            StudentGroupModel model;
+            if (id.HasValue)
+            {
+                var group = await _groupService.GetById(id.Value);
+                model = _mapper.Map<StudentGroupModel>(group);
+                model.Students = _mapper.Map<IEnumerable<StudentModel>>(group.Students);
+            }
+            else
+            {
+                model = new StudentGroupModel
                 {
-                    var group = await _groupService.GetById(id.Value);
-                    model = _mapper.Map<StudentGroupModel>(group);
-                    model.Students = _mapper.Map<IEnumerable<StudentModel>>(group.Students);
-                }
-                else
-                {
-                    model = new StudentGroupModel
-                    {
-                        StartDate = DateTime.Today
-                    };
-                }
+                    StartDate = DateTime.Today
+                };
+            }
 
-                ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherModel>>(await _teacherService.GetAll());
-                ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(await _courseService.GetAll());
-                ViewBag.IsAdmin = HttpContext.User.IsInRole("admin");
+            ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherModel>>(await _teacherService.GetAll());
+            ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(await _courseService.GetAll());
+            ViewBag.IsAdmin = HttpContext.User.IsInRole("admin");
 
-                return View(model);
+            return View(model);
         }
 
         [HttpPost]

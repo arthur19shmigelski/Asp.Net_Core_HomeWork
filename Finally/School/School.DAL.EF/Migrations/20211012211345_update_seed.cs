@@ -3,42 +3,42 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace School.DAL.EF.Migrations
 {
-    public partial class updateseed : Migration
+    public partial class update_seed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
                 table: "Students",
-                columns: new[] { "Id", "Age", "ApplicationUserId", "Email", "FirstName", "GroupId", "LastName", "Phone", "Type", "UserId" },
+                columns: new[] { "Id", "Age", "Email", "FirstName", "GroupId", "LastName", "Phone", "Type", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 22, null, "Fedorov@gmail.com", "Oleg", null, "Fedorov", "+375291111111", 0, null },
-                    { 15, 25, null, "EfremovSergey@mail.ru", "Sergey", null, "Efremov", "+375441232323", 0, null },
-                    { 14, 20, null, "Filimonova@gmail.com", "Alena", null, "Filimonova", "+375441534545", 2, null },
-                    { 13, 29, null, "FistashkaIrina@yandex.by", "Irina", null, "Fistashka", "+375444444444", 0, null },
-                    { 11, 22, null, "MorozNikita@gmail.com", "Nikita", null, "Moroz", "+375440110111", 1, null },
-                    { 10, 39, null, "YakimovMiron@gmail.com", "Miron", null, "Yakimov", "+375441010101", 1, null },
-                    { 9, 40, null, "VaneevaPolina@gmail.com", "Polina", null, "Vaneeva", "+375449999999", 2, null },
-                    { 12, 25, null, "PonimashVitalik@gmail.com", "Vitalik", null, "Ponimash", "+375441212123", 0, null },
-                    { 7, 50, null, "Micinat@gmail.com", "Vladimir", null, "Micinat", "+375447777777", 2, null },
-                    { 6, 25, null, "Sergeenko@yandex.com", "Maxim", null, "Sergeenko", "+375446666666", 2, null },
-                    { 5, 25, null, "Shmigelski@gmail.com", "Arthur", null, "Shmigelski", "+375295555555", 0, null },
-                    { 4, 19, null, "Ivashko@gmail.com", "Sergey", null, "Ivashko", "+375444444444", 0, null },
-                    { 3, 17, null, "Petrov@gmail.com", "Ivan", null, "Petrov", "+375443333333", 1, null },
-                    { 2, 26, null, "Antonov@gmail.com", "Andrey", null, "Antonov", "+375292222222", 2, null },
-                    { 8, 46, null, "Frunze@mail.ru", "Anatoliy", null, "Frunze", "+375448888888", 1, null }
+                    { 1, 22, "Fedorov@gmail.com", "Oleg", null, "Fedorov", "+375291111111", 0, null },
+                    { 15, 25, "EfremovSergey@mail.ru", "Sergey", null, "Efremov", "+375441232323", 0, null },
+                    { 14, 20, "Filimonova@gmail.com", "Alena", null, "Filimonova", "+375441534545", 2, null },
+                    { 13, 29, "FistashkaIrina@yandex.by", "Irina", null, "Fistashka", "+375444444444", 0, null },
+                    { 11, 22, "MorozNikita@gmail.com", "Nikita", null, "Moroz", "+375440110111", 1, null },
+                    { 10, 39, "YakimovMiron@gmail.com", "Miron", null, "Yakimov", "+375441010101", 1, null },
+                    { 9, 40, "VaneevaPolina@gmail.com", "Polina", null, "Vaneeva", "+375449999999", 2, null },
+                    { 12, 25, "PonimashVitalik@gmail.com", "Vitalik", null, "Ponimash", "+375441212123", 0, null },
+                    { 7, 50, "Micinat@gmail.com", "Vladimir", null, "Micinat", "+375447777777", 2, null },
+                    { 6, 25, "Sergeenko@yandex.com", "Maxim", null, "Sergeenko", "+375446666666", 2, null },
+                    { 5, 25, "Shmigelski@gmail.com", "Arthur", null, "Shmigelski", "+375295555555", 0, null },
+                    { 4, 19, "Ivashko@gmail.com", "Sergey", null, "Ivashko", "+375444444444", 0, null },
+                    { 3, 17, "Petrov@gmail.com", "Ivan", null, "Petrov", "+375443333333", 1, null },
+                    { 2, 26, "Antonov@gmail.com", "Andrey", null, "Antonov", "+375292222222", 2, null },
+                    { 8, 46, "Frunze@mail.ru", "Anatoliy", null, "Frunze", "+375448888888", 1, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Teachers",
-                columns: new[] { "Id", "Age", "ApplicationUserId", "Bio", "Email", "FirstName", "LastName", "LinkToProfile", "Phone", "UserId" },
+                columns: new[] { "Id", "Age", "Bio", "Email", "FirstName", "LastName", "LinkToProfile", "Phone", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 30, null, "My name is Vadim Korotkov. I'am full-stack developer. I know all language, frameworks", "Korotkov@mail.ru", "Vadim", "Korotkov", "https://www.linkedin.com/feed/Korotkov", "+375291111111", null },
-                    { 2, 32, null, "My name is Sergey Gromov. I'am a back-end developer on .Net Framework + Java (JS).", "Gromov@yandex.ru", "Sergey", "Gromov", "https://www.linkedin.com/feed/Gromov", "+375292222222", null },
-                    { 3, 36, null, "My name is Andrew Kamilov. I'am front-end developer, know some modern frameworks (Angular, Vue, React)", "Kamilov@yandex.ru", "Andrew", "Kamilov", "https://www.linkedin.com/feed/Kamilov", "+375293333333", null },
-                    { 4, 34, null, "My name is Marina Kuzmina. I am a Design teacher", "Kuzmina@yandex.ru", "Marina", "Kuzmina", "https://www.linkedin.com/feed/Kuzmina", "+375296561723", null },
-                    { 5, 27, null, "My name is Vladimir Vorobei. I am a C# language teacher", "Vorobei@yandex.ru", "Vladimir", "Vorobei", "https://www.linkedin.com/feed/Vorobei", "+375290989093", null }
+                    { 1, 30, "My name is Vadim Korotkov. I'am full-stack developer. I know all language, frameworks", "Korotkov@mail.ru", "Vadim", "Korotkov", "https://www.linkedin.com/feed/Korotkov", "+375291111111", null },
+                    { 2, 32, "My name is Sergey Gromov. I'am a back-end developer on .Net Framework + Java (JS).", "Gromov@yandex.ru", "Sergey", "Gromov", "https://www.linkedin.com/feed/Gromov", "+375292222222", null },
+                    { 3, 36, "My name is Andrew Kamilov. I'am front-end developer, know some modern frameworks (Angular, Vue, React)", "Kamilov@yandex.ru", "Andrew", "Kamilov", "https://www.linkedin.com/feed/Kamilov", "+375293333333", null },
+                    { 4, 34, "My name is Marina Kuzmina. I am a Design teacher", "Kuzmina@yandex.ru", "Marina", "Kuzmina", "https://www.linkedin.com/feed/Kuzmina", "+375296561723", null },
+                    { 5, 27, "My name is Vladimir Vorobei. I am a C# language teacher", "Vorobei@yandex.ru", "Vladimir", "Vorobei", "https://www.linkedin.com/feed/Vorobei", "+375290989093", null }
                 });
 
             migrationBuilder.InsertData(

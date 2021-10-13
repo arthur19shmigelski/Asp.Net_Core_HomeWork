@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
-    public class CoursesRepository :  ICourseRepository
+    public class CoursesRepository : ICourseRepository
     {
         private readonly AcademyContext _context;
 
@@ -38,7 +38,7 @@ namespace School.DAL.EF.Repositories
 
         public async Task Delete(int id)
         {
-            var item =  _context.Courses.FindAsync(id);
+            var item = _context.Courses.FindAsync(id);
             _context.Courses.Remove(item.Result);
             await _context.SaveChangesAsync();
         }

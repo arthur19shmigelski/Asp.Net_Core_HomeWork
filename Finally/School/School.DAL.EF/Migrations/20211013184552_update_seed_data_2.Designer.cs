@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.DAL.EF.Contexts;
 
 namespace School.DAL.EF.Migrations
 {
     [DbContext(typeof(AcademyContext))]
-    partial class AcademyContextModelSnapshot : ModelSnapshot
+    [Migration("20211013184552_update_seed_data_2")]
+    partial class update_seed_data_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -348,39 +350,6 @@ namespace School.DAL.EF.Migrations
                             Program = "1. Знакомство с библиотекой React\n2.Знакомство с библиотекой Angular\n3. Знакомство с библиотекой Vue\n4. Твоя первая большая курсовая работа в команде (3 проекта на каждом фрэймворке - магазин доставки цветов)\n5. И многое другое...",
                             Title = "Angular, React, Vue",
                             TopicId = 3
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Description = "IT-HR — это специалист, деятельность которого объединяет IT-рекрутинг и HR-менеджмент.IT-HR работает с коллективом компании, развивает корпоративную культуру, помогает адаптироваться новым коллегам.Основная задача HR-менеджера — сопровождение сотрудника на протяжении всего времени его работы в компании.",
-                            DurationWeeks = 4,
-                            Level = 0,
-                            Price = 1240.0,
-                            Program = "1. Разобраться с основными понятиями и терминами IT-рекрутинга\n2. Освоить технологии и методы подбора персонала\n3. Изучить алгоритмы адаптации новых сотрудников\n4. Узнать, как управлять эффективностью персонала\n5. Ознакомиться с понятиями «HR-бренд компании» и «HR-бренд рекрутера»...",
-                            Title = "IT-HR интенсив - для маленьких компаний",
-                            TopicId = 4
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Description = "IT-HR — это специалист, деятельность которого объединяет IT-рекрутинг и HR-менеджмент.IT-HR работает с коллективом компании, развивает корпоративную культуру, помогает адаптироваться новым коллегам.Основная задача HR-менеджера — сопровождение сотрудника на протяжении всего времени его работы в компании.",
-                            DurationWeeks = 5,
-                            Level = 1,
-                            Price = 1570.0,
-                            Program = "1. Инструменты анализа\n2. Освоить технологии и методы  двухфакторной теории мотивации Герцберга\n3. Изучить алгоритмы адаптации новых сотрудников\n4. Узнать, как управлять эффективностью персонала\n5. Создание корпоративной культуры и идентификация компании на рынке...",
-                            Title = "IT-HR Middle - для средних и крупных компаний",
-                            TopicId = 4
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Description = "IT-HR — это специалист, деятельность которого объединяет IT-рекрутинг и HR-менеджмент.IT-HR работает с коллективом компании, развивает корпоративную культуру, помогает адаптироваться новым коллегам.Основная задача HR-менеджера — сопровождение сотрудника на протяжении всего времени его работы в компании.",
-                            DurationWeeks = 8,
-                            Level = 2,
-                            Price = 2040.0,
-                            Program = "1. Разобраться с основными понятиями и терминами IT-рекрутинга;\n2. Совершенствование корпоративной культуры, условий труда;\n3. УАттестация и оценка сотрудников (в том числе – «материальная», то есть определение премиальной части ЗП, оплаты на основе KPI);\n4. частие в оперативном управлении и решение текущих вопросов;\n5. Ознакомиться с понятиями «HR-бренд компании» и «HR-бренд рекрутера»...",
-                            Title = "IT-HR интенсив - для крупных организаций, производств...",
-                            TopicId = 4
                         });
                 });
 
@@ -463,9 +432,9 @@ namespace School.DAL.EF.Migrations
                             Id = 1,
                             Age = 22,
                             Email = "Fedorov@gmail.com",
-                            FirstName = "Олег",
-                            LastName = "Федоров",
-                            Phone = "+375296711906",
+                            FirstName = "Oleg",
+                            LastName = "Fedorov",
+                            Phone = "+375291111906",
                             Type = 0
                         },
                         new
@@ -473,9 +442,9 @@ namespace School.DAL.EF.Migrations
                             Id = 2,
                             Age = 26,
                             Email = "Antonov@gmail.com",
-                            FirstName = "Адрей",
-                            LastName = "Антонов",
-                            Phone = "+375293452992",
+                            FirstName = "Andrey",
+                            LastName = "Antonov",
+                            Phone = "+375293452222",
                             Type = 2
                         },
                         new
@@ -483,9 +452,9 @@ namespace School.DAL.EF.Migrations
                             Id = 3,
                             Age = 17,
                             Email = "Petrov@gmail.com",
-                            FirstName = "Иван",
-                            LastName = "Петров",
-                            Phone = "+375443567033",
+                            FirstName = "Ivan",
+                            LastName = "Petrov",
+                            Phone = "+375443357033",
                             Type = 1
                         },
                         new
@@ -493,9 +462,9 @@ namespace School.DAL.EF.Migrations
                             Id = 4,
                             Age = 19,
                             Email = "Ivashko@gmail.com",
-                            FirstName = "Сергей",
-                            LastName = "Ивашко",
-                            Phone = "+375444236424",
+                            FirstName = "Sergey",
+                            LastName = "Ivashko",
+                            Phone = "+375444446424",
                             Type = 0
                         },
                         new
@@ -503,9 +472,9 @@ namespace School.DAL.EF.Migrations
                             Id = 5,
                             Age = 25,
                             Email = "Shmigelski@gmail.com",
-                            FirstName = "Артур",
-                            LastName = "Шмигельский",
-                            Phone = "+375295900865",
+                            FirstName = "Arthur",
+                            LastName = "Shmigelski",
+                            Phone = "+375295900555",
                             Type = 0
                         },
                         new
@@ -513,9 +482,9 @@ namespace School.DAL.EF.Migrations
                             Id = 6,
                             Age = 25,
                             Email = "Sergeenko@yandex.com",
-                            FirstName = "Виктор",
-                            LastName = "Сергеенко",
-                            Phone = "+375446668906",
+                            FirstName = "Maxim",
+                            LastName = "Sergeenko",
+                            Phone = "+375446668676",
                             Type = 2
                         },
                         new
@@ -523,9 +492,9 @@ namespace School.DAL.EF.Migrations
                             Id = 7,
                             Age = 50,
                             Email = "Micinat@gmail.com",
-                            FirstName = "Владимир",
-                            LastName = "Мицинат",
-                            Phone = "+375443525757",
+                            FirstName = "Vladimir",
+                            LastName = "Micinat",
+                            Phone = "+375443577757",
                             Type = 2
                         },
                         new
@@ -533,9 +502,9 @@ namespace School.DAL.EF.Migrations
                             Id = 8,
                             Age = 46,
                             Email = "Frunze@mail.ru",
-                            FirstName = "Анатолий",
-                            LastName = "Фрунзе",
-                            Phone = "+375448839528",
+                            FirstName = "Anatoliy",
+                            LastName = "Frunze",
+                            Phone = "+375448888428",
                             Type = 1
                         },
                         new
@@ -543,9 +512,9 @@ namespace School.DAL.EF.Migrations
                             Id = 9,
                             Age = 40,
                             Email = "VaneevaPolina@gmail.com",
-                            FirstName = "Апполинария",
-                            LastName = "Ванеева",
-                            Phone = "+375449992359",
+                            FirstName = "Polina",
+                            LastName = "Vaneeva",
+                            Phone = "+375449999559",
                             Type = 2
                         },
                         new
@@ -553,9 +522,9 @@ namespace School.DAL.EF.Migrations
                             Id = 10,
                             Age = 39,
                             Email = "YakimovMiron@gmail.com",
-                            FirstName = "Мирон",
-                            LastName = "Якимов",
-                            Phone = "+375441010744",
+                            FirstName = "Miron",
+                            LastName = "Yakimov",
+                            Phone = "+375441010144",
                             Type = 1
                         },
                         new
@@ -563,9 +532,9 @@ namespace School.DAL.EF.Migrations
                             Id = 11,
                             Age = 22,
                             Email = "MorozNikita@gmail.com",
-                            FirstName = "Никита",
-                            LastName = "Мороз",
-                            Phone = "+375440169910",
+                            FirstName = "Nikita",
+                            LastName = "Moroz",
+                            Phone = "+375440110110",
                             Type = 1
                         },
                         new
@@ -573,9 +542,9 @@ namespace School.DAL.EF.Migrations
                             Id = 12,
                             Age = 25,
                             Email = "PonimashVitalik@gmail.com",
-                            FirstName = "Виталик",
-                            LastName = "Понимаш",
-                            Phone = "+375441364123",
+                            FirstName = "Vitalik",
+                            LastName = "Ponimash",
+                            Phone = "+375441212123",
                             Type = 0
                         },
                         new
@@ -583,9 +552,9 @@ namespace School.DAL.EF.Migrations
                             Id = 13,
                             Age = 29,
                             Email = "FistashkaIrina@yandex.by",
-                            FirstName = "Ирэн",
-                            LastName = "Фисташка",
-                            Phone = "+375444444966",
+                            FirstName = "Irina",
+                            LastName = "Fistashka",
+                            Phone = "+375444444425",
                             Type = 0
                         },
                         new
@@ -593,9 +562,9 @@ namespace School.DAL.EF.Migrations
                             Id = 14,
                             Age = 20,
                             Email = "Filimonova@gmail.com",
-                            FirstName = "Алёна",
-                            LastName = "Филимонова",
-                            Phone = "+375441534784",
+                            FirstName = "Alena",
+                            LastName = "Filimonova",
+                            Phone = "+375441534545",
                             Type = 2
                         },
                         new
@@ -603,9 +572,9 @@ namespace School.DAL.EF.Migrations
                             Id = 15,
                             Age = 25,
                             Email = "EfremovSergey@mail.ru",
-                            FirstName = "Сергей",
-                            LastName = "Ефремов",
-                            Phone = "+375441234543",
+                            FirstName = "Sergey",
+                            LastName = "Efremov",
+                            Phone = "+375441232323",
                             Type = 0
                         },
                         new
@@ -1091,12 +1060,6 @@ namespace School.DAL.EF.Migrations
                             Id = 3,
                             Description = "	UI/UX и web-дизайн ориентирован на создание внешне привлекательных, удобных в использовании и функциональных пользовательских интерфейсов. Чтобы достичь успеха в этой сфере, необходимо обладать художественным вкусом, быть внимательным к деталям, понимать принципы компьютерной графики и визуального дизайна, уметь работать с инструментами (например, Adobe Photoshop, Adobe Illustrator, Sketch, Figma).",
                             Title = "Design"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "	Зачастую можно услышать вопрос, что такое HR-менеджер, как переводится и чем занимается специалист. Если посмотреть должностную инструкцию, становится понятно, что он разрабатывает систему управления персоналом, расставляет приоритеты, развивает сотрудников, прорисовывает цели для них. Помимо этого HR мотивирует, оценивает и ищет нужных специалистов.	\n С помощью данного направления вы уверитесь в значимости HR-менеджера в IT-компании и узнаете обо всех тонкостях профессии как в теории, так и на практике",
-                            Title = "HR"
                         });
                 });
 

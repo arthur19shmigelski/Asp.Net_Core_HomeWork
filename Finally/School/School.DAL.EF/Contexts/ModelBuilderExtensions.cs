@@ -143,7 +143,17 @@ namespace School.DAL.EF.Contexts
                 "понимать принципы компьютерной графики и визуального дизайна, уметь работать с инструментами " +
                 "(например, Adobe Photoshop, Adobe Illustrator, Sketch, Figma)."
             };
-            modelBuilder.Entity<Topic>().HasData(topic1, topic2, topic3);
+            var topic4 = new Topic()
+            {
+                Id = 4,
+                Title = "HR",
+                Description = "\tЗачастую можно услышать вопрос, что такое HR-менеджер, как переводится и чем занимается специалист." +
+                " Если посмотреть должностную инструкцию, становится понятно, что он разрабатывает систему управления персоналом, расставляет приоритеты, " +
+                "развивает сотрудников, прорисовывает цели для них. Помимо этого HR мотивирует, оценивает и ищет нужных специалистов." +
+                "\t\n С помощью данного направления вы уверитесь в значимости HR-менеджера в IT-компании и узнаете обо всех тонкостях профессии как в теории," +
+                " так и на практике"
+            };
+            modelBuilder.Entity<Topic>().HasData(topic1, topic2, topic3, topic4);
 
             /*------------------------------------------------------------------------------------------------------------------------*/
             /*Seed for 9 Courses*/
@@ -302,51 +312,105 @@ namespace School.DAL.EF.Contexts
                 TopicId = 3
             };
 
-            modelBuilder.Entity<Course>().HasData(course1, course2, course3, course4, course5, course6, course7, course8, course9);
+            var course10 = new Course()
+            {
+                Id = 10,
+                Title = "IT-HR интенсив - для маленьких компаний",
+                Description = "IT-HR — это специалист, деятельность которого объединяет IT-рекрутинг и HR-менеджмент." +
+                "IT-HR работает с коллективом компании, развивает корпоративную культуру, помогает адаптироваться новым коллегам." +
+                "Основная задача HR-менеджера — сопровождение сотрудника на протяжении всего времени его работы в компании.",
+                Level = CourseLevel.Beginner,
+                Price = 1240,
+                DurationWeeks = 4,
+                Program = "1. Разобраться с основными понятиями и терминами IT-рекрутинга" +
+                          "\n2. Освоить технологии и методы подбора персонала" +
+                          "\n3. Изучить алгоритмы адаптации новых сотрудников" +
+                          "\n4. Узнать, как управлять эффективностью персонала" +
+                          "\n5. Ознакомиться с понятиями «HR-бренд компании» и «HR-бренд рекрутера»...",
+                TopicId = 4
+            };
+            var course11 = new Course()
+            {
+                Id = 11,
+                Title = "IT-HR Middle - для средних и крупных компаний",
+                Description = "IT-HR — это специалист, деятельность которого объединяет IT-рекрутинг и HR-менеджмент." +
+               "IT-HR работает с коллективом компании, развивает корпоративную культуру, помогает адаптироваться новым коллегам." +
+               "Основная задача HR-менеджера — сопровождение сотрудника на протяжении всего времени его работы в компании.",
+                Level = CourseLevel.Advanced,
+                Price = 1570,
+                DurationWeeks = 5,
+                Program = "1. Инструменты анализа" +
+                         "\n2. Освоить технологии и методы  двухфакторной теории мотивации Герцберга" +
+                         "\n3. Изучить алгоритмы адаптации новых сотрудников" +
+                         "\n4. Узнать, как управлять эффективностью персонала" +
+                         "\n5. Создание корпоративной культуры и идентификация компании на рынке...",
+                TopicId = 4
+            };
+            var course12 = new Course()
+            {
+                Id = 12,
+                Title = "IT-HR интенсив - для крупных организаций, производств...",
+                Description = "IT-HR — это специалист, деятельность которого объединяет IT-рекрутинг и HR-менеджмент." +
+               "IT-HR работает с коллективом компании, развивает корпоративную культуру, помогает адаптироваться новым коллегам." +
+               "Основная задача HR-менеджера — сопровождение сотрудника на протяжении всего времени его работы в компании.",
+                Level = CourseLevel.Expert,
+                Price = 2040,
+                DurationWeeks = 8,
+                Program = "1. Разобраться с основными понятиями и терминами IT-рекрутинга;" +
+                         "\n2. Совершенствование корпоративной культуры, условий труда;" +
+                         "\n3. УАттестация и оценка сотрудников (в том числе – «материальная», то есть определение премиальной части ЗП, оплаты на основе KPI);" +
+                         "\n4. частие в оперативном управлении и решение текущих вопросов;" +
+                         "\n5. Ознакомиться с понятиями «HR-бренд компании» и «HR-бренд рекрутера»...",
+                TopicId = 4
+            };
+            modelBuilder.Entity<Course>().HasData(course1, course2, course3,
+                course4, course5, course6,
+                course7, course8, course9, 
+                course10, course11, course12);
 
             /*------------------------------------------------------------------------------------------------------------------------*/
             /*Seed for 5 Teachers*/
             var teacher1 = new Teacher()
             {
                 Id = 1,
-                FirstName = "Vadim",
-                LastName = "Korotkov",
+                FirstName = "Вадим",
+                LastName = "Коротков",
                 LinkToProfile = "https://www.linkedin.com/feed/Korotkov",
-                Bio = "My name is Vadim Korotkov. I'am full-stack developer. I know all language, frameworks",
+                Bio = "Меня зовут Вадим Коротков. Я full-stack developer. Я знаю много языков программирования и frameworks",
                 Age = 30,
                 Email = "Korotkov@mail.ru",
-                Phone = "+375291111111",
+                Phone = "+375291656733",
             };
             var teacher2 = new Teacher()
             {
                 Id = 2,
-                FirstName = "Sergey",
-                LastName = "Gromov",
+                FirstName = "Сергей",
+                LastName = "Громов",
                 LinkToProfile = "https://www.linkedin.com/feed/Gromov",
-                Bio = "My name is Sergey Gromov. I'am a back-end developer on .Net Framework + Java (JS).",
+                Bio = "Меня зовут Сергей Громов. Я back-end developer на .Net Framework + Java (JS).",
                 Age = 32,
                 Email = "Gromov@yandex.ru",
-                Phone = "+375292222222"
+                Phone = "+375292593534"
             };
             var teacher3 = new Teacher()
             {
                 Id = 3,
-                FirstName = "Andrew",
-                LastName = "Kamilov",
+                FirstName = "Андрей",
+                LastName = "Камилов",
                 LinkToProfile = "https://www.linkedin.com/feed/Kamilov",
-                Bio = "My name is Andrew Kamilov. I'am front-end developer, know some modern frameworks (Angular, Vue, React)",
+                Bio = "Меня зовут Андрей Камилов. Я front-end developer, знаю некоторые современные frameworks (Angular, Vue, React)",
                 Age = 36,
-                Email = "Kamilov@yandex.ru",
-                Phone = "+375293333333"
+                Email = "Kamilov@mail.ru",
+                Phone = "+375293334567"
             };
 
             var teacher4 = new Teacher()
             {
                 Id = 4,
-                FirstName = "Marina",
-                LastName = "Kuzmina",
+                FirstName = "Марина",
+                LastName = "Кузьмина",
                 LinkToProfile = "https://www.linkedin.com/feed/Kuzmina",
-                Bio = "My name is Marina Kuzmina. I am a Design teacher",
+                Bio = "Меня зовут Marina Kuzmina. Я учитель по направлению",
                 Age = 34,
                 Email = "Kuzmina@yandex.ru",
                 Phone = "+375296561723"
@@ -354,15 +418,76 @@ namespace School.DAL.EF.Contexts
             var teacher5 = new Teacher()
             {
                 Id = 5,
-                FirstName = "Vladimir",
-                LastName = "Vorobei",
+                FirstName = "Владимир",
+                LastName = "Воробей",
                 LinkToProfile = "https://www.linkedin.com/feed/Vorobei",
-                Bio = "My name is Vladimir Vorobei. I am a C# language teacher",
-                Age = 27,
-                Email = "Vorobei@yandex.ru",
+                Bio = "Меня зовут Владимир Воробей. Я .Net developer со стажем 3",
+                Age = 31,
+                Email = "Vorobei@gmail.com",
                 Phone = "+375290989093"
             };
-            modelBuilder.Entity<Teacher>().HasData(teacher1, teacher2, teacher3, teacher4, teacher5);
+
+            /*------------------------------------------------------------------------------------------------------------------------*/
+
+
+            var teacher6 = new Teacher()
+            {
+                Id = 6,
+                FirstName = "Аристарх",
+                LastName = "Кузнецов",
+                LinkToProfile = "https://www.linkedin.com/feed/Kuznecov",
+                Bio = "Меня зовут Аристарх. Попытаюсь объяснить тебе о .Net",
+                Age = 32,
+                Email = "KuzNica@gmail.com",
+                Phone = "+375290984628",
+            };
+            var teacher7 = new Teacher()
+            {
+                Id = 7,
+                FirstName = "Анисий",
+                LastName = "Виноградов",
+                LinkToProfile = "https://www.linkedin.com/feed/Vinogradov",
+                Bio = "Я Анисий Виноградов. Есть практический опыт на Java, JS, примерно 8 лет.",
+                Age = 45,
+                Email = "AnisVinograd@yandex.ru",
+                Phone = "+375298762334"
+            };
+            var teacher8 = new Teacher()
+            {
+                Id = 8,
+                FirstName = "Аннатолий",
+                LastName = "Голубев",
+                LinkToProfile = "https://www.linkedin.com/feed/Golubev",
+                Bio = "Меня зовут Аннатолий. Я front-end developer, знаю некоторые современные frameworks (Angular, Vue, React)",
+                Age = 43,
+                Email = "Kamilov@yandex.ru",
+                Phone = "+375291324354"
+            };
+
+            var teacher9 = new Teacher()
+            {
+                Id = 9,
+                FirstName = "Аркадий",
+                LastName = "Гусев",
+                LinkToProfile = "https://www.linkedin.com/feed/Gusev",
+                Bio = "My name is Arkadiy Gusev. I am a Design teacher",
+                Age = 22,
+                Email = "ArkadiyGusev@yandex.ru",
+                Phone = "+375294567890"
+            };
+            var teacher10 = new Teacher()
+            {
+                Id = 10,
+                FirstName = "Хасбик",
+                LastName = "Лазарев",
+                LinkToProfile = "https://www.linkedin.com/feed/Lazarev",
+                Bio = "My name is Lazarev Hasbik. I am a C# language teacher",
+                Age = 49,
+                Email = "LazarKiller@yandex.ru",
+                Phone = "+375296263434"
+            };
+            modelBuilder.Entity<Teacher>().HasData(teacher1, teacher2, teacher3, teacher4, teacher5,
+                teacher6, teacher7, teacher8, teacher9,teacher10);
 
             /*------------------------------------------------------------------------------------------------------------------------*/
             /*Seed for 15 students*/
@@ -372,151 +497,304 @@ namespace School.DAL.EF.Contexts
             var student1 = new Student()
             {
                 Id = 1,
-                FirstName = "Oleg",
-                LastName = "Fedorov",
+                FirstName = "Олег",
+                LastName = "Федоров",
                 Email = "Fedorov@gmail.com",
                 Age = 22,
-                Phone = "+375291111111",
+                Phone = "+375296711906",
                 Type = StudentType.Online,
             };
             var student2 = new Student()
             {
                 Id = 2,
-                FirstName = "Andrey",
-                LastName = "Antonov",
+                FirstName = "Адрей",
+                LastName = "Антонов",
                 Email = "Antonov@gmail.com",
                 Age = 26,
-                Phone = "+375292222222",
+                Phone = "+375293452992",
                 Type = StudentType.Mix,
             };
             var student3 = new Student()
             {
                 Id = 3,
-                FirstName = "Ivan",
-                LastName = "Petrov",
+                FirstName = "Иван",
+                LastName = "Петров",
                 Email = "Petrov@gmail.com",
                 Age = 17,
-                Phone = "+375443333333",
+                Phone = "+375443567033",
                 Type = StudentType.InClass,
             };
             var student4 = new Student()
             {
                 Id = 4,
-                FirstName = "Sergey",
-                LastName = "Ivashko",
+                FirstName = "Сергей",
+                LastName = "Ивашко",
                 Email = "Ivashko@gmail.com",
                 Age = 19,
-                Phone = "+375444444444",
+                Phone = "+375444236424",
                 Type = StudentType.Online,
             };
             var student5 = new Student()
             {
                 Id = 5,
-                FirstName = "Arthur",
-                LastName = "Shmigelski",
+                FirstName = "Артур",
+                LastName = "Шмигельский",
                 Email = "Shmigelski@gmail.com",
                 Age = 25,
-                Phone = "+375295555555",
+                Phone = "+375295900865",
                 Type = StudentType.Online,
             };
             var student6 = new Student()
             {
                 Id = 6,
-                FirstName = "Maxim",
-                LastName = "Sergeenko",
+                FirstName = "Виктор",
+                LastName = "Сергеенко",
                 Email = "Sergeenko@yandex.com",
                 Age = 25,
-                Phone = "+375446666666",
+                Phone = "+375446668906",
                 Type = StudentType.Mix,
             };
             var student7 = new Student()
             {
                 Id = 7,
-                FirstName = "Vladimir",
-                LastName = "Micinat",
+                FirstName = "Владимир",
+                LastName = "Мицинат",
                 Email = "Micinat@gmail.com",
                 Age = 50,
-                Phone = "+375447777777",
+                Phone = "+375443525757",
                 Type = StudentType.Mix,
             };
             var student8 = new Student()
             {
                 Id = 8,
-                FirstName = "Anatoliy",
-                LastName = "Frunze",
+                FirstName = "Анатолий",
+                LastName = "Фрунзе",
                 Email = "Frunze@mail.ru",
                 Age = 46,
-                Phone = "+375448888888",
+                Phone = "+375448839528",
                 Type = StudentType.InClass,
             };
             var student9 = new Student()
             {
                 Id = 9,
-                FirstName = "Polina",
-                LastName = "Vaneeva",
+                FirstName = "Апполинария",
+                LastName = "Ванеева",
                 Email = "VaneevaPolina@gmail.com",
                 Age = 40,
-                Phone = "+375449999999",
+                Phone = "+375449992359",
                 Type = StudentType.Mix,
             };
             var student10 = new Student()
             {
                 Id = 10,
-                FirstName = "Miron",
-                LastName = "Yakimov",
+                FirstName = "Мирон",
+                LastName = "Якимов",
                 Email = "YakimovMiron@gmail.com",
                 Age = 39,
-                Phone = "+375441010101",
+                Phone = "+375441010744",
                 Type = StudentType.InClass,
             };
             var student11 = new Student()
             {
                 Id = 11,
-                FirstName = "Nikita",
-                LastName = "Moroz",
+                FirstName = "Никита",
+                LastName = "Мороз",
                 Email = "MorozNikita@gmail.com",
                 Age = 22,
-                Phone = "+375440110111",
+                Phone = "+375440169910",
                 Type = StudentType.InClass,
             };
             var student12 = new Student()
             {
                 Id = 12,
-                FirstName = "Vitalik",
-                LastName = "Ponimash",
+                FirstName = "Виталик",
+                LastName = "Понимаш",
                 Email = "PonimashVitalik@gmail.com",
                 Age = 25,
-                Phone = "+375441212123",
+                Phone = "+375441364123",
                 Type = StudentType.Online,
             };
             var student13 = new Student()
             {
                 Id = 13,
-                FirstName = "Irina",
-                LastName = "Fistashka",
+                FirstName = "Ирэн",
+                LastName = "Фисташка",
                 Email = "FistashkaIrina@yandex.by",
                 Age = 29,
-                Phone = "+375444444444",
+                Phone = "+375444444966",
                 Type = StudentType.Online,
             };
             var student14 = new Student()
             {
                 Id = 14,
-                FirstName = "Alena",
-                LastName = "Filimonova",
+                FirstName = "Алёна",
+                LastName = "Филимонова",
                 Email = "Filimonova@gmail.com",
                 Age = 20,
-                Phone = "+375441534545",
+                Phone = "+375441534784",
                 Type = StudentType.Mix,
             };
             var student15 = new Student()
             {
                 Id = 15,
-                FirstName = "Sergey",
-                LastName = "Efremov",
+                FirstName = "Сергей",
+                LastName = "Ефремов",
                 Email = "EfremovSergey@mail.ru",
                 Age = 25,
-                Phone = "+375441232323",
+                Phone = "+375441234543",
+                Type = StudentType.Online,
+            };
+            /*------------------------------------------------------------------------------------------------------------------------*/
+            /*------------------------------------------------------------------------------------------------------------------------*/
+            /*------------------------------------------------------------------------------------------------------------------------*/
+            var student16 = new Student()
+            {
+                Id = 16,
+                FirstName = "Владимир",
+                LastName = "Соловьёв",
+                Email = "Russia@gmail.com",
+                Age = 22,
+                Phone = "+375291111111",
+                Type = StudentType.Online,
+            };
+            var student17 = new Student()
+            {
+                Id = 17,
+                FirstName = "Микита",
+                LastName = "Беляев",
+                Email = "IamMikita@gmail.com",
+                Age = 26,
+                Phone = "+375292222345",
+                Type = StudentType.Mix,
+            };
+            var student18 = new Student()
+            {
+                Id = 18,
+                FirstName = "Игорь",
+                LastName = "Орлов",
+                Email = "OrlovIgor1998@gmail.com",
+                Age = 17,
+                Phone = "+375443332435",
+                Type = StudentType.InClass,
+            };
+            var student19 = new Student()
+            {
+                Id = 19,
+                FirstName = "Алексей",
+                LastName = "Баранов",
+                Email = "BaranovAlex@gmail.com",
+                Age = 19,
+                Phone = "+375444443445",
+                Type = StudentType.Online,
+            };
+            var student20 = new Student()
+            {
+                Id = 20,
+                FirstName = "Кулич",
+                LastName = "Куликов",
+                Email = "Kulikov@gmail.com",
+                Age = 25,
+                Phone = "+375295340090",
+                Type = StudentType.Online,
+            };
+            var student21 = new Student()
+            {
+                Id = 21,
+                FirstName = "Макс",
+                LastName = "Алексеев",
+                Email = "AlexMax375@yandex.com",
+                Age = 25,
+                Phone = "+375446634312",
+                Type = StudentType.Mix,
+            };
+            var student22 = new Student()
+            {
+                Id = 22,
+                FirstName = "Ян",
+                LastName = "Яковлев",
+                Email = "YakovlevYanik@gmail.com",
+                Age = 50,
+                Phone = "+375447734545",
+                Type = StudentType.Mix,
+            };
+            var student23 = new Student()
+            {
+                Id = 23,
+                FirstName = "Митя",
+                LastName = "Сорокин",
+                Email = "Sorokin998@mail.ru",
+                Age = 46,
+                Phone = "+375448991010",
+                Type = StudentType.InClass,
+            };
+            var student24 = new Student()
+            {
+                Id = 24,
+                FirstName = "Сергей",
+                LastName = "Сергеев",
+                Email = "SergeevSerg@gmail.com",
+                Age = 40,
+                Phone = "+375449345432",
+                Type = StudentType.Mix,
+            };
+            var student25 = new Student()
+            {
+                Id = 25,
+                FirstName = "Роман",
+                LastName = "Романов",
+                Email = "RomanovRoman@gmail.com",
+                Age = 39,
+                Phone = "+375441010134",
+                Type = StudentType.InClass,
+            };
+            var student26 = new Student()
+            {
+                Id = 26,
+                FirstName = "Евдаким",
+                LastName = "Захаров",
+                Email = "ZaharovEvdakim@gmail.com",
+                Age = 22,
+                Phone = "+375440134445",
+                Type = StudentType.InClass,
+            };
+            var student27 = new Student()
+            {
+                Id = 27,
+                FirstName = "Антон",
+                LastName = "Борисов",
+                Email = "Borisov@gmail.com",
+                Age = 25,
+                Phone = "+375442929293",
+                Type = StudentType.Online,
+            };
+            var student28 = new Student()
+            {
+                Id = 28,
+                FirstName = "Аристарх",
+                LastName = "Королёв",
+                Email = "KingSize@yandex.by",
+                Age = 29,
+                Phone = "+375444423342",
+                Type = StudentType.Online,
+            };
+            var student29 = new Student()
+            {
+                Id = 29,
+                FirstName = "Арсений",
+                LastName = "Пономарёв",
+                Email = "Ponomar@gmail.com",
+                Age = 33,
+                Phone = "+375441230909",
+                Type = StudentType.Mix,
+            };
+            var student30 = new Student()
+            {
+                Id = 30,
+                FirstName = "Артём",
+                LastName = "Григорьев",
+                Email = "GriwaArtem@mail.ru",
+                Age = 20,
+                Phone = "+375449998877",
                 Type = StudentType.Online,
             };
             modelBuilder.Entity<Student>().HasData(
@@ -524,7 +802,12 @@ namespace School.DAL.EF.Contexts
                student4, student5, student6,
                student7, student8, student9,
                student10, student11, student12,
-               student13, student14, student15);
+               student13, student14, student15,
+               student16, student17, student18,
+               student19, student20, student21,
+               student22, student23, student24,
+               student25, student26, student27,
+               student28, student29, student30);
 
             modelBuilder.Entity<StudentRequest>().HasData(
                 new StudentRequest

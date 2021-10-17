@@ -1,4 +1,5 @@
-﻿using School.DAL.Interfaces;
+﻿using School.Core.Models.Pages;
+using School.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -36,6 +37,11 @@ namespace School.BLL.Services.Base
         public async Task Delete(int id)
         {
             await _repository.Delete(id);
+        }
+
+        public async Task<PageList<TEntity>> GetByPages(QueryOptions options)
+        {
+            return await _repository.GetByPages(options);
         }
     }
 }

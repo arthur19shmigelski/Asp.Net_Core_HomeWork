@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
@@ -46,6 +47,14 @@ namespace School.DAL.EF.Repositories
         public async Task<Topic> GetById(int id)
         {
             return await _context.Topics.FindAsync(id);
+        }
+
+        public async Task<PageList<Topic>> GetByPages(QueryOptions options)
+        {
+            var topicsHowPageList = new PageList<Topic>(_context.Topics.AsQueryable(), options);
+
+            var pageListHowTask = Task.FromResult(topicsHowPageList);
+            return await pageListHowTask;
         }
 
         public async Task Update(Topic item)

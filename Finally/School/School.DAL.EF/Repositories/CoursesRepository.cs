@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.Core.Models;
 using School.Core.Models.Filters;
+using School.Core.Models.Pages;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
@@ -93,6 +94,15 @@ namespace School.DAL.EF.Repositories
                 filteredCourses = filteredCourses.Where(c => c.DurationWeeks <= filter.DurationWeeksTo.Value);
 
             return await filteredCourses.ToListAsync();
+        }
+
+        public async Task<PageList<Course>> GetByPages(QueryOptions options)
+        {
+            var coursesHowPageList = new PageList<Course>(_context.Courses
+                .Include(c => c.Topic).AsQueryable(), options);
+
+            var pageListHowTask = Task.FromResult(coursesHowPageList);
+            return await pageListHowTask;
         }
     }
 }

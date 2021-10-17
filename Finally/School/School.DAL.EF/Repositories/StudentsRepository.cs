@@ -53,12 +53,12 @@ namespace School.DAL.EF.Repositories
 
         public async Task<PageList<Student>> GetByPages(QueryOptions options)
         {
-            var hellfo = new PageList<Student>(_context
+            var studentHowPageList = new PageList<Student>(_context
                 .Students
                 .Include(s => s.Group).AsQueryable(), options);
 
-            var value = Task.FromResult(hellfo);
-            return await value;
+            var pageListHowTask = Task.FromResult(studentHowPageList);
+            return await pageListHowTask;
         }
 
         public async Task Update(Student item)

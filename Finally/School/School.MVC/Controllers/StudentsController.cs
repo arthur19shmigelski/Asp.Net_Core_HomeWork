@@ -11,7 +11,6 @@ using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
@@ -37,13 +36,9 @@ namespace School.MVC.Controllers
                 ViewData["searchString"] = searchString;
                 ViewData["searchParameter"] = searchParameter;
 
-                var newStudents = await _studentsService.GetByPages(options);
+                var students = await _studentsService.GetByPages(options);
 
-
-                //var students = await _studentsService.GetAll();
-                var value = _mapper.Map<IEnumerable<StudentModel>>(newStudents);
-                value = value.ToList();
-                return View(newStudents);
+                return View(students);
             }
 
             catch (Exception e)

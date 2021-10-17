@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
@@ -59,6 +60,14 @@ namespace School.DAL.EF.Repositories
             return await _context.Teachers.FindAsync(id);
         }
 
+        public async Task<PageList<Teacher>> GetByPages(QueryOptions options)
+        {
+            var teachersHowPageList = new PageList<Teacher>(_context.Teachers.AsQueryable(), options);
+
+            var pageListHowTask = Task.FromResult(teachersHowPageList);
+            return await pageListHowTask;
+        }
+
         public async Task Update(Teacher item)
         {
             var originalTeacher = await _context.Teachers.FindAsync(item.Id);
@@ -70,6 +79,7 @@ namespace School.DAL.EF.Repositories
             originalTeacher.LastName = item.LastName;
             originalTeacher.LinkToProfile = item.LinkToProfile;
             originalTeacher.Phone = item.Phone;
+            originalTeacher.Photo = item.Photo;
 
             await _context.SaveChangesAsync();
         }

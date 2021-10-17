@@ -7,7 +7,7 @@ namespace School.BLL.Services.Student
 {
     public interface IStudentService : IEntityService<Core.Models.Student>
     {
-        Task<PageList<Core.Models.Student>> GetByPages(QueryOptions options);
+        //Task<PageList<Core.Models.Student>> GetByPages(QueryOptions options);
 
         Task<IEnumerable<Core.Models.Student>> Search(string search);
     }

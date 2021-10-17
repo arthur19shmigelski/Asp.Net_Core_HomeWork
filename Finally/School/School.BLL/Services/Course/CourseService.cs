@@ -1,5 +1,6 @@
 ﻿using School.BLL.Extensions;
 using School.Core.Models.Filters;
+using School.Core.Models.Pages;
 using School.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -55,6 +56,11 @@ namespace School.BLL.Services.Course
             var filteredCourses = await _repository.Filter(filter);
 
             return filteredCourses;
+        }
+
+        public async Task<PageList<Core.Models.Course>> GetByPages(QueryOptions options)
+        {
+            return await _repository.GetByPages(options);
         }
     }
 }

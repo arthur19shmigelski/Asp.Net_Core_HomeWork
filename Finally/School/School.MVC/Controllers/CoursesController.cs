@@ -9,6 +9,7 @@ using School.BLL.Services.StudentRequest;
 using School.BLL.Services.Topic;
 using School.Core.Models;
 using School.Core.Models.Filters;
+using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using School.MVC.Configuration;
 using School.MVC.Filters;
@@ -48,11 +49,11 @@ namespace School.MVC.Controllers
             _groupService = groupService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(QueryOptions options)
         {
             try
             {
-                var courses = await _courseService.GetAll();
+                var courses = await _courseService.GetByPages(options);
                 var models = _mapper.Map<IEnumerable<CourseModel>>(courses);
 
                 foreach (var model in models)

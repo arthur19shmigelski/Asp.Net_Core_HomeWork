@@ -1,6 +1,7 @@
 ﻿using School.BLL.Services.Student;
 using School.BLL.Services.StudentRequest;
 using School.Core.Models.Enum;
+using School.Core.Models.Pages;
 using School.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,11 @@ namespace School.BLL.Services.StudentGroup
         public async Task Delete(int id)
         {
             await _repository.Delete(id);
+        }
+
+        public async Task<PageList<Core.Models.Group>> GetByPages(QueryOptions options)
+        {
+            return await _repository.GetByPages(options);
         }
     }
 }

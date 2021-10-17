@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
@@ -62,6 +63,14 @@ namespace School.DAL.EF.Repositories
             Group item = await _context.StudentGroups.FindAsync(id);
             _context.StudentGroups.Remove(item);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<PageList<Group>> GetByPages(QueryOptions options)
+        {
+            var groupHowPageList = new PageList<Group>( _context.StudentGroups.Include(g => g.Teacher).AsQueryable(), options);
+
+            var pageListHowTask = Task.FromResult(groupHowPageList);
+            return await pageListHowTask;
         }
     }
 }

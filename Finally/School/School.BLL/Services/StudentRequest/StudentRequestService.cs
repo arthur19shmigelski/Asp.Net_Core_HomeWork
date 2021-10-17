@@ -1,4 +1,5 @@
 ﻿using School.Core.Models.Enum;
+using School.Core.Models.Pages;
 using School.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,11 @@ namespace School.BLL.Services.StudentRequest
         public async Task<Core.Models.StudentRequest> GetById(int id)
         {
             return await _repository.GetById(id);
+        }
+
+        public async Task<PageList<Core.Models.StudentRequest>> GetByPages(QueryOptions options)
+        {
+            return await _repository.GetByPages(options);
         }
 
         public async Task<IEnumerable<Core.Models.StudentRequest>> GetOpenRequestsByCourse(int courseId)

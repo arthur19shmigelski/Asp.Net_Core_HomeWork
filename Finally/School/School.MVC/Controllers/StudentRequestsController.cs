@@ -9,6 +9,7 @@ using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
 using School.Core.Models;
 using School.Core.Models.Enum;
+using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace School.MVC.Controllers
         }
 
         #region Вывод списка заявок (для каждого пользователя своя логика)
-        public async Task<IActionResult> Index(bool? includeClosed)
+        public async Task<IActionResult> Index(bool? includeClosed, QueryOptions options)
         {
             try
             {
@@ -80,6 +81,7 @@ namespace School.MVC.Controllers
                 else if (User.IsInRole("admin"))
                 {
                     var requests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
+
                     return View(_mapper.Map<IEnumerable<StudentRequestModel>>(requests));
                 }
 
@@ -109,8 +111,6 @@ namespace School.MVC.Controllers
 
             ViewBag.Groups = _mapper.Map<IEnumerable<StudentGroupModel>>(filteredGroups);
 
-            //Взять id студента, проверить есть ли группа с такой темой ,добавить его в группу, удалить текущую заявку заявку.
-            //Студент может учится в разных группах или только 1?Если да, то изменить в студенте группы на List<StudentGroups>
             return View(model);
         }
 

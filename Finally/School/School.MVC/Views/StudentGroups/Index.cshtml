@@ -5,7 +5,7 @@
 }
 <h1 class="text text-center alert-info"> <i>Список наших групп</i></h1>
 
-<table  class="table table-bordered table-striped">
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th class="w-10">Id</th>
@@ -18,7 +18,7 @@
             }
         </tr>
     </thead>
-    
+
     <tbody>
         @foreach (var group in Model)
         {
@@ -57,3 +57,4 @@
         <a asp-action="Edit" class="btn btn-success">Добавить новую группу</a>
     </p>
 }
+@await Html.PartialAsync("Partial/Pages", Model)

@@ -54,15 +54,13 @@ namespace School.MVC.Controllers
             try
             {
                 var courses = await _courseService.GetByPages(options);
-                var models = _mapper.Map<IEnumerable<CourseModel>>(courses);
-
-                foreach (var model in models)
+                foreach (var course in courses)
                 {
-                    var value = await _requestService.GetOpenRequestsCountByCourse(model.Id);
-                    model.RequestsCount = value;
+                    var value = await _requestService.GetOpenRequestsCountByCourse(course.Id);
+                    course.RequestsCount = value;
                 }
 
-                return View(models);
+                return View(courses);
             }
             catch (Exception e)
             {

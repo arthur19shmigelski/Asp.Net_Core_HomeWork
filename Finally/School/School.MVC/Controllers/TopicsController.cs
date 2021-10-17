@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using School.BLL.Services.Course;
 using School.BLL.Services.Topic;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
@@ -30,13 +31,13 @@ namespace School.MVC.Controllers
             _topicService = topicService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(QueryOptions options)
         {
             try
             {
-                var topics = await _topicService.GetAll();
+                var topics = await _topicService.GetByPages(options);
 
-                return View(_mapper.Map<IEnumerable<TopicModel>>(topics));
+                return View(topics);
             }
             catch (Exception e)
             {

@@ -7,6 +7,7 @@ using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
 using School.BLL.Services.Teacher;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
@@ -37,12 +38,12 @@ namespace School.MVC.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(QueryOptions options)
         {
             try
             {
-                var groups = await _groupService.GetAll();
-                return View(_mapper.Map<IEnumerable<StudentGroupModel>>(groups));
+                var groups = await _groupService.GetByPages(options);
+                return View(groups);
             }
 
             catch (Exception e)

@@ -13,6 +13,7 @@ namespace School.Core.Models
         public Topic Topic { get; set; }
         public List<Group> Groups { get; set; } = new List<Group>();
         public double? Price { get; set; }
+        public int RequestsCount { get; set; }
         public CourseLevel Level { get; set; }
         public int DurationWeeks { get; set; }
     }

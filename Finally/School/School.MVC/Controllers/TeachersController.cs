@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Services.Teacher;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
@@ -28,12 +29,12 @@ namespace School.MVC.Controllers
             _appEnvironment = appEnvironment;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(QueryOptions options)
         {
             try
             {
-                var teachers = await _teacherService.GetAll();
-                return View(_mapper.Map<IEnumerable<TeacherModel>>(teachers));
+                var teachers = await _teacherService.GetByPages(options);
+                return View(teachers);
             }
 
             catch (Exception e)

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TeacherModel>
+﻿@model IEnumerable<Teacher>
 
 @{
     ViewData["Title"] = "Teacher";
@@ -24,31 +24,31 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            @if (ViewContext.HttpContext.User.IsInRole("admin"))
-            {
+            <tr>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">
-                        Изменить
-                    </a>
-                    <button type="submit" class="btn btn-outline-warning">
-                        @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
-                    </button>
+                    @Html.DisplayFor(modelItem => item.FullName)
                 </td>
-            }
-        </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                @if (ViewContext.HttpContext.User.IsInRole("admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">
+                            Изменить
+                        </a>
+                        <button type="submit" class="btn btn-outline-warning">
+                            @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+                        </button>
+                    </td>
+                }
+            </tr>
         }
     </tbody>
     <tr>
@@ -64,3 +64,5 @@
     </p>
 
 }
+@await Html.PartialAsync("Partial/Pages", Model)
+

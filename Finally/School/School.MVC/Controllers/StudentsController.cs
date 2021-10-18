@@ -37,7 +37,6 @@ namespace School.MVC.Controllers
                 ViewData["searchParameter"] = searchParameter;
 
                 var students = await _studentsService.GetByPages(options);
-
                 return View(students);
             }
 

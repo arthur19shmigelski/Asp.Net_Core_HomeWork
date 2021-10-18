@@ -126,7 +126,7 @@ namespace School.MVC.Controllers
                 await _teacherService.SavePhoto(id, content);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Edit), new {Id = id});
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using School.Core.Models;
 using School.Core.Models.Filters;
-using School.Core.Models.Pages;
 using School.Core.ShortModels;
 
 namespace School.MVC.Mapper

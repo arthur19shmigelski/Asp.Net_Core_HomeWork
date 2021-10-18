@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.DynamicLinq;
 using School.Core.Models;
 using School.Core.Models.Pages;
 using School.DAL.EF.Contexts;
@@ -53,7 +54,7 @@ namespace School.DAL.EF.Repositories
 
         public async Task<StudentRequest> GetById(int id)
         {
-            return await _context.StudentRequests.FindAsync(id);
+            return await _context.StudentRequests.Include(x => x.Student).Include(x=>x.Course).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<PageList<StudentRequest>> GetByPages(QueryOptions options)

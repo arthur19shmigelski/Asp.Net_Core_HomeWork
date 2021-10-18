@@ -105,6 +105,18 @@ namespace School.MVC.Controllers
 
         public async Task<IActionResult> AcceptRequest(int? id)
         {
+            //StudentRequest request = null;
+            //StudentRequestModel model = null;
+            //if (id.HasValue)
+            //{
+            //    request = await _requestService.GetById(id.Value);
+            //    model = _mapper.Map<StudentRequestModel>(request);
+            //    model.StudentName = request.Student.FullName;
+            //}
+            //else
+            //{
+            //    model = new StudentRequestModel() { Created = DateTime.Today };
+            //}
             var model = id.HasValue ? _mapper.Map<StudentRequestModel>(await _requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
             var allGroups = (await _studentGroupService.GetAll());
             var filteredGroups = allGroups.Where(g => g.Status == GroupStatus.NotStarted && g.CourseId == model.CourseId);

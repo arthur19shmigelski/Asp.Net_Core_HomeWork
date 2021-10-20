@@ -38,6 +38,7 @@ namespace School.MVC.Controllers
             _mapper = mapper;
         }
 
+        #region Index - get first 10 groups
         public async Task<IActionResult> Index(QueryOptions options)
         {
             try
@@ -52,7 +53,29 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Delete group
+        [HttpGet]
+        public async Task<IActionResult> Delete(StudentGroupModel groupModel)
+        {
+            try
+            {
+                var groups = _mapper.Map<Group>(groupModel);
+                await _groupService.Delete(groups.Id);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
+        }
+        #endregion 
+
+        #region Edit group
         [HttpGet]
         public async Task<IActionResult> Edit(int? id, int? courseId)
         {
@@ -102,11 +125,14 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Error Action
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        #endregion
     }
 }

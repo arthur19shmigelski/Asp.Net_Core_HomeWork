@@ -31,6 +31,7 @@ namespace School.MVC.Controllers
             _topicService = topicService;
         }
 
+        #region Index - get first 10 topics
         public async Task<IActionResult> Index(QueryOptions options)
         {
             try
@@ -45,7 +46,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Edit topic
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -88,7 +91,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Delete topic
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -128,5 +133,6 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
     }
 }

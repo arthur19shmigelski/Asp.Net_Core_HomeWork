@@ -10,14 +10,14 @@
     @Html.HiddenFor(x => x.Id)
 
     <div class="form-group">
-        <label asp-for="Title"></label>
+        <label asp-for="Title">Название группы</label>
         <input class="form-control" type="text" asp-for="Title" required />
     </div>
 
     <div class="form-group">
-        <label asp-for="CourseId">Course</label>
+        <label asp-for="CourseId">Курс</label>
         <select class="form-control" asp-for="CourseId">
-            <option value="">Select course...</option>
+            <option value="">Выберите курс...</option>
             @foreach (var course in (List<CourseModel>)ViewBag.Courses)
             {
                 if (course.Id == Model.CourseId)
@@ -33,13 +33,13 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="Status"></label>
+        <label asp-for="Status">Статус</label>
         <select class="form-control" asp-for="Status" asp-items="Html.GetEnumSelectList<School.Core.Models.Enum.GroupStatus>()">
         </select>
     </div>
 
     <div class="form-group">
-        <label asp-for="TeacherId">Teacher</label>
+        <label asp-for="TeacherId">Учитель группы</label>
         <select class="form-control" asp-for="TeacherId">
             <option value="">Select teacher...</option>
             @foreach (var teacher in (List<TeacherModel>)ViewData["Teachers"])
@@ -58,7 +58,7 @@
     @if (Model.Students != null)
     {
         <div class="form-group">
-            <label asp-for="Students"></label>
+            <label asp-for="Students">Студенты</label>
             <table class="table table-borderless table-sm">
 
                 @foreach (var student in Model.Students)

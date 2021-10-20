@@ -29,7 +29,7 @@
 
     else
     {
-        @for (int i = 1; i <= 3 && i <= Model.TotalPages + 1; i++)
+        @for (int i = 1; i <= Model.TotalPages + 1; i++)
         {
             <button name="options.currentPage" value="@i" type="submit"
                     class="btn btn-outline-primary @(Model.CurrentPage == i ? "active" : "")">
@@ -38,29 +38,6 @@
         }
     }
 
-
-
-
-    @if (Model.CurrentPage > 3 && Model.TotalPages - Model.CurrentPage >= 3)
-    {
-        @:...
-        <button class="btn btn-outline-primary active"> @(Model.CurrentPage) </button>
-
-    }
-
-
-    @if (Model.CurrentPage > 3)
-    {
-        @:...
-
-        @for (int i = Math.Max(4, Model.TotalPages - 2); i <= Model.TotalPages; i++)
-        {
-            <button name="options.currentPage" value="@i" type="submit"
-                    class="btn btn-outline-primary @(Model.CurrentPage == i ? "active" : "")">
-                @i
-            </button>
-        }
-    }
 
     @* Проверяет, есть ли следующая страница, если есть - то кнопка активная, если нету следующей страницы - кнопка не активная *@
     @if (!Model.HasNextPage)

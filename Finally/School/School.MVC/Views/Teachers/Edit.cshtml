@@ -9,9 +9,12 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <ul class="nav nav-tabs">
     <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#info">Информация</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#photo">Фото</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#students">Студенты учителя</a></li>
-</ul>
+    @if ((Model.Id != 0))
+    {
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#photo">Фото</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#students">Студенты учителя</a></li>
+    }
+    </ul>
 <hr />
 
 <div class="tab-content">

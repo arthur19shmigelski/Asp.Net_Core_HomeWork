@@ -80,6 +80,8 @@ namespace School.MVC.Controllers
 
                 else if (User.IsInRole("admin"))
                 {
+                    var students = await _requestService.GetByPages(options);
+
                     var requests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
 
                     return View(_mapper.Map<IEnumerable<StudentRequestModel>>(requests));
@@ -99,30 +101,16 @@ namespace School.MVC.Controllers
         }
         #endregion
 
-
         #region Принять заявку
         [HttpGet]
 
         public async Task<IActionResult> AcceptRequest(int? id)
         {
-            //StudentRequest request = null;
-            //StudentRequestModel model = null;
-            //if (id.HasValue)
-            //{
-            //    request = await _requestService.GetById(id.Value);
-            //    model = _mapper.Map<StudentRequestModel>(request);
-            //    model.StudentName = request.Student.FullName;
-            //}
-            //else
-            //{
-            //    model = new StudentRequestModel() { Created = DateTime.Today };
-            //}
             var model = id.HasValue ? _mapper.Map<StudentRequestModel>(await _requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
             var allGroups = (await _studentGroupService.GetAll());
             var filteredGroups = allGroups.Where(g => g.Status == GroupStatus.NotStarted && g.CourseId == model.CourseId);
 
             ViewBag.Groups = _mapper.Map<IEnumerable<StudentGroupModel>>(filteredGroups);
-
             return View(model);
         }
 
@@ -151,6 +139,7 @@ namespace School.MVC.Controllers
             }
         }
         #endregion
+
         #region Изменить заявку
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
@@ -199,6 +188,7 @@ namespace School.MVC.Controllers
             }
         }
         #endregion
+
         #region Удалить заявку
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
@@ -215,6 +205,7 @@ namespace School.MVC.Controllers
             }
         }
         #endregion
+
         #region Exception-view
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

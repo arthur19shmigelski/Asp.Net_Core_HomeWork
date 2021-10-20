@@ -16,6 +16,7 @@ using School.MVC.Filters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
@@ -48,7 +49,7 @@ namespace School.MVC.Controllers
             _courseService = courseService;
             _groupService = groupService;
         }
-
+        #region Index - get first 10 courses
         public async Task<IActionResult> Index(QueryOptions options)
         {
             try
@@ -68,7 +69,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Edit course
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -108,7 +111,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Delete course
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -123,13 +128,18 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
-        public async Task<IActionResult> Search(string search)
+        #region Search course
+        public async Task<IActionResult> Search(string search, QueryOptions options)
         {
             var courses = await _courseService.Search(search);
-            return View(nameof(Index), _mapper.Map<IEnumerable<CourseModel>>(courses));
+            
+            return View(nameof(Index), new PageList<Course>(courses.AsQueryable(), options));
         }
+        #endregion
 
+        #region Filter --- что это
         [HttpGet]
         public IActionResult Filter()
         {
@@ -143,12 +153,14 @@ namespace School.MVC.Controllers
 
             return View(nameof(Index), _mapper.Map<IEnumerable<CourseModel>>(courses));
         }
+        #endregion
 
-
+        #region Error Action
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        #endregion
     }
 }

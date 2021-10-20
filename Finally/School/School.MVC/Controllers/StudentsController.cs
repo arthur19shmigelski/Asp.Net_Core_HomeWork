@@ -11,6 +11,7 @@ using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
@@ -29,6 +30,7 @@ namespace School.MVC.Controllers
             _mapper = mapper;
         }
 
+        #region Index - get first 10 student
         public async Task<IActionResult> Index(QueryOptions options, string sortRecords, string searchString, int skip, int take, EnumPageActions action, EnumSearchParametersStudent searchParameter)
         {
             try
@@ -46,7 +48,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Edit student
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -92,7 +96,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Delete student
         [HttpGet]
         public async Task<IActionResult> Delete(StudentModel studentModel)
         {
@@ -110,16 +116,22 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
-        public async Task<IActionResult> Search(string search)
+        #endregion 
+
+        #region Search student
+        public async Task<IActionResult> Search(string search, QueryOptions options)
         {
             var students = await _studentsService.Search(search);
-            return View(nameof(Index), _mapper.Map<IEnumerable<StudentModel>>(students));
+            return View(nameof(Index), new PageList<Student>(students.AsQueryable(), options));
         }
+        #endregion
 
+        #region Error Action
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        #endregion
     }
 }

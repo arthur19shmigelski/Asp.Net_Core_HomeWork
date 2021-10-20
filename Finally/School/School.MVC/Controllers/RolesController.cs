@@ -21,10 +21,13 @@ namespace CustomIdentityApp.Controllers
             _roleManager = roleManager;
             _userManager = userManager;
         }
+        #region Get roles to list
         public IActionResult RolesList()
         {
             return View(_roleManager.Roles.ToList());
         }
+        #endregion
+
         [HttpPost]
         public async Task<IActionResult> Create(string name)
         {

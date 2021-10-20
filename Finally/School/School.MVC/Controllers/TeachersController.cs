@@ -28,7 +28,7 @@ namespace School.MVC.Controllers
             _mapper = mapper;
             _appEnvironment = appEnvironment;
         }
-
+        #region Index - get first 10 teachers
         public async Task<IActionResult> Index(QueryOptions options)
         {
             try
@@ -43,7 +43,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Edit teacher
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -86,7 +88,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Delete teacher
         [HttpGet]
         public async Task<IActionResult> Delete(TeacherModel teacherModel)
         {
@@ -104,6 +108,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
+
+        #region Upload photo as for teacher
         [HttpPost]
         public async Task<IActionResult> UploadPhoto(int id, IFormFile uploadedFile)
         {
@@ -128,11 +135,14 @@ namespace School.MVC.Controllers
 
             return RedirectToAction(nameof(Edit), new {Id = id});
         }
+        #endregion
 
+        #region Error Action
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        #endregion
     }
 }

@@ -6,6 +6,6 @@ namespace School.DAL.Interfaces
 {
     public interface IStudentRepository : IRepository<Student>
     {
-        Task<PageList<Student>> GetByPages(QueryOptions options);
+        Task<PageList<Student>> GetByPages(PaginationOptions options);
     }
 }

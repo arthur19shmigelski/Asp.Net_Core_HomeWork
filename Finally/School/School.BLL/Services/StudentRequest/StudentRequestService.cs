@@ -42,7 +42,7 @@ namespace School.BLL.Services.StudentRequest
             return await _repository.GetById(id);
         }
 
-        public async Task<PageList<Core.Models.StudentRequest>> GetByPages(QueryOptions options)
+        public async Task<PageList<Core.Models.StudentRequest>> GetByPages(PaginationOptions options)
         {
             return await _repository.GetByPages(options);
         }

@@ -58,7 +58,7 @@ namespace School.BLL.Services.Course
             return filteredCourses;
         }
 
-        public async Task<PageList<Core.Models.Course>> GetByPages(QueryOptions options)
+        public async Task<PageList<Core.Models.Course>> GetByPages(PaginationOptions options)
         {
             return await _repository.GetByPages(options);
         }

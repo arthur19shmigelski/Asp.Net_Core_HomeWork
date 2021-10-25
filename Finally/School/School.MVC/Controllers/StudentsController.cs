@@ -31,7 +31,7 @@ namespace School.MVC.Controllers
         }
 
         #region Index - get first 10 student
-        public async Task<IActionResult> Index(QueryOptions options, string sortRecords, string searchString, int skip, int take, EnumPageActions action, EnumSearchParametersStudent searchParameter)
+        public async Task<IActionResult> Index(PaginationOptions options, string sortRecords, string searchString, int skip, int take, EnumPageActions action, EnumSearchParametersStudent searchParameter)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace School.MVC.Controllers
         #endregion 
 
         #region Search student
-        public async Task<IActionResult> Search(string search, QueryOptions options)
+        public async Task<IActionResult> Search(string search, PaginationOptions options)
         {
             var students = await _studentsService.Search(search);
             return View(nameof(Index), new PageList<Student>(students.AsQueryable(), options));

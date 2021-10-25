@@ -13,6 +13,6 @@ namespace School.DAL.Interfaces
         Task Create(T item);
         Task Update(T item);
         Task Delete(int id);
-        Task<PageList<T>> GetByPages(QueryOptions options);
+        Task<PageList<T>> GetByPages(PaginationOptions options);
     }
 }

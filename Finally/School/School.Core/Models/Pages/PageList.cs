@@ -5,7 +5,7 @@ namespace School.Core.Models.Pages
 {
     public class PageList<T> : List<T>
     {
-        public PageList(IQueryable<T> query, QueryOptions options = null)
+        public PageList(IQueryable<T> query, PaginationOptions options = null)
         {
             CurrentPage = options.CurrentPage;
             PageSize = options.PageSize;

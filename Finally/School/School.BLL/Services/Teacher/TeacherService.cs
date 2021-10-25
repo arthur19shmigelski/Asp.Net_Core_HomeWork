@@ -49,7 +49,7 @@ namespace School.BLL.Services.Teacher
             await _repository.Update(teacher);
         }
 
-        public async Task<PageList<Core.Models.Teacher>> GetByPages(QueryOptions options)
+        public async Task<PageList<Core.Models.Teacher>> GetByPages(PaginationOptions options)
         {
             return await _repository.GetByPages(options);
         }

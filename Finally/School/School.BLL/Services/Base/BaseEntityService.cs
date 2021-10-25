@@ -39,7 +39,7 @@ namespace School.BLL.Services.Base
             await _repository.Delete(id);
         }
 
-        public async Task<PageList<TEntity>> GetByPages(QueryOptions options)
+        public async Task<PageList<TEntity>> GetByPages(PaginationOptions options)
         {
             return await _repository.GetByPages(options);
         }

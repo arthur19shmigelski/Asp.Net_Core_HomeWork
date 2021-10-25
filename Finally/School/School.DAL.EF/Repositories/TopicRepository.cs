@@ -49,7 +49,7 @@ namespace School.DAL.EF.Repositories
             return await _context.Topics.FindAsync(id);
         }
 
-        public async Task<PageList<Topic>> GetByPages(QueryOptions options)
+        public async Task<PageList<Topic>> GetByPages(PaginationOptions options)
         {
             var topicsHowPageList = new PageList<Topic>(_context.Topics.AsQueryable(), options);
 

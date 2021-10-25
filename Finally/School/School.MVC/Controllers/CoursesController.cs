@@ -50,7 +50,7 @@ namespace School.MVC.Controllers
             _groupService = groupService;
         }
         #region Index - get first 10 courses
-        public async Task<IActionResult> Index(QueryOptions options)
+        public async Task<IActionResult> Index(PaginationOptions options)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace School.MVC.Controllers
         #endregion
 
         #region Search course
-        public async Task<IActionResult> Search(string search, QueryOptions options)
+        public async Task<IActionResult> Search(string search, PaginationOptions options)
         {
             var courses = await _courseService.Search(search);
             

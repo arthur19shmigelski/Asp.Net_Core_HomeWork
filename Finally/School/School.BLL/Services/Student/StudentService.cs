@@ -51,7 +51,7 @@ namespace School.BLL.Services.Student
                 c.Email.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase));
         }
 
-        public async Task<PageList<Core.Models.Student>> GetByPages(QueryOptions options)
+        public async Task<PageList<Core.Models.Student>> GetByPages(PaginationOptions options)
         {
             return await _repository.GetByPages(options);
         }

@@ -29,7 +29,7 @@ namespace School.MVC.Controllers
             _appEnvironment = appEnvironment;
         }
         #region Index - get first 10 teachers
-        public async Task<IActionResult> Index(QueryOptions options)
+        public async Task<IActionResult> Index(PaginationOptions options)
         {
             try
             {

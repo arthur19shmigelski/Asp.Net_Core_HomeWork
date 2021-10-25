@@ -65,7 +65,7 @@ namespace School.DAL.EF.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PageList<Group>> GetByPages(QueryOptions options)
+        public async Task<PageList<Group>> GetByPages(PaginationOptions options)
         {
             var groupHowPageList = new PageList<Group>( _context.StudentGroups.Include(g => g.Teacher).AsQueryable(), options);
 

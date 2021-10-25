@@ -96,7 +96,7 @@ namespace School.DAL.EF.Repositories
             return await filteredCourses.ToListAsync();
         }
 
-        public async Task<PageList<Course>> GetByPages(QueryOptions options)
+        public async Task<PageList<Course>> GetByPages(PaginationOptions options)
         {
             var coursesHowPageList = new PageList<Course>(_context.Courses
                 .Include(c => c.Topic).AsQueryable(), options);

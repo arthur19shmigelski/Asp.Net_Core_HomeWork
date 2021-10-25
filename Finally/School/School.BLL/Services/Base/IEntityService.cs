@@ -6,7 +6,7 @@ namespace School.BLL.Services.Base
 {
     public interface IEntityService<TEntity>
     {
-        Task<PageList<TEntity>> GetByPages(QueryOptions options);
+        Task<PageList<TEntity>> GetByPages(PaginationOptions options);
         Task<IEnumerable<TEntity>> GetAll();
         Task<TEntity> GetById(int id);
         Task Create(TEntity entity);

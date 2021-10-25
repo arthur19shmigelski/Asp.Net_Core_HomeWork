@@ -65,7 +65,7 @@ namespace School.BLL.Services.StudentGroup
             await _repository.Delete(id);
         }
 
-        public async Task<PageList<Core.Models.Group>> GetByPages(QueryOptions options)
+        public async Task<PageList<Core.Models.Group>> GetByPages(PaginationOptions options)
         {
             return await _repository.GetByPages(options);
         }

@@ -4,6 +4,10 @@
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <p class="lead">Данная тема обучения <i> @Model.Title</i> содержит следующие курсы:</p>
+        @if(Model.Courses.Count() == 0)
+            {
+                <h3><p>- у данной темы нету курсов</p></h3>
+            }
         @foreach (var item in Model.Courses)
         {
             <div id="accordion">

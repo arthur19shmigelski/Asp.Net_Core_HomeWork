@@ -55,7 +55,7 @@ namespace School.MVC.Controllers
         }
 
         #region Вывод списка заявок (для каждого пользователя своя логика)
-        public async Task<IActionResult> Index(bool? includeClosed, QueryOptions options)
+        public async Task<IActionResult> Index(bool? includeClosed, PaginationOptions options)
         {
             try
             {

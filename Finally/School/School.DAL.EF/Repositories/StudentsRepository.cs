@@ -51,7 +51,7 @@ namespace School.DAL.EF.Repositories
             return await _context.Students.FindAsync(id);
         }
 
-        public async Task<PageList<Student>> GetByPages(QueryOptions options)
+        public async Task<PageList<Student>> GetByPages(PaginationOptions options)
         {
             var studentHowPageList = new PageList<Student>(_context
                 .Students

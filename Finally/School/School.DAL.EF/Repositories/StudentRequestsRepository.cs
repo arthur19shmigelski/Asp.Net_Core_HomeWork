@@ -57,7 +57,7 @@ namespace School.DAL.EF.Repositories
             return await _context.StudentRequests.Include(x => x.Student).Include(x=>x.Course).FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task<PageList<StudentRequest>> GetByPages(QueryOptions options)
+        public async Task<PageList<StudentRequest>> GetByPages(PaginationOptions options)
         {
             var requestHowPageList = new PageList<StudentRequest>(_context.StudentRequests
                 .Include(r => r.Student)

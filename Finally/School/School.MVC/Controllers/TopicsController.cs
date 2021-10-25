@@ -32,7 +32,7 @@ namespace School.MVC.Controllers
         }
 
         #region Index - get first 10 topics
-        public async Task<IActionResult> Index(QueryOptions options)
+        public async Task<IActionResult> Index(PaginationOptions options)
         {
             try
             {

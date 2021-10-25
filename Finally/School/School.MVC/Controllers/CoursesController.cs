@@ -9,12 +9,14 @@ using School.BLL.Services.StudentRequest;
 using School.BLL.Services.Topic;
 using School.Core.Models;
 using School.Core.Models.Filters;
+using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using School.MVC.Configuration;
 using School.MVC.Filters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
@@ -47,21 +49,19 @@ namespace School.MVC.Controllers
             _courseService = courseService;
             _groupService = groupService;
         }
-
-        public async Task<IActionResult> Index()
+        #region Index - get first 10 courses
+        public async Task<IActionResult> Index(QueryOptions options)
         {
             try
             {
-                var courses = await _courseService.GetAll();
-                var models = _mapper.Map<IEnumerable<CourseModel>>(courses);
-
-                foreach (var model in models)
+                var courses = await _courseService.GetByPages(options);
+                foreach (var course in courses)
                 {
-                    var value = await _requestService.GetOpenRequestsCountByCourse(model.Id);
-                    model.RequestsCount = value;
+                    var value = await _requestService.GetOpenRequestsCountByCourse(course.Id);
+                    course.RequestsCount = value;
                 }
 
-                return View(models);
+                return View(courses);
             }
             catch (Exception e)
             {
@@ -69,20 +69,20 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Edit course
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
 
-                var model = id.HasValue ? _mapper.Map<CourseModel>(await _courseService.GetById(id.Value)) : new CourseModel();
+            var model = id.HasValue ? _mapper.Map<CourseModel>(await _courseService.GetById(id.Value)) : new CourseModel();
 
-                if (id.HasValue)
-                    model.Requests = _mapper.Map<IEnumerable<StudentRequestModel>>(await _requestService.GetOpenRequestsByCourse(id.Value));
+            if (id.HasValue)
+                model.Requests = _mapper.Map<IEnumerable<StudentRequestModel>>(await _requestService.GetOpenRequestsByCourse(id.Value));
 
-                ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(await _topicService.GetAll());
-                return View(model);
-
-
+            ViewBag.Topics = _mapper.Map<IEnumerable<TopicModel>>(await _topicService.GetAll());
+            return View(model);
         }
 
         [HttpPost]
@@ -111,7 +111,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Delete course
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -126,13 +128,18 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
-        public async Task<IActionResult> Search(string search)
+        #region Search course
+        public async Task<IActionResult> Search(string search, QueryOptions options)
         {
             var courses = await _courseService.Search(search);
-            return View(nameof(Index), _mapper.Map<IEnumerable<CourseModel>>(courses));
+            
+            return View(nameof(Index), new PageList<Course>(courses.AsQueryable(), options));
         }
+        #endregion
 
+        #region Filter --- что это
         [HttpGet]
         public IActionResult Filter()
         {
@@ -146,12 +153,14 @@ namespace School.MVC.Controllers
 
             return View(nameof(Index), _mapper.Map<IEnumerable<CourseModel>>(courses));
         }
+        #endregion
 
-
+        #region Error Action
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        #endregion
     }
 }

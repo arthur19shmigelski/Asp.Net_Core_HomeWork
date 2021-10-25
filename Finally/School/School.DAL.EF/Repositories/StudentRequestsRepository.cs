@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.DynamicLinq;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
@@ -52,7 +54,17 @@ namespace School.DAL.EF.Repositories
 
         public async Task<StudentRequest> GetById(int id)
         {
-            return await _context.StudentRequests.FindAsync(id);
+            return await _context.StudentRequests.Include(x => x.Student).Include(x=>x.Course).FirstOrDefaultAsync(i => i.Id == id);
+        }
+
+        public async Task<PageList<StudentRequest>> GetByPages(QueryOptions options)
+        {
+            var requestHowPageList = new PageList<StudentRequest>(_context.StudentRequests
+                .Include(r => r.Student)
+                .Include(r => r.Course).AsQueryable(), options);
+
+            var pageListHowTask = Task.FromResult(requestHowPageList);
+            return await pageListHowTask;
         }
 
         public async Task Update(StudentRequest item)

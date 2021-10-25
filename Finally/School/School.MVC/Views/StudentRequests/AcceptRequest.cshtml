@@ -2,9 +2,8 @@
 
 @{
     ViewData["Title"] = $"Student Request ({Model.StudentName}, {Model.CourseTitle})";
-
 }
-<h1 class="text text-center alert-info"> @(Model.Id == 0?"Создать новый запрос" : "Изменить запрос: ") <u> <i> </i> </u></h1>
+<h1 class="text text-center alert-info"> @(Model.Id == 0?"Создать новую заявку" : "Изменить заявку: ") <u> <i> </i> </u></h1>
 
 @using (Html.BeginForm("AcceptRequest", "StudentRequests", FormMethod.Post))
 {
@@ -24,10 +23,7 @@
             <div class="row align-items-end">
                 <div class="col-10">
                     <label asp-for="StudentId">Студент</label>
-                    <input type="text" readonly asp-for="StudentName"/>
-                </div>
-                <div class="col-2">
-                    <a class="btn btn-info" asp-controller="Students" asp-action="Edit">Добавить нового</a>
+                    <input class="form-control" type="text" asp-for="StudentName" readonly="readonly" />
                 </div>
             </div>
         </div>
@@ -35,27 +31,35 @@
 
 <div class="form-group">
     <label asp-for="CourseId">Курс</label>
-    <input type="text" readonly asp-for="CourseTitle" />
+    <input class="form-control" type="text" asp-for="CourseTitle" readonly="readonly" />
 </div>
 
 <div class="form-group">
-    <label asp-for="GroupId">Groups</label>
-    <select class="form-control" asp-for="GroupId" required>
-        <option value="">Выбрать...</option>
-        @if (ViewBag.Groups != null)
-            foreach (var group in (List
-            <StudentGroupModel>)ViewBag.Groups)
-            {
-                if (group.Id == Model.GroupId)
-                {
-                    <option value="@group.Id" selected>@group.Title</option>
-                }
-                else
-                {
-                    <option value="@group.Id">@group.Title</option>
-                }
-            }
-    </select>
+    <div class="row align-items-end">
+
+        <div class="col-10">
+            <label asp-for="GroupId">Groups</label>
+            <select class="form-control" asp-for="GroupId" required>
+                <option value="">Выбрать...</option>
+                @if (ViewBag.Groups != null)
+                    foreach (var group in (List
+                    <StudentGroupModel>)ViewBag.Groups)
+                    {
+                        if (group.Id == Model.GroupId)
+                        {
+                            <option value="@group.Id" selected>@group.Title</option>
+                        }
+                        else
+                        {
+                            <option value="@group.Id">@group.Title</option>
+                        }
+                    }
+            </select>
+        </div>
+        <div class="col-2">
+            <a class="btn btn-info" asp-controller="StudentGroups" asp-action="Edit" asp-route-CourseId="@Model.CourseId">Добавить новую группу</a>
+        </div>
+    </div>   
 </div>
     <div class="form-group">
         <label asp-for="Comments">Комментарий</label>
@@ -66,8 +70,8 @@
         <button type="submit" class="btn btn-success">Сохранить</button>
         <a asp-action="Index" class="btn btn-secondary">Отменить</a>
     </div>
-}
+    }
 
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial.cshtml")
-}
+    @section Scripts {
+        @await Html.PartialAsync("_ValidationScriptsPartial.cshtml")
+    }

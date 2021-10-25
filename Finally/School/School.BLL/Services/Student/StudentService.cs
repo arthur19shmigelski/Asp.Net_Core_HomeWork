@@ -1,5 +1,5 @@
 ﻿using School.BLL.Extensions;
-using School.Core.Models.Enum;
+using School.Core.Models.Pages;
 using School.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -49,6 +49,11 @@ namespace School.BLL.Services.Student
                 c.FirstName.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase) ||
                 c.LastName.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase) ||
                 c.Email.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase));
+        }
+
+        public async Task<PageList<Core.Models.Student>> GetByPages(QueryOptions options)
+        {
+            return await _repository.GetByPages(options);
         }
     }
 }

@@ -7,12 +7,20 @@
 
 <h1 class="text text-center alert-info">@(Model.Id == 0?"Добавить нового учителя" : "Изменить учителя: ") <u> <i> @Model.FullName</i> </u></h1>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+<ul class="nav nav-tabs">
+    <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#info">Информация</a></li>
+    @if ((Model.Id != 0))
+    {
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#photo">Фото</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#students">Студенты учителя</a></li>
+    }
+    </ul>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
 
+<div class="tab-content">
+    <div id="info" class="tab-pane fade show active mt-2">
+        @using (Html.BeginForm("Edit", "Teachers", FormMethod.Post))
+        {
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label">Имя</label>
                 <input asp-for="FirstName" class="form-control" />
@@ -46,6 +54,28 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-success">Сохранить</button>
                 <a asp-action="Index" class="btn btn-secondary">Отменить</a>
+            </div>
+        }
+    </div>
+
+    <div id="students" class="tab-pane fade mt-2">
+        <h1>All students</h1>
+        <p>All students of the teacher</p>
+    </div>
+
+    <div id="photo" class="tab-pane fade mt-2">
+        <h1>Загрузить фотографию</h1>
+        <form asp-action="UploadPhoto" asp-controller="Teachers" method="post" enctype="multipart/form-data">
+            @Html.HiddenFor(x => x.Id)
+            <div class="form-group">
+                <input type="file" name="uploadedFile" class="btn btn-sm" />
+                @if (Model.Photo != null)
+                {
+                    <img alt="Photo" class="img-thumbnail" style="height: 200px; width: 150px; " src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Photo))" />
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" value="Сохранить фото" />
             </div>
         </form>
     </div>

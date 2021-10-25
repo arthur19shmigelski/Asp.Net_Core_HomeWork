@@ -1,35 +1,40 @@
 ﻿using AutoMapper;
 using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Services.Teacher;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
 {
-    [Authorize(Roles = "admin, manager")]
+    [Authorize(Roles = "admin, manager, student")]
     public class TeachersController : Controller
     {
         private readonly ITeacherService _teacherService;
         private readonly IMapper _mapper;
-
-        public TeachersController(ITeacherService teacherService, IMapper mapper)
+        private readonly IWebHostEnvironment _appEnvironment;
+        public TeachersController(ITeacherService teacherService, IMapper mapper, IWebHostEnvironment appEnvironment)
         {
             _teacherService = teacherService;
             _mapper = mapper;
+            _appEnvironment = appEnvironment;
         }
-
-        public async Task<IActionResult> Index()
+        #region Index - get first 10 teachers
+        public async Task<IActionResult> Index(QueryOptions options)
         {
             try
             {
-                var teachers = await _teacherService.GetAll();
-                return View(_mapper.Map<IEnumerable<TeacherModel>>(teachers));
+                var teachers = await _teacherService.GetByPages(options);
+                return View(teachers);
             }
 
             catch (Exception e)
@@ -38,7 +43,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Edit teacher
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -81,7 +88,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Delete teacher
         [HttpGet]
         public async Task<IActionResult> Delete(TeacherModel teacherModel)
         {
@@ -99,11 +108,41 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Upload photo as for teacher
+        [HttpPost]
+        public async Task<IActionResult> UploadPhoto(int id, IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                var path = "/Files/" + uploadedFile.FileName;
+
+                // save file to file system
+                await using var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create);
+
+                await uploadedFile.CopyToAsync(fileStream);
+
+                //save file to DB (Person)
+                await using var memoryStream = new MemoryStream();
+
+                await uploadedFile.CopyToAsync(memoryStream);
+
+                var content = memoryStream.ToArray();
+
+                await _teacherService.SavePhoto(id, content);
+            }
+
+            return RedirectToAction(nameof(Edit), new {Id = id});
+        }
+        #endregion
+
+        #region Error Action
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        #endregion
     }
 }

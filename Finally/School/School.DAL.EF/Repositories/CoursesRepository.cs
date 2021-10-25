@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.Core.Models;
 using School.Core.Models.Filters;
+using School.Core.Models.Pages;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
-    public class CoursesRepository :  ICourseRepository
+    public class CoursesRepository : ICourseRepository
     {
         private readonly AcademyContext _context;
 
@@ -38,15 +39,15 @@ namespace School.DAL.EF.Repositories
 
         public async Task Delete(int id)
         {
-            var item =  _context.Courses.FindAsync(id);
+            var item = _context.Courses.FindAsync(id);
             _context.Courses.Remove(item.Result);
             await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Course>> Find(Func<Course, bool> predicate)
         {
-            return _context.Courses
-                            .AsEnumerable().Where(predicate).ToList();
+            return  _context.Courses
+                            .Where(predicate).ToList();
         }
 
         public async Task Update(Course item)
@@ -93,6 +94,15 @@ namespace School.DAL.EF.Repositories
                 filteredCourses = filteredCourses.Where(c => c.DurationWeeks <= filter.DurationWeeksTo.Value);
 
             return await filteredCourses.ToListAsync();
+        }
+
+        public async Task<PageList<Course>> GetByPages(QueryOptions options)
+        {
+            var coursesHowPageList = new PageList<Course>(_context.Courses
+                .Include(c => c.Topic).AsQueryable(), options);
+
+            var pageListHowTask = Task.FromResult(coursesHowPageList);
+            return await pageListHowTask;
         }
     }
 }

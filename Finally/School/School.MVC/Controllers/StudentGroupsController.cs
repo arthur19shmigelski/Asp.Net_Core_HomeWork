@@ -7,6 +7,7 @@ using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
 using School.BLL.Services.Teacher;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
@@ -37,12 +38,13 @@ namespace School.MVC.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        #region Index - get first 10 groups
+        public async Task<IActionResult> Index(QueryOptions options)
         {
             try
             {
-                var groups = await _groupService.GetAll();
-                return View(_mapper.Map<IEnumerable<StudentGroupModel>>(groups));
+                var groups = await _groupService.GetByPages(options);
+                return View(groups);
             }
 
             catch (Exception e)
@@ -51,30 +53,52 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Delete group
+        [HttpGet]
+        public async Task<IActionResult> Delete(StudentGroupModel groupModel)
+        {
+            try
+            {
+                var groups = _mapper.Map<Group>(groupModel);
+                await _groupService.Delete(groups.Id);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
+        }
+        #endregion 
+
+        #region Edit group
         [HttpGet]
         public async Task<IActionResult> Edit(int? id, int? courseId)
         {
-                StudentGroupModel model;
-                if (id.HasValue)
+            StudentGroupModel model;
+            if (id.HasValue)
+            {
+                var group = await _groupService.GetById(id.Value);
+                model = _mapper.Map<StudentGroupModel>(group);
+                model.Students = _mapper.Map<IEnumerable<StudentModel>>(group.Students);
+            }
+            else
+            {
+                model = new StudentGroupModel
                 {
-                    var group = await _groupService.GetById(id.Value);
-                    model = _mapper.Map<StudentGroupModel>(group);
-                    model.Students = _mapper.Map<IEnumerable<StudentModel>>(group.Students);
-                }
-                else
-                {
-                    model = new StudentGroupModel
-                    {
-                        StartDate = DateTime.Today
-                    };
-                }
+                    StartDate = DateTime.Today
+                };
+            }
 
-                ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherModel>>(await _teacherService.GetAll());
-                ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(await _courseService.GetAll());
-                ViewBag.IsAdmin = HttpContext.User.IsInRole("admin");
+            ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherModel>>(await _teacherService.GetAll());
+            ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(await _courseService.GetAll());
+            ViewBag.IsAdmin = HttpContext.User.IsInRole("admin");
 
-                return View(model);
+            return View(model);
         }
 
         [HttpPost]
@@ -86,7 +110,7 @@ namespace School.MVC.Controllers
                 if (!ModelState.IsValid)
                     return View(groupModel);
 
-                var group = _mapper.Map<StudentGroup>(groupModel);
+                var group = _mapper.Map<Group>(groupModel);
                 if (groupModel.Id > 0)
                     await _groupService.Update(group);
                 else
@@ -101,11 +125,14 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Error Action
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        #endregion
     }
 }

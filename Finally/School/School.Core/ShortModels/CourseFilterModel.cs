@@ -12,6 +12,7 @@ namespace School.Core.ShortModels
 
         [Display(Name = "Цена от")]
         public double? PriceFrom { get; set; }
+
         [Display(Name = "Цена до")]
         public double? PriceTo { get; set; }
         public CourseLevel? Level { get; set; }

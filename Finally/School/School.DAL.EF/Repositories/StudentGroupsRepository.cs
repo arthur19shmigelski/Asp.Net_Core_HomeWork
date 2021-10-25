@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
-    public class StudentGroupsRepository : IRepository<StudentGroup>
+    public class StudentGroupsRepository : IRepository<Group>
     {
         private readonly AcademyContext _context;
 
@@ -18,16 +19,16 @@ namespace School.DAL.EF.Repositories
             _context = context;
         }
 
-        public async Task<StudentGroup> GetById(int id)
+        public async Task<Group> GetById(int id)
         {
             return await _context.StudentGroups.Include(g => g.Students).FirstAsync(g => g.Id == id);
         }
-        public async Task<IEnumerable<StudentGroup>> GetAll()
+        public async Task<IEnumerable<Group>> GetAll()
         {
-            return  await _context.StudentGroups.Include(g => g.Teacher).ToListAsync();
+            return await _context.StudentGroups.Include(g => g.Teacher).ToListAsync();
         }
 
-        public async Task Update(StudentGroup item)
+        public async Task Update(Group item)
         {
             var originalStudentGroup = _context.StudentGroups.Find(item.Id);
 
@@ -43,7 +44,7 @@ namespace School.DAL.EF.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<StudentGroup>> Find(Func<StudentGroup, bool> predicate)
+        public async Task<IEnumerable<Group>> Find(Func<Group, bool> predicate)
         {
             return await _context.StudentGroups
                            .Where(predicate)
@@ -51,7 +52,7 @@ namespace School.DAL.EF.Repositories
                            .ToListAsync();
         }
 
-        public async Task Create(StudentGroup item)
+        public async Task Create(Group item)
         {
             await _context.StudentGroups.AddAsync(item);
             await _context.SaveChangesAsync();
@@ -59,9 +60,17 @@ namespace School.DAL.EF.Repositories
 
         public async Task Delete(int id)
         {
-            StudentGroup item = await _context.StudentGroups.FindAsync(id);
+            Group item = await _context.StudentGroups.FindAsync(id);
             _context.StudentGroups.Remove(item);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<PageList<Group>> GetByPages(QueryOptions options)
+        {
+            var groupHowPageList = new PageList<Group>( _context.StudentGroups.Include(g => g.Teacher).AsQueryable(), options);
+
+            var pageListHowTask = Task.FromResult(groupHowPageList);
+            return await pageListHowTask;
         }
     }
 }

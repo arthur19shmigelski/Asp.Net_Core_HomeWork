@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using School.BLL.Services.Course;
 using School.BLL.Services.Topic;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
@@ -30,13 +31,14 @@ namespace School.MVC.Controllers
             _topicService = topicService;
         }
 
-        public async Task<IActionResult> Index()
+        #region Index - get first 10 topics
+        public async Task<IActionResult> Index(QueryOptions options)
         {
             try
             {
-                var topics = await _topicService.GetAll();
+                var topics = await _topicService.GetByPages(options);
 
-                return View(_mapper.Map<IEnumerable<TopicModel>>(topics));
+                return View(topics);
             }
             catch (Exception e)
             {
@@ -44,7 +46,9 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Edit topic
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -87,15 +91,17 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
 
+        #region Delete topic
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             try
             {
                 var topic = _mapper.Map<Topic>(await _topicService.GetById(id));
-                    await _topicService.Delete(id);
-                    return RedirectToAction(nameof(Index));
+                await _topicService.Delete(id);
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception e)
             {
@@ -127,5 +133,6 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
+        #endregion
     }
 }

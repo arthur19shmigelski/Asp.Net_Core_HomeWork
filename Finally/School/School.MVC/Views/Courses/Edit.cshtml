@@ -24,6 +24,11 @@
         <textarea rows="5" class="form-control" asp-for="Program"></textarea>
     </div>
     <div class="form-group">
+        <label asp-for="DurationWeeks">Длительность курса в неделях</label>
+        <input class="form-control" type="number" asp-for="DurationWeeks" />
+        <span class="alert-danger" asp-validation-for="DurationWeeks" />
+    </div>
+    <div class="form-group">
         <label asp-for="TopicId">Тема обучения</label>
         <select class="form-control" asp-for="TopicId" required>
             <option value="">Выбрать...</option>
@@ -43,6 +48,11 @@
             }
         </select>
     </div>
+    <div class="form-group">
+        <label asp-for="Price">Цена курса в BYN</label>
+        <input class="form-control" type="number" asp-for="Price" />
+        <span class="alert-danger" asp-validation-for="Price" />
+    </div>
     @if (Model.Id == 0)
     {
         <div class="form-group">
@@ -53,40 +63,40 @@
 
     else
     {
-<div class="form-group">
-    <label asp-for="Requests">Запросы</label>
-    <table class="table table-bordered table-sm">
-        <tr>
-            <th>Студенты</th>
-            <th>Комментарии</th>
-        </tr>
+        <div class="form-group">
+            <label asp-for="Requests">Запросы</label>
+            <table class="table table-bordered table-sm">
+                <tr>
+                    <th>Студенты</th>
+                    <th>Комментарии</th>
+                </tr>
 
-        @foreach (var request in Model.Requests)
-        {
-            <tr>
-                <td><a asp-controller="Students" asp-action="Edit" asp-route-id="@request.StudentId">@request.StudentName</a></td>
-                <td>@request.Comments</td>
-            </tr>
-        }
+                @foreach (var request in Model.Requests)
+                {
+                    <tr>
+                        <td><a asp-controller="Students" asp-action="Edit" asp-route-id="@request.StudentId">@request.StudentName</a></td>
+                        <td>@request.Comments</td>
+                    </tr>
+                }
 
-        <tr>
-            <th>
-                <div class="text-info">Total: @Model.Requests.Count()</div>
-            </th>
-        </tr>
-    </table>
-</div>
+                <tr>
+                    <th>
+                        <div class="text-info">Total: @Model.Requests.Count()</div>
+                    </th>
+                </tr>
+            </table>
+        </div>
 
 
-<div class="form-group">
-    <button type="submit" class="btn btn-success">Сохранить</button>
-    @* Если на группу есть запросы === то добавить новую группу *@
-    @if (Model.Requests.Any())
-    {
-        <a class="btn btn-success" asp-controller="StudentGroups" asp-action="Edit" asp-route-courseId="@Model.Id">Добавить новую группу</a>
-    }
-    <a asp-action="Index" class="btn btn-secondary">Отменить</a>
-</div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Сохранить</button>
+            @* Если на группу есть запросы === то добавить новую группу *@
+            @if (Model.Requests.Any())
+            {
+                <a class="btn btn-success" asp-controller="StudentGroups" asp-action="Edit" asp-route-courseId="@Model.Id">Добавить новую группу</a>
+            }
+            <a asp-action="Index" class="btn btn-secondary">Отменить</a>
+        </div>
     }
 
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using School.BLL.Extensions;
+using School.Core.Models;
 using School.DAL.EF.Contexts;
 using School.DAL.EF.Extensions;
 using School.MVC.Configuration;
@@ -128,7 +129,7 @@ namespace School.MVC
                 await userManager.AddToRoleAsync(managerUser, "MANAGER");
             }
 
-            var value = userManager.Users.Where(email => email.Email != Configuration["Security:ManagerUserEmail"] 
+            var value = userManager.Users.Where(email => email.Email != Configuration["Security:ManagerUserEmail"]
             && email.Email != Configuration["Security:AdminUserEmail"]).Select(users => users).ToList();
             foreach (var student in value)
             {

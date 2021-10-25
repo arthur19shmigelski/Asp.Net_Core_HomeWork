@@ -7,7 +7,7 @@ namespace School.DAL.EF.Contexts
     public class AcademyContext : IdentityDbContext
     {
         public DbSet<Student> Students { get; set; } = default!;
-        public DbSet<StudentGroup> StudentGroups { get; set; } = default!;
+        public DbSet<Group> StudentGroups { get; set; } = default!;
         public DbSet<Teacher> Teachers { get; set; } = default!;
         public DbSet<Topic> Topics { get; set; } = default!;
         public DbSet<Course> Courses { get; set; } = default!;

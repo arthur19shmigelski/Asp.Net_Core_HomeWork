@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.MVC", "School.MVC\Sc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Angular", "School.Angular\School.Angular.csproj", "{AB900562-CB1F-4094-89DA-927D00E39E17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.Core", "School.Core\School.Core.csproj", "{E3965F5F-103F-46A5-B9B1-28123DD267CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Core", "School.Core\School.Core.csproj", "{E3965F5F-103F-46A5-B9B1-28123DD267CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.DAL.EF.Tests", "School.DAL.EF.Tests\School.DAL.EF.Tests.csproj", "{42D1A204-3EE2-4058-B77D-1F805C44798C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{E3965F5F-103F-46A5-B9B1-28123DD267CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3965F5F-103F-46A5-B9B1-28123DD267CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3965F5F-103F-46A5-B9B1-28123DD267CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42D1A204-3EE2-4058-B77D-1F805C44798C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42D1A204-3EE2-4058-B77D-1F805C44798C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42D1A204-3EE2-4058-B77D-1F805C44798C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42D1A204-3EE2-4058-B77D-1F805C44798C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

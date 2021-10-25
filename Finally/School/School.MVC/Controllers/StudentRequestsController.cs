@@ -8,12 +8,13 @@ using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
 using School.Core.Models;
+using School.Core.Models.Enum;
+using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using School.Core.Models.Enum;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
@@ -54,7 +55,7 @@ namespace School.MVC.Controllers
         }
 
         #region Вывод списка заявок (для каждого пользователя своя логика)
-        public async Task<IActionResult> Index(bool? includeClosed)
+        public async Task<IActionResult> Index(bool? includeClosed, QueryOptions options)
         {
             try
             {
@@ -79,7 +80,10 @@ namespace School.MVC.Controllers
 
                 else if (User.IsInRole("admin"))
                 {
+                    var students = await _requestService.GetByPages(options);
+
                     var requests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
+
                     return View(_mapper.Map<IEnumerable<StudentRequestModel>>(requests));
                 }
 
@@ -97,7 +101,6 @@ namespace School.MVC.Controllers
         }
         #endregion
 
-
         #region Принять заявку
         [HttpGet]
 
@@ -108,9 +111,6 @@ namespace School.MVC.Controllers
             var filteredGroups = allGroups.Where(g => g.Status == GroupStatus.NotStarted && g.CourseId == model.CourseId);
 
             ViewBag.Groups = _mapper.Map<IEnumerable<StudentGroupModel>>(filteredGroups);
-
-            //Взять id студента, проверить есть ли группа с такой темой ,добавить его в группу, удалить текущую заявку заявку.
-            //Студент может учится в разных группах или только 1?Если да, то изменить в студенте группы на List<StudentGroups>
             return View(model);
         }
 
@@ -139,6 +139,7 @@ namespace School.MVC.Controllers
             }
         }
         #endregion
+
         #region Изменить заявку
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
@@ -187,6 +188,7 @@ namespace School.MVC.Controllers
             }
         }
         #endregion
+
         #region Удалить заявку
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
@@ -203,6 +205,7 @@ namespace School.MVC.Controllers
             }
         }
         #endregion
+
         #region Exception-view
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

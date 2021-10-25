@@ -1,4 +1,5 @@
-﻿using System;
+﻿using School.Core.Models.Pages;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,5 +13,6 @@ namespace School.DAL.Interfaces
         Task Create(T item);
         Task Update(T item);
         Task Delete(int id);
+        Task<PageList<T>> GetByPages(QueryOptions options);
     }
 }

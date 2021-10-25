@@ -237,6 +237,9 @@ namespace School.DAL.EF.Migrations
                     b.Property<string>("Program")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RequestsCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -258,6 +261,7 @@ namespace School.DAL.EF.Migrations
                             Level = 0,
                             Price = 1350.0,
                             Program = "1. Вводное. Установка окружения(C#, Visual Studio). Запуск первой программы Console Application.\n2. Типы данных. Переменные. Операторы.\n3. Операторы if/switch.\n4. Циклы.\n5. И многое другое...",
+                            RequestsCount = 0,
                             Title = "C#",
                             TopicId = 1
                         },
@@ -269,6 +273,7 @@ namespace School.DAL.EF.Migrations
                             Level = 0,
                             Price = 1420.0,
                             Program = "1. Вводное. Установка окружения(Java, Intellij IDEA). Запуск первой программы.\n2. Типы данных. Переменные. Операторы.\n3. Операторы if/switch.\n4. Циклы.\n5. И многое другое...",
+                            RequestsCount = 0,
                             Title = "Java",
                             TopicId = 2
                         },
@@ -280,6 +285,7 @@ namespace School.DAL.EF.Migrations
                             Level = 0,
                             Price = 1250.0,
                             Program = "1. Принципы визуального дизайна.\n2. Особенности UI/UX/web дизайна.\n3. Основы композиции.\n4. Правила работы со шрифтами.\n5. И многое другое...",
+                            RequestsCount = 0,
                             Title = "Web Design",
                             TopicId = 3
                         },
@@ -291,6 +297,7 @@ namespace School.DAL.EF.Migrations
                             Level = 1,
                             Price = 1610.0,
                             Program = "1. Основы MVC: -Паттерн MVC, MVC контроллеры, разработка представлений.\n2. Основы WebApi: -Архитектура REST; -Проектирование RESTful сервисов, Self-Hosted приложения\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики; -DI и паттерн IoC\n4. Работа с данными: -Понятие ORM, Entity Framework; -Основные подходы к проектированию БД: CodeFirst, DatabaseFirst, ModelFirst\n5. И многое другое...",
+                            RequestsCount = 0,
                             Title = "Промышленная разработка ПО на ASP.NET",
                             TopicId = 1
                         },
@@ -302,6 +309,7 @@ namespace School.DAL.EF.Migrations
                             Level = 1,
                             Price = 1650.0,
                             Program = "1. Основы Apache Maven.\n2. Инженерные техники при работе с Apache Maven.\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики, паттерн DAO; -Практика.\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL.\n5. И многое другое...",
+                            RequestsCount = 0,
                             Title = "Промышленная разработка ПО на Java",
                             TopicId = 2
                         },
@@ -313,6 +321,7 @@ namespace School.DAL.EF.Migrations
                             Level = 1,
                             Price = 1440.0,
                             Program = "1. Знакомство с библиотекой React.\n2. Настройка Git и Webpack.\n3. Глубокое изучение JavaScript.\n4. Твоя первая большая курсовая работа в команде (простой суши-магазин).\n5. И многое другое...",
+                            RequestsCount = 0,
                             Title = "Веб-разработка на языках HTML, CSS и JavaScript ",
                             TopicId = 3
                         },
@@ -324,6 +333,7 @@ namespace School.DAL.EF.Migrations
                             Level = 2,
                             Price = 2040.0,
                             Program = "1. Введение в Unity. Hello world с Unity.\n2. Scripts (Cкрипты). Part 1: -Методология; -Игровые объекты и компоненты; -Cлои, ввод данных, теги.\n3. Scripts (Скрипты). Part 2: -Manual: Immediate Mode GUI (IMGUI); -Сопрограммы.\n4. Инструментарий для разработки 2D-игр.\n5. И многое другое...",
+                            RequestsCount = 0,
                             Title = "Unity",
                             TopicId = 1
                         },
@@ -335,6 +345,7 @@ namespace School.DAL.EF.Migrations
                             Level = 2,
                             Price = 2570.0,
                             Program = "1. JQuery.\n2. EscmaScript6.\n3. Расширенные возможность JavaScript\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL\n5. И многое другое...",
+                            RequestsCount = 0,
                             Title = "Full-stack developer",
                             TopicId = 2
                         },
@@ -346,9 +357,78 @@ namespace School.DAL.EF.Migrations
                             Level = 2,
                             Price = 2300.0,
                             Program = "1. Знакомство с библиотекой React\n2.Знакомство с библиотекой Angular\n3. Знакомство с библиотекой Vue\n4. Твоя первая большая курсовая работа в команде (3 проекта на каждом фрэймворке - магазин доставки цветов)\n5. И многое другое...",
+                            RequestsCount = 0,
                             Title = "Angular, React, Vue",
                             TopicId = 3
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "IT-HR — это специалист, деятельность которого объединяет IT-рекрутинг и HR-менеджмент.IT-HR работает с коллективом компании, развивает корпоративную культуру, помогает адаптироваться новым коллегам.Основная задача HR-менеджера — сопровождение сотрудника на протяжении всего времени его работы в компании.",
+                            DurationWeeks = 4,
+                            Level = 0,
+                            Price = 1240.0,
+                            Program = "1. Разобраться с основными понятиями и терминами IT-рекрутинга\n2. Освоить технологии и методы подбора персонала\n3. Изучить алгоритмы адаптации новых сотрудников\n4. Узнать, как управлять эффективностью персонала\n5. Ознакомиться с понятиями «HR-бренд компании» и «HR-бренд рекрутера»...",
+                            RequestsCount = 0,
+                            Title = "IT-HR интенсив - для маленьких компаний",
+                            TopicId = 4
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Description = "IT-HR — это специалист, деятельность которого объединяет IT-рекрутинг и HR-менеджмент.IT-HR работает с коллективом компании, развивает корпоративную культуру, помогает адаптироваться новым коллегам.Основная задача HR-менеджера — сопровождение сотрудника на протяжении всего времени его работы в компании.",
+                            DurationWeeks = 5,
+                            Level = 1,
+                            Price = 1570.0,
+                            Program = "1. Инструменты анализа\n2. Освоить технологии и методы  двухфакторной теории мотивации Герцберга\n3. Изучить алгоритмы адаптации новых сотрудников\n4. Узнать, как управлять эффективностью персонала\n5. Создание корпоративной культуры и идентификация компании на рынке...",
+                            RequestsCount = 0,
+                            Title = "IT-HR Middle - для средних и крупных компаний",
+                            TopicId = 4
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Description = "IT-HR — это специалист, деятельность которого объединяет IT-рекрутинг и HR-менеджмент.IT-HR работает с коллективом компании, развивает корпоративную культуру, помогает адаптироваться новым коллегам.Основная задача HR-менеджера — сопровождение сотрудника на протяжении всего времени его работы в компании.",
+                            DurationWeeks = 8,
+                            Level = 2,
+                            Price = 2040.0,
+                            Program = "1. Разобраться с основными понятиями и терминами IT-рекрутинга;\n2. Совершенствование корпоративной культуры, условий труда;\n3. УАттестация и оценка сотрудников (в том числе – «материальная», то есть определение премиальной части ЗП, оплаты на основе KPI);\n4. частие в оперативном управлении и решение текущих вопросов;\n5. Ознакомиться с понятиями «HR-бренд компании» и «HR-бренд рекрутера»...",
+                            RequestsCount = 0,
+                            Title = "IT-HR интенсив - для крупных организаций, производств...",
+                            TopicId = 4
                         });
+                });
+
+            modelBuilder.Entity("School.Core.Models.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("StudentGroups");
                 });
 
             modelBuilder.Entity("School.Core.Models.Student", b =>
@@ -380,6 +460,9 @@ namespace School.DAL.EF.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -398,9 +481,9 @@ namespace School.DAL.EF.Migrations
                             Id = 1,
                             Age = 22,
                             Email = "Fedorov@gmail.com",
-                            FirstName = "Oleg",
-                            LastName = "Fedorov",
-                            Phone = "+375291111111",
+                            FirstName = "Олег",
+                            LastName = "Федоров",
+                            Phone = "+375296711906",
                             Type = 0
                         },
                         new
@@ -408,9 +491,9 @@ namespace School.DAL.EF.Migrations
                             Id = 2,
                             Age = 26,
                             Email = "Antonov@gmail.com",
-                            FirstName = "Andrey",
-                            LastName = "Antonov",
-                            Phone = "+375292222222",
+                            FirstName = "Адрей",
+                            LastName = "Антонов",
+                            Phone = "+375293452992",
                             Type = 2
                         },
                         new
@@ -418,9 +501,9 @@ namespace School.DAL.EF.Migrations
                             Id = 3,
                             Age = 17,
                             Email = "Petrov@gmail.com",
-                            FirstName = "Ivan",
-                            LastName = "Petrov",
-                            Phone = "+375443333333",
+                            FirstName = "Иван",
+                            LastName = "Петров",
+                            Phone = "+375443567033",
                             Type = 1
                         },
                         new
@@ -428,9 +511,9 @@ namespace School.DAL.EF.Migrations
                             Id = 4,
                             Age = 19,
                             Email = "Ivashko@gmail.com",
-                            FirstName = "Sergey",
-                            LastName = "Ivashko",
-                            Phone = "+375444444444",
+                            FirstName = "Сергей",
+                            LastName = "Ивашко",
+                            Phone = "+375444236424",
                             Type = 0
                         },
                         new
@@ -438,9 +521,9 @@ namespace School.DAL.EF.Migrations
                             Id = 5,
                             Age = 25,
                             Email = "Shmigelski@gmail.com",
-                            FirstName = "Arthur",
-                            LastName = "Shmigelski",
-                            Phone = "+375295555555",
+                            FirstName = "Артур",
+                            LastName = "Шмигельский",
+                            Phone = "+375295900865",
                             Type = 0
                         },
                         new
@@ -448,9 +531,9 @@ namespace School.DAL.EF.Migrations
                             Id = 6,
                             Age = 25,
                             Email = "Sergeenko@yandex.com",
-                            FirstName = "Maxim",
-                            LastName = "Sergeenko",
-                            Phone = "+375446666666",
+                            FirstName = "Виктор",
+                            LastName = "Сергеенко",
+                            Phone = "+375446668906",
                             Type = 2
                         },
                         new
@@ -458,9 +541,9 @@ namespace School.DAL.EF.Migrations
                             Id = 7,
                             Age = 50,
                             Email = "Micinat@gmail.com",
-                            FirstName = "Vladimir",
-                            LastName = "Micinat",
-                            Phone = "+375447777777",
+                            FirstName = "Владимир",
+                            LastName = "Мицинат",
+                            Phone = "+375443525757",
                             Type = 2
                         },
                         new
@@ -468,9 +551,9 @@ namespace School.DAL.EF.Migrations
                             Id = 8,
                             Age = 46,
                             Email = "Frunze@mail.ru",
-                            FirstName = "Anatoliy",
-                            LastName = "Frunze",
-                            Phone = "+375448888888",
+                            FirstName = "Анатолий",
+                            LastName = "Фрунзе",
+                            Phone = "+375448839528",
                             Type = 1
                         },
                         new
@@ -478,9 +561,9 @@ namespace School.DAL.EF.Migrations
                             Id = 9,
                             Age = 40,
                             Email = "VaneevaPolina@gmail.com",
-                            FirstName = "Polina",
-                            LastName = "Vaneeva",
-                            Phone = "+375449999999",
+                            FirstName = "Апполинария",
+                            LastName = "Ванеева",
+                            Phone = "+375449992359",
                             Type = 2
                         },
                         new
@@ -488,9 +571,9 @@ namespace School.DAL.EF.Migrations
                             Id = 10,
                             Age = 39,
                             Email = "YakimovMiron@gmail.com",
-                            FirstName = "Miron",
-                            LastName = "Yakimov",
-                            Phone = "+375441010101",
+                            FirstName = "Мирон",
+                            LastName = "Якимов",
+                            Phone = "+375441010744",
                             Type = 1
                         },
                         new
@@ -498,9 +581,9 @@ namespace School.DAL.EF.Migrations
                             Id = 11,
                             Age = 22,
                             Email = "MorozNikita@gmail.com",
-                            FirstName = "Nikita",
-                            LastName = "Moroz",
-                            Phone = "+375440110111",
+                            FirstName = "Никита",
+                            LastName = "Мороз",
+                            Phone = "+375440169910",
                             Type = 1
                         },
                         new
@@ -508,9 +591,9 @@ namespace School.DAL.EF.Migrations
                             Id = 12,
                             Age = 25,
                             Email = "PonimashVitalik@gmail.com",
-                            FirstName = "Vitalik",
-                            LastName = "Ponimash",
-                            Phone = "+375441212123",
+                            FirstName = "Виталик",
+                            LastName = "Понимаш",
+                            Phone = "+375441364123",
                             Type = 0
                         },
                         new
@@ -518,9 +601,9 @@ namespace School.DAL.EF.Migrations
                             Id = 13,
                             Age = 29,
                             Email = "FistashkaIrina@yandex.by",
-                            FirstName = "Irina",
-                            LastName = "Fistashka",
-                            Phone = "+375444444444",
+                            FirstName = "Ирэн",
+                            LastName = "Фисташка",
+                            Phone = "+375444444966",
                             Type = 0
                         },
                         new
@@ -528,9 +611,9 @@ namespace School.DAL.EF.Migrations
                             Id = 14,
                             Age = 20,
                             Email = "Filimonova@gmail.com",
-                            FirstName = "Alena",
-                            LastName = "Filimonova",
-                            Phone = "+375441534545",
+                            FirstName = "Алёна",
+                            LastName = "Филимонова",
+                            Phone = "+375441534784",
                             Type = 2
                         },
                         new
@@ -538,43 +621,161 @@ namespace School.DAL.EF.Migrations
                             Id = 15,
                             Age = 25,
                             Email = "EfremovSergey@mail.ru",
-                            FirstName = "Sergey",
-                            LastName = "Efremov",
-                            Phone = "+375441232323",
+                            FirstName = "Сергей",
+                            LastName = "Ефремов",
+                            Phone = "+375441234543",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Age = 22,
+                            Email = "Russia@gmail.com",
+                            FirstName = "Владимир",
+                            LastName = "Соловьёв",
+                            Phone = "+375291111111",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Age = 26,
+                            Email = "IamMikita@gmail.com",
+                            FirstName = "Микита",
+                            LastName = "Беляев",
+                            Phone = "+375292222345",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Age = 17,
+                            Email = "OrlovIgor1998@gmail.com",
+                            FirstName = "Игорь",
+                            LastName = "Орлов",
+                            Phone = "+375443332435",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Age = 19,
+                            Email = "BaranovAlex@gmail.com",
+                            FirstName = "Алексей",
+                            LastName = "Баранов",
+                            Phone = "+375444443445",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Age = 25,
+                            Email = "Kulikov@gmail.com",
+                            FirstName = "Кулич",
+                            LastName = "Куликов",
+                            Phone = "+375295340090",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Age = 25,
+                            Email = "AlexMax375@yandex.com",
+                            FirstName = "Макс",
+                            LastName = "Алексеев",
+                            Phone = "+375446634312",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Age = 50,
+                            Email = "YakovlevYanik@gmail.com",
+                            FirstName = "Ян",
+                            LastName = "Яковлев",
+                            Phone = "+375447734545",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Age = 46,
+                            Email = "Sorokin998@mail.ru",
+                            FirstName = "Митя",
+                            LastName = "Сорокин",
+                            Phone = "+375448991010",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Age = 40,
+                            Email = "SergeevSerg@gmail.com",
+                            FirstName = "Сергей",
+                            LastName = "Сергеев",
+                            Phone = "+375449345432",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Age = 39,
+                            Email = "RomanovRoman@gmail.com",
+                            FirstName = "Роман",
+                            LastName = "Романов",
+                            Phone = "+375441010134",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Age = 22,
+                            Email = "ZaharovEvdakim@gmail.com",
+                            FirstName = "Евдаким",
+                            LastName = "Захаров",
+                            Phone = "+375440134445",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Age = 25,
+                            Email = "Borisov@gmail.com",
+                            FirstName = "Антон",
+                            LastName = "Борисов",
+                            Phone = "+375442929293",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Age = 29,
+                            Email = "KingSize@yandex.by",
+                            FirstName = "Аристарх",
+                            LastName = "Королёв",
+                            Phone = "+375444423342",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Age = 33,
+                            Email = "Ponomar@gmail.com",
+                            FirstName = "Арсений",
+                            LastName = "Пономарёв",
+                            Phone = "+375441230909",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Age = 20,
+                            Email = "GriwaArtem@mail.ru",
+                            FirstName = "Артём",
+                            LastName = "Григорьев",
+                            Phone = "+375449998877",
                             Type = 0
                         });
-                });
-
-            modelBuilder.Entity("School.Core.Models.StudentGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("StudentGroups");
                 });
 
             modelBuilder.Entity("School.Core.Models.StudentRequest", b =>
@@ -748,6 +949,9 @@ namespace School.DAL.EF.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
@@ -760,56 +964,111 @@ namespace School.DAL.EF.Migrations
                         {
                             Id = 1,
                             Age = 30,
-                            Bio = "My name is Vadim Korotkov. I'am full-stack developer. I know all language, frameworks",
+                            Bio = "Меня зовут Вадим Коротков. Я full-stack developer. Я знаю много языков программирования и frameworks",
                             Email = "Korotkov@mail.ru",
-                            FirstName = "Vadim",
-                            LastName = "Korotkov",
+                            FirstName = "Вадим",
+                            LastName = "Коротков",
                             LinkToProfile = "https://www.linkedin.com/feed/Korotkov",
-                            Phone = "+375291111111"
+                            Phone = "+375291656733"
                         },
                         new
                         {
                             Id = 2,
                             Age = 32,
-                            Bio = "My name is Sergey Gromov. I'am a back-end developer on .Net Framework + Java (JS).",
+                            Bio = "Меня зовут Сергей Громов. Я back-end developer на .Net Framework + Java (JS).",
                             Email = "Gromov@yandex.ru",
-                            FirstName = "Sergey",
-                            LastName = "Gromov",
+                            FirstName = "Сергей",
+                            LastName = "Громов",
                             LinkToProfile = "https://www.linkedin.com/feed/Gromov",
-                            Phone = "+375292222222"
+                            Phone = "+375292593534"
                         },
                         new
                         {
                             Id = 3,
                             Age = 36,
-                            Bio = "My name is Andrew Kamilov. I'am front-end developer, know some modern frameworks (Angular, Vue, React)",
-                            Email = "Kamilov@yandex.ru",
-                            FirstName = "Andrew",
-                            LastName = "Kamilov",
+                            Bio = "Меня зовут Андрей Камилов. Я front-end developer, знаю некоторые современные frameworks (Angular, Vue, React)",
+                            Email = "Kamilov@mail.ru",
+                            FirstName = "Андрей",
+                            LastName = "Камилов",
                             LinkToProfile = "https://www.linkedin.com/feed/Kamilov",
-                            Phone = "+375293333333"
+                            Phone = "+375293334567"
                         },
                         new
                         {
                             Id = 4,
                             Age = 34,
-                            Bio = "My name is Marina Kuzmina. I am a Design teacher",
+                            Bio = "Меня зовут Marina Kuzmina. Я учитель по направлению",
                             Email = "Kuzmina@yandex.ru",
-                            FirstName = "Marina",
-                            LastName = "Kuzmina",
+                            FirstName = "Марина",
+                            LastName = "Кузьмина",
                             LinkToProfile = "https://www.linkedin.com/feed/Kuzmina",
                             Phone = "+375296561723"
                         },
                         new
                         {
                             Id = 5,
-                            Age = 27,
-                            Bio = "My name is Vladimir Vorobei. I am a C# language teacher",
-                            Email = "Vorobei@yandex.ru",
-                            FirstName = "Vladimir",
-                            LastName = "Vorobei",
+                            Age = 31,
+                            Bio = "Меня зовут Владимир Воробей. Я .Net developer со стажем 3",
+                            Email = "Vorobei@gmail.com",
+                            FirstName = "Владимир",
+                            LastName = "Воробей",
                             LinkToProfile = "https://www.linkedin.com/feed/Vorobei",
                             Phone = "+375290989093"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Age = 32,
+                            Bio = "Меня зовут Аристарх. Попытаюсь объяснить тебе о .Net",
+                            Email = "KuzNica@gmail.com",
+                            FirstName = "Аристарх",
+                            LastName = "Кузнецов",
+                            LinkToProfile = "https://www.linkedin.com/feed/Kuznecov",
+                            Phone = "+375290984628"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Age = 45,
+                            Bio = "Я Анисий Виноградов. Есть практический опыт на Java, JS, примерно 8 лет.",
+                            Email = "AnisVinograd@yandex.ru",
+                            FirstName = "Анисий",
+                            LastName = "Виноградов",
+                            LinkToProfile = "https://www.linkedin.com/feed/Vinogradov",
+                            Phone = "+375298762334"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Age = 43,
+                            Bio = "Меня зовут Аннатолий. Я front-end developer, знаю некоторые современные frameworks (Angular, Vue, React)",
+                            Email = "Kamilov@yandex.ru",
+                            FirstName = "Аннатолий",
+                            LastName = "Голубев",
+                            LinkToProfile = "https://www.linkedin.com/feed/Golubev",
+                            Phone = "+375291324354"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Age = 22,
+                            Bio = "My name is Arkadiy Gusev. I am a Design teacher",
+                            Email = "ArkadiyGusev@yandex.ru",
+                            FirstName = "Аркадий",
+                            LastName = "Гусев",
+                            LinkToProfile = "https://www.linkedin.com/feed/Gusev",
+                            Phone = "+375294567890"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Age = 49,
+                            Bio = "My name is Lazarev Hasbik. I am a C# language teacher",
+                            Email = "LazarKiller@yandex.ru",
+                            FirstName = "Хасбик",
+                            LastName = "Лазарев",
+                            LinkToProfile = "https://www.linkedin.com/feed/Lazarev",
+                            Phone = "+375296263434"
                         });
                 });
 
@@ -853,6 +1112,12 @@ namespace School.DAL.EF.Migrations
                             Id = 3,
                             Description = "	UI/UX и web-дизайн ориентирован на создание внешне привлекательных, удобных в использовании и функциональных пользовательских интерфейсов. Чтобы достичь успеха в этой сфере, необходимо обладать художественным вкусом, быть внимательным к деталям, понимать принципы компьютерной графики и визуального дизайна, уметь работать с инструментами (например, Adobe Photoshop, Adobe Illustrator, Sketch, Figma).",
                             Title = "Design"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "	Зачастую можно услышать вопрос, что такое HR-менеджер, как переводится и чем занимается специалист. Если посмотреть должностную инструкцию, становится понятно, что он разрабатывает систему управления персоналом, расставляет приоритеты, развивает сотрудников, прорисовывает цели для них. Помимо этого HR мотивирует, оценивает и ищет нужных специалистов.	\n С помощью данного направления вы уверитесь в значимости HR-менеджера в IT-компании и узнаете обо всех тонкостях профессии как в теории, так и на практике",
+                            Title = "HR"
                         });
                 });
 
@@ -918,16 +1183,7 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Topic");
                 });
 
-            modelBuilder.Entity("School.Core.Models.Student", b =>
-                {
-                    b.HasOne("School.Core.Models.StudentGroup", "Group")
-                        .WithMany("Students")
-                        .HasForeignKey("GroupId");
-
-                    b.Navigation("Group");
-                });
-
-            modelBuilder.Entity("School.Core.Models.StudentGroup", b =>
+            modelBuilder.Entity("School.Core.Models.Group", b =>
                 {
                     b.HasOne("School.Core.Models.Course", "Course")
                         .WithMany("Groups")
@@ -942,6 +1198,15 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("School.Core.Models.Student", b =>
+                {
+                    b.HasOne("School.Core.Models.Group", "Group")
+                        .WithMany("Students")
+                        .HasForeignKey("GroupId");
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("School.Core.Models.StudentRequest", b =>
@@ -977,7 +1242,7 @@ namespace School.DAL.EF.Migrations
                     b.Navigation("Groups");
                 });
 
-            modelBuilder.Entity("School.Core.Models.StudentGroup", b =>
+            modelBuilder.Entity("School.Core.Models.Group", b =>
                 {
                     b.Navigation("Students");
                 });

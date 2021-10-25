@@ -1,9 +1,10 @@
-﻿@model IEnumerable<CourseModel>
+﻿@model IEnumerable<Course>
 @{
     ViewData["Title"] = "Courses";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h1 class="text text-center alert-info"> <i>Список наших курсов</i></h1>
+
 
 @await Html.PartialAsync("Partial/_Search")
 
@@ -67,3 +68,5 @@
         <a asp-action="Edit" class="btn btn-success">Добавить новый курс</a>
     </p>
 }
+
+    @await Html.PartialAsync("Partial/Pages", Model)

@@ -1,4 +1,5 @@
-﻿using School.DAL.Interfaces;
+﻿using School.Core.Models.Pages;
+using School.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -36,6 +37,21 @@ namespace School.BLL.Services.Teacher
         public async Task Delete(int id)
         {
             await _repository.Delete(id);
+        }
+
+        public async Task SavePhoto(int id, byte[] content)
+        {
+            var teacher = await _repository.GetById(id);
+
+            if(teacher !=null)
+                teacher.Photo = content;
+
+            await _repository.Update(teacher);
+        }
+
+        public async Task<PageList<Core.Models.Teacher>> GetByPages(QueryOptions options)
+        {
+            return await _repository.GetByPages(options);
         }
     }
 }

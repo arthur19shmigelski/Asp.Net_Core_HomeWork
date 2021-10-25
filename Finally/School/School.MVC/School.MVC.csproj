@@ -27,4 +27,8 @@
     <ProjectReference Include="..\School.DAL.EF\School.DAL.EF.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Files\" />
+  </ItemGroup>
+
 </Project>

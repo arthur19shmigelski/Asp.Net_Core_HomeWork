@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.Core.Models;
+using School.Core.Models.Pages;
 using School.DAL.EF.Contexts;
 using School.DAL.Interfaces;
 using System;
@@ -39,14 +40,25 @@ namespace School.DAL.EF.Repositories
 
         public async Task<IEnumerable<Student>> GetAll()
         {
-            return await _context.Students.AsNoTracking()
-            .Include(s => s.Group)
-            .ToListAsync();
+            return await _context.Students
+                .AsNoTracking()
+                .Include(s => s.Group)
+                .ToListAsync();
         }
 
         public async Task<Student> GetById(int id)
         {
             return await _context.Students.FindAsync(id);
+        }
+
+        public async Task<PageList<Student>> GetByPages(QueryOptions options)
+        {
+            var studentHowPageList = new PageList<Student>(_context
+                .Students
+                .Include(s => s.Group).AsQueryable(), options);
+
+            var pageListHowTask = Task.FromResult(studentHowPageList);
+            return await pageListHowTask;
         }
 
         public async Task Update(Student item)

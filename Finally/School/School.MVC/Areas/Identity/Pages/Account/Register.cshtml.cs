@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using FluentEmail.Core;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -6,11 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using MimeKit;
 using School.BLL.Services.Student;
 using School.Core.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -110,8 +114,8 @@ namespace School.MVC.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -122,7 +126,7 @@ namespace School.MVC.Areas.Identity.Pages.Account
                         student.Email = Input.Email;
                         student.UserId = user.Id;
                         student.Phone = Input.Phone;
-
+                        
                         await _studentService.Create(student);
 
                         await _userManager.AddToRoleAsync(user, "STUDENT");

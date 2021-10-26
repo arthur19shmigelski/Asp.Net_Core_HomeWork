@@ -38,6 +38,8 @@ namespace School.MVC
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddFluentEmail("6y9gyvglt3@mac-24.com");
+
             services.AddIdentity<IdentityUser, IdentityRole>(options => { options.SignIn.RequireConfirmedAccount = true; options.User.RequireUniqueEmail = true; })
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<AcademyContext>()

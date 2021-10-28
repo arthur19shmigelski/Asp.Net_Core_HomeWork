@@ -78,7 +78,21 @@ namespace CustomIdentityApp.Controllers
             }
         }
 
-        public IActionResult UserList() => View(_userManager.Users.ToList());
+        public async Task<IActionResult> UserList()
+        {
+            var users = _userManager.Users.ToList();
+            List<string> listRoles = new();
+            foreach (var item in users)
+            {
+                var userRoles = await _userManager.GetRolesAsync(item);
+                foreach (var item2 in userRoles)
+                {
+                    listRoles.Add(item2);
+                }
+            }
+            ViewBag.Roles = listRoles;
+            return View(users);
+        }
 
         public async Task<IActionResult> Edit(string userId)
         {

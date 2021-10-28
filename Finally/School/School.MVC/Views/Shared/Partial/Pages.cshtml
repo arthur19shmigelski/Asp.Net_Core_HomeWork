@@ -1,6 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<form id="pageform" method="get" class="form-inline d-inline-block">
+<form id="pageform" asp-action="Index" method="get" class="form-inline d-inline-block">
 
     @* Проверяет, есть ли предыдущая страница, если есть - то кнопка (предыдущая страница) становится активной, если нету предыдущей страницы - кнопка не активная *@
     @if (!Model.HasPreviosPage)

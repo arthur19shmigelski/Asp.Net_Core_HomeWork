@@ -43,7 +43,7 @@ namespace School.BLL.Services.Teacher
         {
             var teacher = await _repository.GetById(id);
 
-            if(teacher !=null)
+            if (teacher != null)
                 teacher.Photo = content;
 
             await _repository.Update(teacher);

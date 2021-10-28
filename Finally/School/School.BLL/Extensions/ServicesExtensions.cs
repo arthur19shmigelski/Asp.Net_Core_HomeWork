@@ -1,10 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using School.BLL.Services.Base;
 using School.BLL.Services.Course;
+using School.BLL.Services.Lesson;
 using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
 using School.BLL.Services.Teacher;
 using School.BLL.Services.Topic;
+using School.Core.Models;
 
 namespace School.BLL.Extensions
 {
@@ -18,6 +21,7 @@ namespace School.BLL.Extensions
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IStudentGroupService, StudentGroupService>();
             services.AddScoped<IStudentRequestService, StudentRequestService>();
+            services.AddScoped<IEntityService<Lesson>, LessonService>();
 
             return services;
         }

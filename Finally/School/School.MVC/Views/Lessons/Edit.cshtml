@@ -1,0 +1,64 @@
+﻿@model LessonModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+}
+
+<h1 class="text text-center alert-info"> @(Model.Id == 0?"Добавить новый урок" : "Изменить урок: ") <u> <i> @Model.NameLesson</i> </u></h1>
+<hr />
+@using (Html.BeginForm("Edit", "Lessons", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+
+    <div class="form-group">
+        <label asp-for="NameLesson">Название урока</label>
+        <input class="form-control" type="text" asp-for="NameLesson" />
+        <span class="alert-danger" asp-validation-for="NameLesson" />
+    </div>
+    <div class="form-group">
+        <label asp-for="TopicLesson">Тема</label>
+        <input class="form-control" type="text" asp-for="TopicLesson" />
+        <span class="alert-danger" asp-validation-for="TopicLesson" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Comment">Коммент</label>
+        <input class="form-control" type="text" asp-for="Comment" />
+        <span class="alert-danger" asp-validation-for="Comment" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GroupId">Группа</label>
+        <select class="form-control" asp-for="GroupId" required>
+            <option value="">Выбрать группу для занятия...</option>
+            @if (ViewBag.Group != null)
+            {
+                foreach (var group in (List<StudentGroupModel>)ViewBag.Group)
+                {
+                    <option value="@group.Id">@group.Title</option>
+                }
+            }
+        </select>
+    </div>
+
+    @*<div class="form-group">
+        <label asp-for="GroupId">Группа</label>
+        <select class="form-control" asp-for="GroupId" required>
+            <option value="">Выбрать...</option>
+            @if (ViewBag.Groups != null)
+            {
+                foreach (var group in (List<Group>)ViewBag.Groups)
+                {
+                    <option value="@group.Id" selected>@group.Title</option>
+                }
+            }
+        </select>
+    </div>*@
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Сохранить</button>
+        <a asp-action="Index" class="btn btn-secondary">Отменить</a>
+    </div>
+}
+

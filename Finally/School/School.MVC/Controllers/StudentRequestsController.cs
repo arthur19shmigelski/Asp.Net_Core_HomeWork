@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
 {
-    [Authorize(Roles = "admin, manager, student")]
+    [Authorize(Roles = "admin, student")]
     public class StudentRequestsController : Controller
     {
         private readonly IStudentRequestService _requestService;
@@ -71,11 +71,6 @@ namespace School.MVC.Controllers
 
                     var selectRequestsCurrentStudent = allRequests.Where(studentReq => studentReq.StudentId == getCurrentStudentBySystemUserId.Id);
                     return View(_mapper.Map<IEnumerable<StudentRequestModel>>(selectRequestsCurrentStudent));
-                }
-                else if (User.IsInRole("manager"))
-                {
-                    //Дописать - взять манагера, посмотреть всех его учеников и посмотреть все их заявки
-                    return RedirectToAction(nameof(Error));
                 }
 
                 else if (User.IsInRole("admin"))

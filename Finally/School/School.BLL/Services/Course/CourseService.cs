@@ -51,7 +51,7 @@ namespace School.BLL.Services.Course
                 c.Description.Contains(search.NormalizeSearchString(), StringComparison.OrdinalIgnoreCase));
         }
 
-        public async Task<IEnumerable<object>> Filter(CourseFilter filter)
+        public async Task<IEnumerable<Core.Models.Course>> Filter(CourseFilter filter)
         {
             var filteredCourses = await _repository.Filter(filter);
 

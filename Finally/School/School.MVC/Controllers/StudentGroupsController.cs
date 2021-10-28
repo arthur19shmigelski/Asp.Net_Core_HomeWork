@@ -2,6 +2,7 @@
 using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using School.BLL.Services.Base;
 using School.BLL.Services.Course;
 using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
@@ -12,6 +13,7 @@ using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
@@ -23,18 +25,24 @@ namespace School.MVC.Controllers
         private readonly ITeacherService _teacherService;
         private readonly ICourseService _courseService;
         private readonly IStudentRequestService _requestService;
+
+        private readonly IEntityService<Lesson> _lessonsService;
+
         private readonly IMapper _mapper;
 
         public StudentGroupsController(IStudentGroupService groupService,
            ITeacherService teacherService,
            ICourseService courseService,
            IStudentRequestService requestService,
-           IMapper mapper)
+           IMapper mapper,
+           IEntityService<Lesson> lessonsService)
         {
             _groupService = groupService;
             _teacherService = teacherService;
             _courseService = courseService;
             _requestService = requestService;
+
+            _lessonsService = lessonsService;
             _mapper = mapper;
         }
 
@@ -56,6 +64,7 @@ namespace School.MVC.Controllers
         #endregion
 
         #region Delete group
+        [Authorize(Roles = "admin, manager")]
         [HttpGet]
         public async Task<IActionResult> Delete(StudentGroupModel groupModel)
         {
@@ -73,9 +82,10 @@ namespace School.MVC.Controllers
                 return RedirectToAction(nameof(Error));
             }
         }
-        #endregion 
+        #endregion
 
         #region Edit group
+        [Authorize(Roles = "admin, manager")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id, int? courseId)
         {
@@ -85,6 +95,10 @@ namespace School.MVC.Controllers
                 var group = await _groupService.GetById(id.Value);
                 model = _mapper.Map<StudentGroupModel>(group);
                 model.Students = _mapper.Map<IEnumerable<StudentModel>>(group.Students);
+
+                var lessons = await _lessonsService.GetAll();
+                
+                ViewBag.Lessons = _mapper.Map<IEnumerable<LessonModel>>(lessons.Where(x => x.GroupId == group.Id).ToList());
             }
             else
             {
@@ -102,13 +116,33 @@ namespace School.MVC.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, manager")]
         public async Task<IActionResult> Edit(StudentGroupModel groupModel)
         {
             try
             {
-                if (!ModelState.IsValid)
-                    return View(groupModel);
+                if(groupModel.LessonId == 0)
+                {
+                    for (int i = groupModel.Lessons.Count() - 1; i > -1; i--)
+                    {
+                        if (groupModel.Lessons[i].IsActive == false)
+                        {
+                            groupModel.Lessons.Remove(groupModel.Lessons[i]);
+                            //_lessonsService.GetById(groupModel.Lessons[i].Gr)
+                        }
+                    }
+                }
+
+                if (groupModel.LessonId > 0)
+                {
+                    //foreach (var item in groupModel.Lessons)
+                    //{
+                    //    item = 
+                    //}
+                    var lessons = await _lessonsService.GetById(groupModel.LessonId);
+
+                    groupModel.Lessons.Add(_mapper.Map<LessonModel>(lessons));
+                }
 
                 var group = _mapper.Map<Group>(groupModel);
                 if (groupModel.Id > 0)

@@ -36,10 +36,8 @@ namespace School.BLL.Services.StudentGroup
         {
             await _repository.Create(entity);
 
-            //find all requests related to new group
             var requests = (await _requestService.GetOpenRequestsByCourse(entity.CourseId)).ToList();
 
-            //add students from requests to group
             var studentsToGroup = requests.Select(r => r.Student);
             foreach (var student in studentsToGroup)
             {
@@ -47,7 +45,6 @@ namespace School.BLL.Services.StudentGroup
                 await _studentService.Update(student);
             }
 
-            //close requests
             foreach (var request in requests)
             {
                 request.Status = RequestStatus.Closed;

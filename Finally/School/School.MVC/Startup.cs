@@ -38,8 +38,6 @@ namespace School.MVC
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddFluentEmail("6y9gyvglt3@mac-24.com");
-
             services.AddIdentity<IdentityUser, IdentityRole>(options => { options.SignIn.RequireConfirmedAccount = true; options.User.RequireUniqueEmail = true; })
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<AcademyContext>()
@@ -97,46 +95,7 @@ namespace School.MVC
                 endpoints.MapRazorPages();
             });
 
-            //CreateRoles(serviceProvider, securityOptions).Wait();
-
             app.UseElmah();
-        }
-
-        private async Task CreateRoles(IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)
-        {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-            var roles = new[] { "admin", "manager", "student" };
-
-            foreach (var roleName in roles)
-            {
-                roleManager.CreateAsync(new IdentityRole
-                {
-                    Name = roleName,
-                    NormalizedName = roleName.ToUpper()
-                }).Wait();
-            }
-
-            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-
-            var adminUser = await userManager.FindByEmailAsync(Configuration["Security:AdminUserEmail"]);
-            if (adminUser != null)
-            {
-                await userManager.AddToRoleAsync(adminUser, "ADMIN");
-            }
-
-            var managerUser = await userManager.FindByEmailAsync(Configuration["Security:ManagerUserEmail"]);
-            if (managerUser != null)
-            {
-                await userManager.AddToRoleAsync(managerUser, "MANAGER");
-            }
-
-            var value = userManager.Users.Where(email => email.Email != Configuration["Security:ManagerUserEmail"]
-            && email.Email != Configuration["Security:AdminUserEmail"]).Select(users => users).ToList();
-            foreach (var student in value)
-            {
-                await userManager.AddToRoleAsync(student, "STUDENT");
-            }
-        }
+        }       
     }
 }

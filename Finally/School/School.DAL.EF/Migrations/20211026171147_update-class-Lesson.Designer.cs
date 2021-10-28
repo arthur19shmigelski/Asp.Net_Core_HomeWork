@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.DAL.EF.Contexts;
 
 namespace School.DAL.EF.Migrations
 {
     [DbContext(typeof(AcademyContext))]
-    partial class AcademyContextModelSnapshot : ModelSnapshot
+    [Migration("20211026171147_update-class-Lesson")]
+    partial class updateclassLesson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -444,16 +446,18 @@ namespace School.DAL.EF.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<string>("NameLesson")
+                    b.Property<string>("NameLessons")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TopicLesson")
+                    b.Property<string>("TopicLessons")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("GroupId");
 
@@ -1231,13 +1235,17 @@ namespace School.DAL.EF.Migrations
 
             modelBuilder.Entity("School.Core.Models.Lesson", b =>
                 {
-                    b.HasOne("School.Core.Models.Group", "Group")
-                        .WithMany("Lessons")
-                        .HasForeignKey("GroupId")
+                    b.HasOne("School.Core.Models.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Group");
+                    b.HasOne("School.Core.Models.Group", null)
+                        .WithMany("Lessons")
+                        .HasForeignKey("GroupId");
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("School.Core.Models.Student", b =>

@@ -9,6 +9,8 @@ namespace School.MVC.Mapper
     {
         public MappingProfile()
         {
+            CreateMap<Lesson, LessonModel>()
+                .ReverseMap();
             CreateMap<Person, PersonModel>()
                 .ReverseMap();
             CreateMap<Teacher, TeacherModel>()

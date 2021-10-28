@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.DAL.EF.Contexts;
 
 namespace School.DAL.EF.Migrations
 {
     [DbContext(typeof(AcademyContext))]
-    partial class AcademyContextModelSnapshot : ModelSnapshot
+    [Migration("20211026165733_add_new_class")]
+    partial class add_new_class
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -441,16 +443,13 @@ namespace School.DAL.EF.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CourseId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NameLesson")
+                    b.Property<string>("NameLessons")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TopicLesson")
+                    b.Property<string>("TopicLessons")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -1231,13 +1230,9 @@ namespace School.DAL.EF.Migrations
 
             modelBuilder.Entity("School.Core.Models.Lesson", b =>
                 {
-                    b.HasOne("School.Core.Models.Group", "Group")
+                    b.HasOne("School.Core.Models.Group", null)
                         .WithMany("Lessons")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
+                        .HasForeignKey("GroupId");
                 });
 
             modelBuilder.Entity("School.Core.Models.Student", b =>

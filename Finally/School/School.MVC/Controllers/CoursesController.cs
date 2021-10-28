@@ -139,7 +139,7 @@ namespace School.MVC.Controllers
         }
         #endregion
 
-        #region Filter --- что это
+        #region Filter расширенный поиск
         [HttpGet]
         public IActionResult Filter()
         {
@@ -147,11 +147,11 @@ namespace School.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Filter(CourseFilterModel model)
+        public async Task<IActionResult> Filter(CourseFilterModel model, PaginationOptions options)
         {
             var courses = await _courseService.Filter(_mapper.Map<CourseFilter>(model));
 
-            return View(nameof(Index), _mapper.Map<IEnumerable<CourseModel>>(courses));
+            return View(nameof(Index), new PageList<Course>(courses.AsQueryable(), options));
         }
         #endregion
 

@@ -28,17 +28,17 @@ namespace School.DAL.EF.Contexts
                 }).Wait();
             }
 
-            string email = "admin@email.com";
-            string password = "ASDqwe!@3";
+            string emailForAdmin = "admin@email.com";
+            string passwordForAdmin = "ASDqwe!@3";
 
-            if (userManager.FindByEmailAsync(email).Result == null)
+            if (userManager.FindByEmailAsync(emailForAdmin).Result == null)
             {
                 IdentityUser user = new();
-                user.UserName = email;
-                user.Email = email;
+                user.UserName = emailForAdmin;
+                user.Email = emailForAdmin;
                 user.EmailConfirmed = true;
 
-                IdentityResult result = userManager.CreateAsync(user, password).Result;
+                IdentityResult result = userManager.CreateAsync(user, passwordForAdmin).Result;
 
                 if (result.Succeeded)
                 {

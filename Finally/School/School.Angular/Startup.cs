@@ -39,7 +39,7 @@ namespace School.Angular
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
-            services.AddScoped<IRepository<Course>, CoursesRepository>();
+            services.AddScoped<ICourseRepository, CoursesRepository>();
 
             services.AddScoped<ICourseService, CourseService>();
 

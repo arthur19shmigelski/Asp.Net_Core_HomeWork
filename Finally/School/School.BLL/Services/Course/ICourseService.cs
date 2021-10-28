@@ -8,6 +8,6 @@ namespace School.BLL.Services.Course
     public interface ICourseService : IEntityService<Core.Models.Course>
     {
         Task<IEnumerable<Core.Models.Course>> Search(string search);
-        Task<IEnumerable<object>> Filter(CourseFilter filter);
+        Task<IEnumerable<Core.Models.Course>> Filter(CourseFilter filter);
     }
 }

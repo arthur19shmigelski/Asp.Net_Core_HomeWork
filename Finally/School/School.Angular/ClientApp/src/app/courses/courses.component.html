@@ -1,12 +1,12 @@
-<h1 id="tableLabel">Courses</h1>
+<h1 id="tableLabel">Список доступных курсов</h1>
 
 <p *ngIf="!courses"><em>Loading...</em></p>
 
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="courses">
   <thead>
     <tr>
-      <th class="w-75">Title</th>
-      <th class="w-25">Topic</th>
+      <th class="w-75">Название</th>
+      <th class="w-25">Направление</th>
     </tr>
   </thead>
   <tbody>
@@ -15,7 +15,7 @@
         <div *ngIf="courses.length === 1">
           {{ course.description }}
           <td>
-              <a class="nav-link text-dark" [routerLink]="['/courses']">Back to the list of course</a>
+              <a class="nav-link text-dark" [routerLink]="['/courses']">Вернуться назад к списку курсов</a>
           </td>
         </div>
       </td>
@@ -25,7 +25,7 @@
     </tr>
     <tr *ngIf="isFilterApplied">
       <td></td>
-      <td><div class="text-muted" (click)="clearFilter()">Clear filter</div></td>
+      <td><div class="text-muted" (click)="clearFilter()">Очистить фильтр</div></td>
     </tr>
   </tbody>
 </table>

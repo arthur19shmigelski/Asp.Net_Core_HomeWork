@@ -21,7 +21,7 @@ namespace School.DAL.EF.Repositories
 
         public async Task<Group> GetById(int id)
         {
-            return await _context.StudentGroups.Include(g => g.Students).FirstAsync(g => g.Id == id);
+            return await _context.StudentGroups.Include(g => g.Students).Include(c => c.Course).Include(l => l.Lessons).FirstAsync(g => g.Id == id);
         }
         public async Task<IEnumerable<Group>> GetAll()
         {
@@ -32,12 +32,10 @@ namespace School.DAL.EF.Repositories
         {
             var originalStudentGroup = _context.StudentGroups.Find(item.Id);
 
-            originalStudentGroup.Course = item.Course;
             originalStudentGroup.CourseId = item.CourseId;
+            originalStudentGroup.Lessons = item.Lessons;
             originalStudentGroup.StartDate = item.StartDate;
             originalStudentGroup.Status = item.Status;
-            originalStudentGroup.Students = item.Students;
-            originalStudentGroup.Teacher = item.Teacher;
             originalStudentGroup.TeacherId = item.TeacherId;
             originalStudentGroup.Title = item.Title;
 
@@ -67,7 +65,7 @@ namespace School.DAL.EF.Repositories
 
         public async Task<PageList<Group>> GetByPages(PaginationOptions options)
         {
-            var groupHowPageList = new PageList<Group>( _context.StudentGroups.Include(g => g.Teacher).AsQueryable(), options);
+            var groupHowPageList = new PageList<Group>(_context.StudentGroups.Include(g => g.Teacher).AsQueryable(), options);
 
             var pageListHowTask = Task.FromResult(groupHowPageList);
             return await pageListHowTask;

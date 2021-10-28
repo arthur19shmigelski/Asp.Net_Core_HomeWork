@@ -11,6 +11,7 @@ namespace School.DAL.EF.Contexts
         public DbSet<Teacher> Teachers { get; set; } = default!;
         public DbSet<Topic> Topics { get; set; } = default!;
         public DbSet<Course> Courses { get; set; } = default!;
+        public DbSet<Lesson> Lessons { get; set; } = default!;
 
         public DbSet<StudentRequest> StudentRequests { get; set; } = default!;
 

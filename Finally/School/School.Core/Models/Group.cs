@@ -22,5 +22,6 @@ namespace School.Core.Models
 
         public GroupStatus Status { get; set; }
         public List<Student> Students { get; set; } = new List<Student>();
+        public List<Lesson> Lessons { get; set; } = new List<Lesson>();
     }
 }

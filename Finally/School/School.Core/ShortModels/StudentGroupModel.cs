@@ -23,5 +23,8 @@ namespace School.Core.ShortModels
 
         public string Status { get; set; }
         public IEnumerable<StudentModel> Students { get; set; }
+        public int LessonId { get; set; }
+        public List<LessonModel> Lessons { get; set; } = new List<LessonModel>();
+
     }
 }

@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Group " + Model.Title;
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 }
 <h1 class="text text-center alert-info">@(Model.Id == 0?"Создать новую группу" : "Изменить группу: ") <u> <i> @Model.Title</i> </u></h1>
 
@@ -39,7 +41,7 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="TeacherId">Учитель группы</label>
+        <label asp-for="TeacherId">Учитель</label>
         <select class="form-control" asp-for="TeacherId">
             <option value="">Select teacher...</option>
             @foreach (var teacher in (List<TeacherModel>)ViewData["Teachers"])
@@ -55,10 +57,62 @@
             }
         </select>
     </div>
+
+    //--------------------------------Уроки текущеий группы-------------------------------------------------------------
+
+    @if (Model.Id == 0)
+    {
+
+    }
+    else
+    {
+<div class="form-group">
+    <label asp-for="Lessons">Уроки группы</label>
+    @if (Model.Lessons.Count() == 0)
+    {
+        <textarea rows="1" class="form-control" readonly>
+@String.Format("У группы нет уроков!")
+                    </textarea>
+    }
+
+    else
+    {
+<div class="form-group">    
+        <textarea class="form-control" id="exampleFormControlTextarea1" readonly rows="@Model.Lessons.Count()">
+            @for (int i = 0; i < Model.Lessons.Count(); i++)
+                {
+                @String.Format("Название урока - {0}, тема урока - {1} \n", Model.Lessons[i].NameLesson, Model.Lessons[i].TopicLesson)
+                }
+            </textarea>
+
+</div>
+    
+    
+       
+    }
+</div>
+        //--------------------------------Уроки доступные для добавления в группу-------------------------------------------------------------
+
+        <div class="form-group">
+            <label asp-for="LessonId">Доступные уроки</label>
+            <select class="form-control" asp-for="LessonId">
+                <option value="">Выбрать новый урок...</option>
+                @foreach (var lesson in (List<LessonModel>)ViewBag.Lessons)
+                {
+                   
+                        <option value="@lesson.Id">@lesson.TopicLesson @lesson.NameLesson</option>
+                }
+            </select>
+        </div>
+    }
+
+
+    //----------------------------------------Конец уроков-----------------------------------------------------
+
     @if (Model.Students != null)
     {
         <div class="form-group">
-            <label asp-for="Students">Студенты</label>
+            <label asp-for="Students">Студенты группы</label>
             <table class="table table-borderless table-sm">
 
                 @foreach (var student in Model.Students)
@@ -78,11 +132,11 @@
 
     }
 
-<div class="form-group">
-    @if (ViewBag.IsAdmin)
-    {
-        <button type="submit" class="btn btn-success">Сохранить</button>
-    }
-    <a asp-action="Index" class="btn btn-secondary">Отменить</a>
-</div>
+    <div class="form-group">
+        @if (ViewBag.IsAdmin)
+        {
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        }
+        <a asp-action="Index" class="btn btn-secondary">Отменить</a>
+    </div>
 }

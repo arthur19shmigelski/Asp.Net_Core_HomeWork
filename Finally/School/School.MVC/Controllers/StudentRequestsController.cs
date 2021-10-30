@@ -26,7 +26,6 @@ namespace School.MVC.Controllers
         private readonly ICourseService _courseService;
         private readonly IStudentService _studentService;
         private readonly IStudentGroupService _studentGroupService;
-
         private readonly IMapper _mapper;
         private readonly UserManager<IdentityUser> _userManager;
 
@@ -63,13 +62,13 @@ namespace School.MVC.Controllers
                 {
                     var allRequests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
 
-                    IdentityUser currentSystemUser = await _userManager.GetUserAsync(User);
+                    var student = await GetCurrentStudentBySystemUser();
 
-                    var getAllStudents = await _studentService.GetAll();
+                    var selectRequestsCurrentStudent = allRequests.Where(studentReq => studentReq.StudentId == student.Id).ToList();
+                    if(selectRequestsCurrentStudent == null)
+                    {
 
-                    Student getCurrentStudentBySystemUserId = getAllStudents.FirstOrDefault(student => student.UserId == currentSystemUser.Id);
-
-                    var selectRequestsCurrentStudent = allRequests.Where(studentReq => studentReq.StudentId == getCurrentStudentBySystemUserId.Id);
+                    }
                     return View(_mapper.Map<IEnumerable<StudentRequestModel>>(selectRequestsCurrentStudent));
                 }
 
@@ -98,7 +97,7 @@ namespace School.MVC.Controllers
 
         #region Принять заявку
         [HttpGet]
-
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AcceptRequest(int? id)
         {
             var model = id.HasValue ? _mapper.Map<StudentRequestModel>(await _requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
@@ -110,6 +109,7 @@ namespace School.MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AcceptRequest(StudentRequestModel model)
         {
             try
@@ -137,11 +137,24 @@ namespace School.MVC.Controllers
 
         #region Изменить заявку
         [HttpGet]
+        [Authorize(Roles = "admin, student")]
         public async Task<IActionResult> Edit(int? id)
         {
             try
             {
                 var model = id.HasValue ? _mapper.Map<StudentRequestModel>(await _requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
+
+                if(id.HasValue && model != null)
+                {
+                    var student = await GetCurrentStudentBySystemUser();
+                    if(model.StudentId == student.Id)
+                    {
+                    }
+                    else
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
 
                 var allCourses = await _courseService.GetAll();
                 ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(allCourses.OrderBy(c => c.Title));
@@ -159,6 +172,7 @@ namespace School.MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin, student")]
         public async Task<IActionResult> Edit(StudentRequestModel model)
         {
             try
@@ -185,6 +199,7 @@ namespace School.MVC.Controllers
         #endregion
 
         #region Удалить заявку
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

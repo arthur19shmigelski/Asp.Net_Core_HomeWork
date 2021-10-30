@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using School.BLL.Services.Student;
+using School.BLL.Services.Teacher;
 using School.Core.ShortModels;
 using System;
 using System.Collections.Generic;
@@ -16,10 +18,19 @@ namespace CustomIdentityApp.Controllers
     {
         RoleManager<IdentityRole> _roleManager;
         UserManager<IdentityUser> _userManager;
-        public RolesController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        private readonly IStudentService _studentsService;
+        private readonly ITeacherService _teacherService;
+
+        public RolesController(
+            RoleManager<IdentityRole> roleManager,
+            UserManager<IdentityUser> userManager,
+            IStudentService studentsService,
+            ITeacherService teacherService)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _studentsService = studentsService;
+            _teacherService = teacherService;
         }
         #region Get roles to list
         public IActionResult RolesList()
@@ -94,6 +105,60 @@ namespace CustomIdentityApp.Controllers
             return View(users);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(id);
+
+                if(user != null)
+                {
+                    var userRoles = await _userManager.GetRolesAsync(user);
+                    foreach (var item in userRoles)
+                    {
+                        if(string.Equals(item, "student"))
+                        {
+                            var students = await _studentsService.GetAll();
+                            var student = students.Where(x => x.UserId == id).FirstOrDefault();
+                            if (student != null)
+                            {
+                                await _studentsService.Delete(student.Id);
+                                await _userManager.DeleteAsync(user);
+                            }
+                            else
+                                RedirectToAction(nameof(Error));
+                        }
+
+                        else if(string.Equals(item, "manager"))
+                        {
+                            var teachers = await _teacherService.GetAll();
+                            var teacher = teachers.Where(x => x.UserId == id).FirstOrDefault();
+                            if (teacher != null)
+                            {
+                                await _teacherService.Delete(teacher.Id);
+                                await _userManager.DeleteAsync(user);
+                            }
+                            else
+                                RedirectToAction(nameof(Error));
+                        }
+
+                        else
+                        {
+                            RedirectToAction(nameof(Error));
+                        }
+                    }
+                }
+
+                return RedirectToAction(nameof(UserList));
+            }
+
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(UserList));
+            }
+        }
         public async Task<IActionResult> Edit(string userId)
         {
             try

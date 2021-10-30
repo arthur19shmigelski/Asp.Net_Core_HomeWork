@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ElmahCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -72,6 +73,7 @@ namespace School.MVC.Controllers
         #endregion
 
         #region Edit course
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -86,6 +88,7 @@ namespace School.MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(CourseModel courseModel)
         {
             try
@@ -114,6 +117,7 @@ namespace School.MVC.Controllers
         #endregion
 
         #region Delete course
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

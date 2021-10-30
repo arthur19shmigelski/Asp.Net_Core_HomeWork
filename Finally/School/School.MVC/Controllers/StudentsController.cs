@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;
 using School.Core.Models;
-using School.Core.Models.Enum;
 using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
@@ -22,22 +22,21 @@ namespace School.MVC.Controllers
         private readonly IStudentService _studentsService;
         private readonly IStudentGroupService _groupService;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public StudentsController(IStudentService studentService, IStudentGroupService groupService, IMapper mapper)
+        public StudentsController(IStudentService studentService, IStudentGroupService groupService, IMapper mapper, UserManager<IdentityUser> userManager)
         {
             _studentsService = studentService;
             _groupService = groupService;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         #region Index - get first 10 student
-        public async Task<IActionResult> Index(PaginationOptions options, string sortRecords, string searchString, int skip, int take, EnumPageActions action, EnumSearchParametersStudent searchParameter)
+        public async Task<IActionResult> Index(PaginationOptions options)
         {
             try
             {
-                ViewData["searchString"] = searchString;
-                ViewData["searchParameter"] = searchParameter;
-
                 var students = await _studentsService.GetByPages(options);
                 return View(students);
             }
@@ -83,7 +82,23 @@ namespace School.MVC.Controllers
                     if (studentModel.Id > 0)
                         await _studentsService.Update(student);
                     else
-                        await _studentsService.Create(student);
+                    {
+                        IdentityUser user = new();
+
+                        user.UserName = student.Email;
+                        user.Email = student.Email;
+                        user.EmailConfirmed = true;
+
+                        student.UserId = user.Id;
+
+                        IdentityResult result = _userManager.CreateAsync(user, studentModel.Password).Result;
+
+                        if (result.Succeeded)
+                        {
+                            _userManager.AddToRoleAsync(user, "student").Wait();
+                            await _studentsService.Create(student);
+                        }
+                    }
 
                     return RedirectToAction("Index");
                 }

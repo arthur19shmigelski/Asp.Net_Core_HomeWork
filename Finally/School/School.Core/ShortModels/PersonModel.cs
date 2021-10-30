@@ -32,5 +32,8 @@ namespace School.Core.ShortModels
         public byte[] Photo { get; set; }
 
         public string FullName => $"{LastName} {FirstName}";
+
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }

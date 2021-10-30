@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using MimeKit;
+using School.MVC.Areas.Identity.Pages.Account.Methods;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,28 +54,7 @@ namespace School.MVC.Areas.Identity.Pages.Account
                     values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                     protocol: Request.Scheme);
 
-                #region Email confirm
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Администратор", "testingciscoyandex@gmail.com"));
-                message.To.Add(new MailboxAddress("Mrs.schooler", user.Email));
-                message.Subject = "Подтвердите свою почту для сайта школы";
-
-                message.Body = new TextPart("plain")
-                {
-                    Text = $"Привет. Ты зарегестриторвался у нас на сайте. Для подтверждения своей почты кликни по этой ссылке {EmailConfirmationUrl}"
-                };
-
-                using (var client = new MailKit.Net.Smtp.SmtpClient())
-                {
-
-                    client.Connect("smtp.gmail.com", 465, true);
-
-                    client.Authenticate("testingciscoyandex@gmail.com", "!@3QWeASd");
-
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
-                #endregion
+                Mail.SendLetterRegisterConfirmation(user.Email, EmailConfirmationUrl);
             }
 
             return Page();

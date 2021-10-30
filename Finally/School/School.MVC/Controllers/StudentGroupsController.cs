@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Services.Base;
 using School.BLL.Services.Course;
@@ -25,7 +26,7 @@ namespace School.MVC.Controllers
         private readonly ITeacherService _teacherService;
         private readonly ICourseService _courseService;
         private readonly IStudentRequestService _requestService;
-
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly IEntityService<Lesson> _lessonsService;
 
         private readonly IMapper _mapper;
@@ -35,16 +36,28 @@ namespace School.MVC.Controllers
            ICourseService courseService,
            IStudentRequestService requestService,
            IMapper mapper,
-           IEntityService<Lesson> lessonsService)
+           IEntityService<Lesson> lessonsService,
+           UserManager<IdentityUser> userManager)
         {
             _groupService = groupService;
             _teacherService = teacherService;
             _courseService = courseService;
             _requestService = requestService;
-
+            _userManager = userManager;
             _lessonsService = lessonsService;
             _mapper = mapper;
         }
+        #region Some methods
+        public async Task<Teacher> GetCurrentTeacherBySystemUser()
+        {
+            IdentityUser currentSystemUser = await _userManager.GetUserAsync(User);
+
+            var getAllTeachers = await _teacherService.GetAll();
+
+            Teacher getCurrentTeacherBySystemUserId = getAllTeachers.FirstOrDefault(teacher => teacher.UserId == currentSystemUser.Id);
+            return getCurrentTeacherBySystemUserId;
+        }
+        #endregion
 
         #region Index - get first 10 groups
         public async Task<IActionResult> Index(PaginationOptions options)
@@ -52,6 +65,14 @@ namespace School.MVC.Controllers
             try
             {
                 var groups = await _groupService.GetByPages(options);
+                var teacher = await GetCurrentTeacherBySystemUser();
+
+                for (int i = groups.Count() - 1; i >= 0; i--)
+                {
+                    if (teacher.Id != groups[i].TeacherId)
+                        groups.Remove(groups[i]);
+                }
+
                 return View(groups);
             }
 
@@ -64,7 +85,7 @@ namespace School.MVC.Controllers
         #endregion
 
         #region Delete group
-        [Authorize(Roles = "admin, manager")]
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> Delete(StudentGroupModel groupModel)
         {
@@ -128,17 +149,12 @@ namespace School.MVC.Controllers
                         if (groupModel.Lessons[i].IsActive == false)
                         {
                             groupModel.Lessons.Remove(groupModel.Lessons[i]);
-                            //_lessonsService.GetById(groupModel.Lessons[i].Gr)
                         }
                     }
                 }
 
                 if (groupModel.LessonId > 0)
                 {
-                    //foreach (var item in groupModel.Lessons)
-                    //{
-                    //    item = 
-                    //}
                     var lessons = await _lessonsService.GetById(groupModel.LessonId);
 
                     groupModel.Lessons.Add(_mapper.Map<LessonModel>(lessons));

@@ -3,6 +3,7 @@ using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Services.Teacher;
 using School.Core.Models;
@@ -22,11 +23,18 @@ namespace School.MVC.Controllers
         private readonly ITeacherService _teacherService;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _appEnvironment;
-        public TeachersController(ITeacherService teacherService, IMapper mapper, IWebHostEnvironment appEnvironment)
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public TeachersController(
+            ITeacherService teacherService,
+            IMapper mapper,
+            IWebHostEnvironment appEnvironment,
+            UserManager<IdentityUser> userManager)
         {
             _teacherService = teacherService;
             _mapper = mapper;
             _appEnvironment = appEnvironment;
+            _userManager = userManager;
         }
         #region Index - get first 10 teachers
         public async Task<IActionResult> Index(PaginationOptions options)
@@ -47,6 +55,7 @@ namespace School.MVC.Controllers
 
         #region Edit teacher
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             try
@@ -65,6 +74,7 @@ namespace School.MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(TeacherModel teacherModel)
         {
             try
@@ -75,7 +85,23 @@ namespace School.MVC.Controllers
                     if (teacherModel.Id > 0)
                         await _teacherService.Update(teacher);
                     else
-                        await _teacherService.Create(teacher);
+                    {
+                        IdentityUser user = new();
+
+                        user.UserName = teacher.Email;
+                        user.Email = teacher.Email;
+                        user.EmailConfirmed = true;
+
+                        teacher.UserId = user.Id;
+
+                        IdentityResult result = _userManager.CreateAsync(user, teacherModel.Password).Result;
+                        
+                        if (result.Succeeded)
+                        {
+                            _userManager.AddToRoleAsync(user, "manager").Wait();
+                            await _teacherService.Create(teacher);
+                        }
+                    }
 
                     return RedirectToAction("Index");
                 }
@@ -92,6 +118,7 @@ namespace School.MVC.Controllers
 
         #region Delete teacher
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(TeacherModel teacherModel)
         {
             try
@@ -111,12 +138,13 @@ namespace School.MVC.Controllers
         #endregion
 
         #region Upload photo as for teacher
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> UploadPhoto(int id, IFormFile uploadedFile)
         {
             if (uploadedFile != null)
             {
-                var path = "/Files/" + uploadedFile.FileName;
+                var path = "/Files/" + uploadedFile.FileName + DateTime.Now.Ticks.ToString();
 
                 // save file to file system
                 await using var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create);

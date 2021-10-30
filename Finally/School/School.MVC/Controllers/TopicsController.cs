@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ElmahCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using School.BLL.Services.Course;
@@ -49,6 +50,7 @@ namespace School.MVC.Controllers
         #endregion
 
         #region Edit topic
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -68,6 +70,7 @@ namespace School.MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(TopicModel topicModel)
         {
             try
@@ -94,6 +97,7 @@ namespace School.MVC.Controllers
         #endregion
 
         #region Delete topic
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -111,6 +115,7 @@ namespace School.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             try

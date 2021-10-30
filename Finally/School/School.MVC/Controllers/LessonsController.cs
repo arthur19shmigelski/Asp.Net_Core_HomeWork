@@ -28,7 +28,7 @@ namespace School.MVC.Controllers
             _mapper = mapper;
             _groupService = groupService;
         }
-        // GET: LessonsController
+
         public async Task<IActionResult> Index()
         {
             var value = await _lessonsService.GetAll();
@@ -36,7 +36,6 @@ namespace School.MVC.Controllers
             return View(value);
         }
 
-        // GET: LessonsController/Details/5
         public ActionResult Details(int id)
         {
             return View();
@@ -80,13 +79,11 @@ namespace School.MVC.Controllers
 
         
 
-        // GET: LessonsController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: LessonsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

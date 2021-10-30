@@ -57,6 +57,13 @@
         </th>
     </tr>
 </table>
+@if (ViewContext.HttpContext.User.IsInRole("admin"))
+{
+    <p>
+        <a asp-action="Edit" class="btn btn-success">Добавить нового учителя</a>
+    </p>
+}
+
 
 @await Html.PartialAsync("Partial/Pages", Model)
 

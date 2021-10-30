@@ -30,8 +30,6 @@ namespace School.MVC.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
-
-
         public RegisterModel(IStudentService studentService,
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
@@ -113,9 +111,6 @@ namespace School.MVC.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
-
-
-                    
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

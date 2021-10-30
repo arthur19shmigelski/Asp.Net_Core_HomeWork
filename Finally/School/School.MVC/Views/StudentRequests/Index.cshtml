@@ -12,7 +12,7 @@
         <tr>
 
             <th> Создан </th>
-            <th> Запрос на курс </th>
+            <th> Заявка на курс </th>
             <th> Имя студента </th>
             <th> Комментарий </th>
             @if (ViewContext.HttpContext.User.IsInRole("admin"))
@@ -49,7 +49,7 @@
     </tbody>
     <tr>
         <th>
-            <div class="text-info">Итого запросов: @Model.Count()</div>
+            <div class="text-info">Итого заявок: @Model.Count()</div>
         </th>
     </tr>
 </table>

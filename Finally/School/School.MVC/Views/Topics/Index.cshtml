@@ -7,8 +7,12 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th> Тема </th>
-            <th> Описание </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParam"]">@Html.DisplayNameFor(m => m.First().Title)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DescriptionSortParam"]">@Html.DisplayNameFor(m => m.First().Description)</a>
+            </th>
             @if (ViewContext.HttpContext.User.IsInRole("admin"))
             {
                 <th> Действие </th>

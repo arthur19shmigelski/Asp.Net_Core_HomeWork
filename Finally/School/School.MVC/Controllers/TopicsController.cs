@@ -33,11 +33,16 @@ namespace School.MVC.Controllers
         }
 
         #region Index - get first 10 topics
-        public async Task<IActionResult> Index(PaginationOptions options)
+        public async Task<IActionResult> Index(PaginationOptions options, string sortOrder)
         {
             try
             {
-                var topics = await _topicService.GetByPages(options);
+                //ViewData["CurrentSort"] = sortOrder;
+
+                ViewData["TitleSortParam"] = String.IsNullOrEmpty(sortOrder) ? "Title_desc" : "";
+                ViewData["DescriptionSortParam"] = sortOrder == "Description" ? "Description_desc" : "Description";
+
+                var topics = await _topicService.GetByPagesAndSorted(options, sortOrder);
 
                 return View(topics);
             }

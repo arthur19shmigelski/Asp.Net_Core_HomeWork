@@ -36,8 +36,9 @@ namespace School.MVC.Controllers
         public async Task<IActionResult> Index(PaginationOptions options)
         {
             try
-            {
+            {               
                 var students = await _studentsService.GetByPages(options);
+
                 return View(students);
             }
 

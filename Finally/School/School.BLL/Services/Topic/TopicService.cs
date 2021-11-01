@@ -7,9 +7,9 @@ namespace School.BLL.Services.Topic
 {
     public class TopicService : ITopicService
     {
-        private readonly IRepository<Core.Models.Topic> _repository;
+        private readonly ITopicRepository _repository;
 
-        public TopicService(IRepository<Core.Models.Topic> repository)
+        public TopicService(ITopicRepository repository)
         {
             _repository = repository;
         }
@@ -42,6 +42,11 @@ namespace School.BLL.Services.Topic
         public async Task<PageList<Core.Models.Topic>> GetByPages(PaginationOptions options)
         {
             return await _repository.GetByPages(options);
+        }
+
+        public async Task<PageList<Core.Models.Topic>> GetByPagesAndSorted(PaginationOptions options, string sortOrder)
+        {
+            return await _repository.GetByPagesAndSorted(options, sortOrder);
         }
     }
 }

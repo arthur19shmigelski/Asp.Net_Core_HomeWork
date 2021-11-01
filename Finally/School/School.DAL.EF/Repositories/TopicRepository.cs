@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace School.DAL.EF.Repositories
 {
-    public class TopicRepository : IRepository<Topic>
+    public class TopicRepository : ITopicRepository
     {
         private readonly AcademyContext _context;
 
@@ -51,10 +51,34 @@ namespace School.DAL.EF.Repositories
 
         public async Task<PageList<Topic>> GetByPages(PaginationOptions options)
         {
+           
             var topicsHowPageList = new PageList<Topic>(_context.Topics.AsQueryable(), options);
 
             var pageListHowTask = Task.FromResult(topicsHowPageList);
             return await pageListHowTask;
+        }
+
+        public async Task<PageList<Topic>> GetByPagesAndSorted(PaginationOptions options, string sortOrder)
+        {
+            PageList<Topic> topicsHowPageList = null;
+
+            switch (sortOrder)
+            {
+                case "Title_desc":
+                    topicsHowPageList = new PageList<Topic>(_context.Topics.OrderByDescending(x => x.Title).AsQueryable(), options);
+                    break;
+                case "Description_desc":
+                    topicsHowPageList = new PageList<Topic>(_context.Topics.OrderByDescending(x => x.Description).AsQueryable(), options);
+                    break;
+                case "Description":
+                    topicsHowPageList = new PageList<Topic>(_context.Topics.OrderBy(x => x.Description).AsQueryable(), options);
+                    break;
+                default:
+                    topicsHowPageList = new PageList<Topic>(_context.Topics.OrderBy(x => x.Title).AsQueryable(), options);
+                    break;
+            }
+
+            return topicsHowPageList;
         }
 
         public async Task Update(Topic item)

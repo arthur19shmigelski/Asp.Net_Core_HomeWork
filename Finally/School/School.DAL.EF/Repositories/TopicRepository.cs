@@ -67,10 +67,10 @@ namespace School.DAL.EF.Repositories
                 case "Title_desc":
                     topicsHowPageList = new PageList<Topic>(_context.Topics.OrderByDescending(x => x.Title).AsQueryable(), options);
                     break;
-                case "Description_desc":
+                case "Description":
                     topicsHowPageList = new PageList<Topic>(_context.Topics.OrderByDescending(x => x.Description).AsQueryable(), options);
                     break;
-                case "Description":
+                case "Description_asc":
                     topicsHowPageList = new PageList<Topic>(_context.Topics.OrderBy(x => x.Description).AsQueryable(), options);
                     break;
                 default:

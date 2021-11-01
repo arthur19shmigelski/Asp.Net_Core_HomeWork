@@ -20,20 +20,29 @@ namespace School.MVC.Controllers
         private readonly IEntityService<Lesson> _lessonsService;
         private readonly IMapper _mapper;
         private readonly IStudentGroupService _groupService;
+        private readonly ITopicService _topicService;
 
-
-        public LessonsController(IEntityService<Lesson> lessonsService, IMapper mapper, IStudentGroupService groupService)
+        public LessonsController(IEntityService<Lesson> lessonsService, IMapper mapper, IStudentGroupService groupService, ITopicService topicService)
         {
             _lessonsService = lessonsService;
             _mapper = mapper;
             _groupService = groupService;
+            _topicService = topicService;
         }
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Start()
         {
-            var value = await _lessonsService.GetAll();
+            var topics = await _topicService.GetAll();
+            var models = _mapper.Map<IEnumerable<TopicModel>>(topics);
+                
+            return View(models);
+        }
+        public async Task<IActionResult> Index(string title)
+        {
+            var lessons = _mapper.Map<IEnumerable<LessonModel>>(await _lessonsService.GetAll());
+            var model = lessons.Where(l => l.TopicLesson == title).ToList();
 
-            return View(value);
+            ViewBag.Topic = title;
+            return View(model);
         }
 
         public ActionResult Details(int id)
@@ -60,7 +69,6 @@ namespace School.MVC.Controllers
             {
                 if (!ModelState.IsValid) return View(lessonModel);
 
-                //Плохо мапируется... Почему?
                 var lesson = _mapper.Map<Lesson>(lessonModel);
 
                 if (lesson.Id > 0)
@@ -76,8 +84,6 @@ namespace School.MVC.Controllers
             }
         }
         #endregion
-
-        
 
         public ActionResult Delete(int id)
         {

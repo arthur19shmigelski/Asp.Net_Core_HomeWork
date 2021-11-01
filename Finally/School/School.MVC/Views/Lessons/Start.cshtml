@@ -1,0 +1,7 @@
+﻿@model IEnumerable<TopicModel>
+@foreach (var item in Model)
+	{
+<div class="list-group">
+    <a class="list-group-item list-group-item-action text-center" asp-action="Index" asp-route-title="@item.Title">@item.Title</a>
+</div>
+	}

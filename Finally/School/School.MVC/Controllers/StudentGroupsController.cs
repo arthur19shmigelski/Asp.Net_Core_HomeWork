@@ -69,7 +69,9 @@ namespace School.MVC.Controllers
 
                 for (int i = groups.Count() - 1; i >= 0; i--)
                 {
-                    if (teacher.Id != groups[i].TeacherId)
+                    if (groups[i].TeacherId == null)
+                        new NullReferenceException();
+                    if (teacher.Id != groups[i].TeacherId )
                         groups.Remove(groups[i]);
                 }
 

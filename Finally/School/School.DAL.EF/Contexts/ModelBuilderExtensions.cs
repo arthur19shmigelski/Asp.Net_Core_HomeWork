@@ -369,7 +369,7 @@ namespace School.DAL.EF.Contexts
             };
             modelBuilder.Entity<Course>().HasData(course1, course2, course3,
                 course4, course5, course6,
-                course7, course8, course9, 
+                course7, course8, course9,
                 course10, course11, course12);
 
             /*------------------------------------------------------------------------------------------------------------------------*/
@@ -491,7 +491,7 @@ namespace School.DAL.EF.Contexts
                 Phone = "+375296263434"
             };
             modelBuilder.Entity<Teacher>().HasData(teacher1, teacher2, teacher3, teacher4, teacher5,
-                teacher6, teacher7, teacher8, teacher9,teacher10);
+                teacher6, teacher7, teacher8, teacher9, teacher10);
 
             /*------------------------------------------------------------------------------------------------------------------------*/
             /*Seed for 15 students*/
@@ -648,8 +648,6 @@ namespace School.DAL.EF.Contexts
                 Phone = "+375441234543",
                 Type = StudentType.Online,
             };
-            /*------------------------------------------------------------------------------------------------------------------------*/
-            /*------------------------------------------------------------------------------------------------------------------------*/
             /*------------------------------------------------------------------------------------------------------------------------*/
             var student16 = new Student()
             {
@@ -899,6 +897,121 @@ namespace School.DAL.EF.Contexts
                     Status = RequestStatus.Open
                 }
             );
+
+            modelBuilder.Entity<Group>().HasData(
+                new Group
+                {
+                    Id = 1,
+                    CourseId = course1.Id,
+                    TeacherId = teacher1.Id,
+                    StartDate = DateTime.Today,
+                    Status = GroupStatus.NotStarted,
+                    Title = course1.Title + "Group",
+                },
+                new Group
+                {
+                    Id = 2,
+                    CourseId = course2.Id,
+                    TeacherId = teacher2.Id,
+                    StartDate = DateTime.Today,
+                    Status = GroupStatus.Started,
+                    Title = course2.Title + "Group",
+                }, new Group
+                {
+                    Id = 3,
+                    CourseId = course3.Id,
+                    TeacherId = teacher3.Id,
+                    StartDate = DateTime.Today,
+                    Status = GroupStatus.NotStarted,
+                    Title = course3.Title + "Group",
+                }
+            );
+
+            modelBuilder.Entity<Lesson>().HasData(
+               new Lesson
+               {
+                   Id = 1,
+                   CourseId = course1.Id,
+                   GroupId = 1,
+                   TopicLesson = course1.Title + "Topic 1",
+                   NameLesson = "Lesson 1",
+                   Comment = "Topic 1 - lesson 1",
+
+               },
+               new Lesson
+               {
+                   Id = 2,
+                   CourseId = course1.Id,
+                   GroupId = 1,
+                   TopicLesson = course1.Title + "Topic 2",
+                   NameLesson = "Lesson 2",
+                   Comment = "Topic 2 - lesson 2",
+               }, new Lesson
+               {
+                   Id = 3,
+                   GroupId = 1,
+                   CourseId = course1.Id,
+                   TopicLesson = course1.Title + "Topic 3",
+                   NameLesson = "Lesson 3",
+                   Comment = "Topic 3 - lesson 3",
+               },
+               //-----------------------------------------------------
+               new Lesson
+               {
+                   Id = 4,
+                   CourseId = course2.Id,
+                   GroupId = 1,
+                   TopicLesson = course2.Title + "Topic 1",
+                   NameLesson = "Lesson 1",
+                   Comment = "Topic 1 - lesson 1",
+
+               },
+               new Lesson
+               {
+                   Id = 5,
+                   CourseId = course2.Id,
+                   GroupId = 1,
+                   TopicLesson = course2.Title + "Topic 2",
+                   NameLesson = "Lesson 2",
+                   Comment = "Topic 2 - lesson 2",
+               }, new Lesson
+               {
+                   Id = 6,
+                   GroupId = 1,
+                   CourseId = course2.Id,
+                   TopicLesson = course2.Title + "Topic 3",
+                   NameLesson = "Lesson 3",
+                   Comment = "Topic 3 - lesson 3",
+               },
+                //-----------------------------------------------------
+                new Lesson
+                {
+                    Id = 7,
+                    CourseId = course3.Id,
+                    GroupId = 1,
+                    TopicLesson = course3.Title + "Topic 1",
+                    NameLesson = "Lesson 1",
+                    Comment = "Topic 1 - lesson 1",
+
+                },
+               new Lesson
+               {
+                   Id = 8,
+                   CourseId = course3.Id,
+                   GroupId = 1,
+                   TopicLesson = course3.Title + "Topic 2",
+                   NameLesson = "Lesson 2",
+                   Comment = "Topic 2 - lesson 2",
+               }, new Lesson
+               {
+                   Id = 9,
+                   GroupId = 1,
+                   CourseId = course3.Id,
+                   TopicLesson = course3.Title + "Topic 3",
+                   NameLesson = "Lesson 3",
+                   Comment = "Topic 3 - lesson 3",
+               }
+           );
         }
     }
 }

@@ -40,7 +40,7 @@ namespace School.MVC.Controllers
                 //ViewData["CurrentSort"] = sortOrder;
 
                 ViewData["TitleSortParam"] = String.IsNullOrEmpty(sortOrder) ? "Title_desc" : "";
-                ViewData["DescriptionSortParam"] = sortOrder == "Description" ? "Description_desc" : "Description";
+                ViewData["DescriptionSortParam"] = sortOrder == "Description" ? "Description_asc" : "Description";
 
                 var topics = await _topicService.GetByPagesAndSorted(options, sortOrder);
 

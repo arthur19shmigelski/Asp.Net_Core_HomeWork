@@ -144,18 +144,32 @@ namespace School.MVC.Controllers
             {
                 var model = id.HasValue ? _mapper.Map<StudentRequestModel>(await _requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
 
-                if(id.HasValue && model != null)
+                IdentityUser currentSystemUser = await _userManager.GetUserAsync(User);
+                
+                if(currentSystemUser.UserName == "admin")
                 {
-                    var student = await GetCurrentStudentBySystemUser();
-                    if(model.StudentId == student.Id)
+
+                }
+                else if(currentSystemUser.UserName == "manager")
+                {
+
+                }
+                else
+                {
+                    if (id.HasValue && model != null)
                     {
-                    }
-                    else
-                    {
-                        return RedirectToAction(nameof(Index));
+                        var student = await GetCurrentStudentBySystemUser();
+                        if (model.StudentId == student.Id && student != null)
+                        {
+                            return View(model);
+                        }
+                        else
+                        {
+                            return RedirectToAction(nameof(Index));
+                        }
                     }
                 }
-
+                
                 var allCourses = await _courseService.GetAll();
                 ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(allCourses.OrderBy(c => c.Title));
 

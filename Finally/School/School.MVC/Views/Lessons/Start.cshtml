@@ -1,7 +1,9 @@
-﻿@model IEnumerable<TopicModel>
+﻿@model IEnumerable<StudentGroupModel>
+<h1 class="text text-center alert-info">Выберите группу, для которой отобразить уроки</h1>
+
 @foreach (var item in Model)
-	{
-<div class="list-group">
-    <a class="list-group-item list-group-item-action text-center" asp-action="Index" asp-route-title="@item.Title">@item.Title</a>
-</div>
-	}
+{
+    <div class="list-group">
+        <a class="list-group-item list-group-item-action text-center" asp-action="Index" asp-route-title="@item.Title">@item.Title</a>
+    </div>
+}

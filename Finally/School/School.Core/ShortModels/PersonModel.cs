@@ -33,7 +33,8 @@ namespace School.Core.ShortModels
 
         public string FullName => $"{LastName} {FirstName}";
 
+        [Required(ErrorMessage = "Поле -Пароль- не может быть пустым")]
+        [DataType(DataType.Password, ErrorMessage = "Некорректный -Пароль-")]
         public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
     }
 }

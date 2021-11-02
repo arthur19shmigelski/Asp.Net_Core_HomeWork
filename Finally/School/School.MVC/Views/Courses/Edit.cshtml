@@ -18,15 +18,16 @@
     <div class="form-group">
         <label asp-for="Description">Описание</label>
         <textarea class="form-control" asp-for="Description"></textarea>
+        <span class="alert-danger" asp-validation-for="Description" />
     </div>
     <div class="form-group">
         <label asp-for="Program">Программа курса</label>
         <textarea rows="5" class="form-control" asp-for="Program"></textarea>
+        <span class="alert-danger" asp-validation-for="Program" />
     </div>
     <div class="form-group">
         <label asp-for="DurationWeeks">Длительность курса в неделях</label>
         <input class="form-control" type="number" asp-for="DurationWeeks" />
-        <span class="alert-danger" asp-validation-for="DurationWeeks" />
     </div>
     <div class="form-group">
         <label asp-for="TopicId">Тема обучения</label>

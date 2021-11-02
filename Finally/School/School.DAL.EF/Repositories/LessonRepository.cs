@@ -43,7 +43,7 @@ namespace School.DAL.EF.Repositories
 
         public async Task<Lesson> GetById(int id)
         {
-            return await _context.Lessons.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id); ;
+            return await _context.Lessons.AsNoTracking().Include(g=>g.Group).FirstOrDefaultAsync(x => x.Id == id); ;
         }
 
         public Task<PageList<Lesson>> GetByPages(PaginationOptions options)

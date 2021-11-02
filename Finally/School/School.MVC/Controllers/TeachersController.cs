@@ -95,12 +95,14 @@ namespace School.MVC.Controllers
                         teacher.UserId = user.Id;
 
                         IdentityResult result = _userManager.CreateAsync(user, teacherModel.Password).Result;
-                        
+
                         if (result.Succeeded)
                         {
                             _userManager.AddToRoleAsync(user, "manager").Wait();
                             await _teacherService.Create(teacher);
                         }
+                        else
+                            return RedirectToAction(nameof(Edit), new { id = teacherModel.Id });
                     }
 
                     return RedirectToAction("Index");
@@ -124,6 +126,9 @@ namespace School.MVC.Controllers
             try
             {
                 var teacher = _mapper.Map<Teacher>(teacherModel);
+                var userTeacher = await _userManager.FindByIdAsync(teacher.UserId);
+
+                await _userManager.DeleteAsync(userTeacher);
                 await _teacherService.Delete(teacher.Id);
 
                 return RedirectToAction(nameof(Index));

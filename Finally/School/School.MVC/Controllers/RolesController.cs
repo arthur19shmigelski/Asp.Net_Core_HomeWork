@@ -140,7 +140,7 @@ namespace CustomIdentityApp.Controllers
                                 await _userManager.DeleteAsync(user);
                             }
                             else
-                                RedirectToAction(nameof(Error));
+                                await _userManager.DeleteAsync(user);
                         }
 
                         else

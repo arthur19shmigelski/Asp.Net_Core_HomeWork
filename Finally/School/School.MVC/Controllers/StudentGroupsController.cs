@@ -57,6 +57,19 @@ namespace School.MVC.Controllers
             Teacher getCurrentTeacherBySystemUserId = getAllTeachers.FirstOrDefault(teacher => teacher.UserId == currentSystemUser.Id);
             return getCurrentTeacherBySystemUserId;
         }
+
+        public async Task<String> GetCurrentRoleBySystemUser()
+        {
+            IdentityUser currentSystemUser = await _userManager.GetUserAsync(User);
+
+            var roleToString = await _userManager.GetRolesAsync(currentSystemUser);
+            string stringToSLosf = null;
+            foreach (var item in roleToString)
+            {
+                stringToSLosf = item;
+            }
+            return stringToSLosf;
+        }
         #endregion
 
         #region Index - get first 10 groups
@@ -65,17 +78,24 @@ namespace School.MVC.Controllers
             try
             {
                 var groups = await _groupService.GetByPages(options);
-                var teacher = await GetCurrentTeacherBySystemUser();
 
-                for (int i = groups.Count() - 1; i >= 0; i--)
+                if(User.IsInRole("admin"))
+                    return View(groups);
+                else if (User.IsInRole("manager"))
                 {
-                    if (groups[i].TeacherId == null)
-                        new NullReferenceException();
-                    if (teacher.Id != groups[i].TeacherId )
-                        groups.Remove(groups[i]);
+                    var teacher = await GetCurrentTeacherBySystemUser();
+                    for (int i = groups.Count() - 1; i >= 0; i--)
+                    {
+                        if (groups[i].TeacherId == null)
+                            new NullReferenceException();
+                        if (teacher.Id != groups[i].TeacherId)
+                            groups.Remove(groups[i]);
+                    }
+                    return View(groups);
                 }
 
-                return View(groups);
+                else
+                    return RedirectToAction(nameof(Error));
             }
 
             catch (Exception e)

@@ -21,28 +21,34 @@ namespace School.MVC.Controllers
         private readonly IMapper _mapper;
         private readonly IStudentGroupService _groupService;
         private readonly ITopicService _topicService;
+        private readonly ICourseService _courseService;
 
-        public LessonsController(IEntityService<Lesson> lessonsService, IMapper mapper, IStudentGroupService groupService, ITopicService topicService)
+        public LessonsController(IEntityService<Lesson> lessonsService, IMapper mapper, IStudentGroupService groupService, ITopicService topicService, ICourseService courseService)
         {
             _lessonsService = lessonsService;
             _mapper = mapper;
             _groupService = groupService;
             _topicService = topicService;
+            _courseService = courseService;
         }
         public async Task<IActionResult> Start()
         {
-            var topics = await _topicService.GetAll();
-            var models = _mapper.Map<IEnumerable<TopicModel>>(topics);
-                
-            return View(models);
+            var modelGroups = _mapper.Map<IEnumerable<StudentGroupModel>>(await _groupService.GetAll());
+
+            return View(modelGroups);
         }
         public async Task<IActionResult> Index(string title)
         {
-            var lessons = _mapper.Map<IEnumerable<LessonModel>>(await _lessonsService.GetAll());
-            var model = lessons.Where(l => l.TopicLesson == title).ToList();
+            var modelLessons = _mapper.Map<IEnumerable<LessonModel>>(await _lessonsService.GetAll());
+
+            var groups = await _groupService.GetAll();
+
+            var group = groups.Where(x => x.Title == title).FirstOrDefault();
+
+            var selectModelLessonsByTitle = modelLessons.Where(l => l.GroupId == group.Id).ToList();
 
             ViewBag.Topic = title;
-            return View(model);
+            return View(selectModelLessonsByTitle);
         }
 
         public ActionResult Details(int id)
@@ -52,14 +58,27 @@ namespace School.MVC.Controllers
 
         #region Edit course
         [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string titleGroup)
         {
+            LessonModel modelLesson = null;
+            if (id.HasValue)
+            {
+                modelLesson = _mapper.Map<LessonModel>(await _lessonsService.GetById(id.Value));
+                
+                ViewBag.NameGroup = modelLesson.Group.Title;
+                return View(modelLesson);
+            }
+            else
+            {
+                modelLesson = new LessonModel();
+                var modelGroups = _mapper.Map<IEnumerable<StudentGroupModel>>(await _groupService.GetAll());
 
-            var model = id.HasValue ? _mapper.Map<LessonModel>(await _lessonsService.GetById(id.Value)) : new LessonModel();
+                var currentGroup = modelGroups.Where(x => x.Title == titleGroup).FirstOrDefault();
+                modelLesson.GroupId = currentGroup.Id;
 
-
-            ViewBag.Group = _mapper.Map<IEnumerable<StudentGroupModel>>(await _groupService.GetAll());
-            return View(model);
+                ViewBag.NameGroup = currentGroup.Title;
+                return View(modelLesson);
+            }            
         }
 
         [HttpPost]
@@ -75,7 +94,7 @@ namespace School.MVC.Controllers
                     await _lessonsService.Update(lesson);
                 else
                     await _lessonsService.Create(lesson);
-                return RedirectToAction("Index");
+                return RedirectToAction("Start");
             }
             catch (Exception e)
             {
@@ -85,10 +104,25 @@ namespace School.MVC.Controllers
         }
         #endregion
 
-        public ActionResult Delete(int id)
+        #region Delete student
+        [HttpGet]
+        public async Task<IActionResult> Delete(LessonModel lessonModel)
         {
-            return View();
+            try
+            {
+                var lesson = _mapper.Map<Lesson>(lessonModel);
+                await _lessonsService.Delete(lesson.Id);
+
+                return RedirectToAction(nameof(Start));
+            }
+
+            catch (Exception e)
+            {
+                ElmahExtensions.RiseError(new Exception(e.Message));
+                return RedirectToAction(nameof(Error));
+            }
         }
+        #endregion 
 
         [HttpPost]
         [ValidateAntiForgeryToken]

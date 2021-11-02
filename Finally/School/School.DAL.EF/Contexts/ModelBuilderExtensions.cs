@@ -116,8 +116,8 @@ namespace School.DAL.EF.Contexts
                 Title = ".Net",
                 Description = "\tC# (си шарп) – объектно-ориентированный язык программирования, разработанный " +
                   "компанией Microsoft. Прямой интерес такой крупной корпорации к языку гарантирует, что он " +
-                  "продолжит развиваться и находить применение в различных отраслях." + "\n\t" +
-                  "C Sharp впитал лучшие качества, а также унаследовал особенности " +
+                  "продолжит развиваться и находить применение в различных отраслях." + "\n" +
+                  "\tC Sharp впитал лучшие качества, а также унаследовал особенности " +
                   "синтаксиса Java и C++. Применяется язык для веб-разработки, создания настольных и " +
                   "мобильных приложений. Если вы записались на курс по C# в Минске для того, чтобы научиться " +
                   "создавать web-проекты, то в дальнейшем вам необходимо освоить инструментарий .NET."
@@ -138,7 +138,8 @@ namespace School.DAL.EF.Contexts
                 Id = 3,
                 Title = "Design",
                 Description = "\tUI/UX и web-дизайн ориентирован на создание внешне привлекательных, " +
-                "удобных в использовании и функциональных пользовательских интерфейсов. Чтобы достичь " +
+                "удобных в использовании и функциональных пользовательских интерфейсов." +
+                "\n\tЧтобы достичь " +
                 "успеха в этой сфере, необходимо обладать художественным вкусом, быть внимательным к деталям, " +
                 "понимать принципы компьютерной графики и визуального дизайна, уметь работать с инструментами " +
                 "(например, Adobe Photoshop, Adobe Illustrator, Sketch, Figma)."
@@ -150,7 +151,7 @@ namespace School.DAL.EF.Contexts
                 Description = "\tЗачастую можно услышать вопрос, что такое HR-менеджер, как переводится и чем занимается специалист." +
                 " Если посмотреть должностную инструкцию, становится понятно, что он разрабатывает систему управления персоналом, расставляет приоритеты, " +
                 "развивает сотрудников, прорисовывает цели для них. Помимо этого HR мотивирует, оценивает и ищет нужных специалистов." +
-                "\t\n С помощью данного направления вы уверитесь в значимости HR-менеджера в IT-компании и узнаете обо всех тонкостях профессии как в теории," +
+                "\t\nС помощью данного направления вы уверитесь в значимости HR-менеджера в IT-компании и узнаете обо всех тонкостях профессии как в теории," +
                 " так и на практике"
             };
             modelBuilder.Entity<Topic>().HasData(topic1, topic2, topic3, topic4);
@@ -180,7 +181,7 @@ namespace School.DAL.EF.Contexts
                 Title = "Java",
                 Description = "Курс поможет с нуля освоить востребованную специальность Java-разработчика. " +
                 "\tПрограмма построена таким образом, что вы не просто познакомитесь с основами Java и объектно-ориентированным программированием на нем," +
-                " \tа научитесь разбираться в типах данных, использовать алгоритмы и коллекции Java. ",
+                " \tнаучитесь разбираться в типах данных, использовать алгоритмы и коллекции Java. ",
                 Level = CourseLevel.Beginner,
                 Price = 1420,
                 DurationWeeks = 8,
@@ -198,7 +199,7 @@ namespace School.DAL.EF.Contexts
                 Title = "Web Design",
                 Description = "Современный дизайн — обширная область, которая тесно соприкасается с ИТ-сферой, а UX/UI-дизайнеры, " +
                 "веб-дизайнеры и дизайнеры интерфейсов — одновременно и художники, и технически подкованные специалисты, востребованные в индустрии." +
-                "\t Курс поможет с нуля освоить востребованную специальность Design-разработчика",
+                "\n\tКурс поможет с нуля освоить востребованную специальность Design-разработчика",
                 Level = CourseLevel.Beginner,
                 Price = 1250,
                 DurationWeeks = 6,
@@ -236,10 +237,10 @@ namespace School.DAL.EF.Contexts
                 Price = 1650,
                 DurationWeeks = 10,
                 Program = "1. Основы Apache Maven." +
-                "\n2. Инженерные техники при работе с Apache Maven." +
-                "\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики, паттерн DAO; -Практика." +
-                "\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL." +
-                "\n5. И многое другое...",
+                        "\n2. Инженерные техники при работе с Apache Maven." +
+                        "\n3. Работа с моделями: -Многослойная архитектура; -Добавление слоя бизнес-логики, паттерн DAO; -Практика." +
+                        "\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL." +
+                        "\n5. И многое другое...",
                 TopicId = 2
             };
 
@@ -270,10 +271,10 @@ namespace School.DAL.EF.Contexts
                 Price = 2040,
                 DurationWeeks = 14,
                 Program = "1. Введение в Unity. Hello world с Unity." +
-                "\n2. Scripts (Cкрипты). Part 1: -Методология; -Игровые объекты и компоненты; -Cлои, ввод данных, теги." +
-                "\n3. Scripts (Скрипты). Part 2: -Manual: Immediate Mode GUI (IMGUI); -Сопрограммы." +
-                "\n4. Инструментарий для разработки 2D-игр." +
-                "\n5. И многое другое...",
+                        "\n2. Scripts (Cкрипты). Part 1: -Методология; -Игровые объекты и компоненты; -Cлои, ввод данных, теги." +
+                        "\n3. Scripts (Скрипты). Part 2: -Manual: Immediate Mode GUI (IMGUI); -Сопрограммы." +
+                        "\n4. Инструментарий для разработки 2D-игр." +
+                        "\n5. И многое другое...",
                 TopicId = 1
             };
 
@@ -289,10 +290,10 @@ namespace School.DAL.EF.Contexts
                 Price = 2570,
                 DurationWeeks = 15,
                 Program = "1. JQuery." +
-                "\n2. EscmaScript6." +
-                "\n3. Расширенные возможность JavaScript" +
-                "\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL" +
-                "\n5. И многое другое...",
+                        "\n2. EscmaScript6." +
+                        "\n3. Расширенные возможность JavaScript" +
+                        "\n4. Работа с данными: Основные подходы к проектированию БД, Введение в БД и SQL" +
+                        "\n5. И многое другое...",
                 TopicId = 2
             };
 
@@ -317,10 +318,9 @@ namespace School.DAL.EF.Contexts
                 Id = 10,
                 Title = "IT-HR интенсив - для маленьких компаний",
                 Description = "Курс рассчитан на подготовку рекрутеров, работающих в отраслях IT, IOT, R&D и высокотехнологичного производства." +
-                "Курс рассчитан на подготовку рекрутеров, работающих в отраслях IT, IOT, R&D и высокотехнологичного производства." +
                 "За годы существования программа постоянно совершенствовалась. Сейчас в ней выдержан баланс теории и практики, остались только темы и занятия, " +
                 "непосредственно связанные с работой ИТ-рекрутера." +
-                "Благодаря практическим заданиям, моделирующим работу ИТ-рекрутера, за 4 недели ученики успевают " +
+                "\n\tБлагодаря практическим заданиям, моделирующим работу ИТ-рекрутера, за 4 недели ученики успевают " +
                 "полностью овладеть профессиональными инструментами рекрутера и могут приступать к работе уже во время обучения.",
                 Level = CourseLevel.Beginner,
                 Price = 1240,
@@ -338,7 +338,7 @@ namespace School.DAL.EF.Contexts
                 Title = "IT-HR Middle - для средних и крупных компаний",
                 Description = "IT-HR — это специалист, деятельность которого объединяет IT-рекрутинг и HR-менеджмент." +
                "IT-HR работает с коллективом компании, развивает корпоративную культуру, помогает адаптироваться новым коллегам." +
-               "Основная задача HR-менеджера — сопровождение сотрудника на протяжении всего времени его работы в компании.",
+               "\n\tОсновная задача HR-менеджера — сопровождение сотрудника на протяжении всего времени его работы в компании.",
                 Level = CourseLevel.Advanced,
                 Price = 1570,
                 DurationWeeks = 5,
@@ -354,8 +354,8 @@ namespace School.DAL.EF.Contexts
                 Id = 12,
                 Title = "IT-HR интенсив - для крупных организаций, производств...",
                 Description = "Поиск сотрудников на открытые вакансии, помощь в адаптации новым коллегам, работа с коллективом, развитие корпоративной культуры..." +
-                " Задач в сфере HR сегодня много. Как во всем разобраться и понять специфику работы в IT? Решить эти вопросы поможет данный курс." +
-                "После обучения вы будете понимать, подходит ли вам работа HR в IT, а также то, в какой компании хотите работать и чем можете быть ей полезны. " +
+                "\n\tЗадач в сфере HR сегодня много. Как во всем разобраться и понять специфику работы в IT? Решить эти вопросы поможет данный курс." +
+                "\n\tПосле обучения вы будете понимать, подходит ли вам работа HR в IT, а также то, в какой компании хотите работать и чем можете быть ей полезны. " +
                 "Выпускники смогут претендовать на позицию associate/junior HR. Средняя зарплата у опытных специалистов в этой сфере – свыше 1300 долларов.",
                 Level = CourseLevel.Expert,
                 Price = 2040,
@@ -924,94 +924,111 @@ namespace School.DAL.EF.Contexts
                     StartDate = DateTime.Today,
                     Status = GroupStatus.NotStarted,
                     Title = course3.Title + "Group",
+                },
+                new Group
+                {
+                    Id = 4,
+                    CourseId = course4.Id,
+                    TeacherId = teacher4.Id,
+                    StartDate = DateTime.Today,
+                    Status = GroupStatus.Started,
+                    Title = course4.Title + "Group",
+                }, new Group
+                {
+                    Id = 5,
+                    CourseId = course5.Id,
+                    TeacherId = teacher5.Id,
+                    StartDate = DateTime.Today,
+                    Status = GroupStatus.NotStarted,
+                    Title = course5.Title + "Group",
                 }
             );
 
-            modelBuilder.Entity<Lesson>().HasData(
-               new Lesson
-               {
-                   Id = 1,
-                   CourseId = course1.Id,
-                   GroupId = 1,
-                   TopicLesson = course1.Title + "Topic 1",
-                   NameLesson = "Lesson 1",
-                   Comment = "Topic 1 - lesson 1",
+           // modelBuilder.Entity<Lesson>().HasData(
+           //    new Lesson
+           //    {
+           //        Id = 1,
+           //        CourseId = course1.Id,
+           //        GroupId = 1,
+           //        TopicLesson = course1.Title + "Topic 1",
+           //        NameLesson = "Lesson 1",
+           //        Comment = "Topic 1 - lesson 1",
 
-               },
-               new Lesson
-               {
-                   Id = 2,
-                   CourseId = course1.Id,
-                   GroupId = 1,
-                   TopicLesson = course1.Title + "Topic 2",
-                   NameLesson = "Lesson 2",
-                   Comment = "Topic 2 - lesson 2",
-               }, new Lesson
-               {
-                   Id = 3,
-                   GroupId = 1,
-                   CourseId = course1.Id,
-                   TopicLesson = course1.Title + "Topic 3",
-                   NameLesson = "Lesson 3",
-                   Comment = "Topic 3 - lesson 3",
-               },
-               //-----------------------------------------------------
-               new Lesson
-               {
-                   Id = 4,
-                   CourseId = course2.Id,
-                   GroupId = 1,
-                   TopicLesson = course2.Title + "Topic 1",
-                   NameLesson = "Lesson 1",
-                   Comment = "Topic 1 - lesson 1",
+           //    },
+           //    new Lesson
+           //    {
+           //        Id = 2,
+           //        CourseId = course1.Id,
+           //        GroupId = 1,
+           //        TopicLesson = course1.Title + "Topic 2",
+           //        NameLesson = "Lesson 2",
+           //        Comment = "Topic 2 - lesson 2",
+           //    }, new Lesson
+           //    {
+           //        Id = 3,
+           //        GroupId = 1,
+           //        CourseId = course1.Id,
+           //        TopicLesson = course1.Title + "Topic 3",
+           //        NameLesson = "Lesson 3",
+           //        Comment = "Topic 3 - lesson 3",
+           //    },
+           //    //-----------------------------------------------------
+           //    new Lesson
+           //    {
+           //        Id = 4,
+           //        CourseId = course2.Id,
+           //        GroupId = 1,
+           //        TopicLesson = course2.Title + "Topic 1",
+           //        NameLesson = "Lesson 1",
+           //        Comment = "Topic 1 - lesson 1",
 
-               },
-               new Lesson
-               {
-                   Id = 5,
-                   CourseId = course2.Id,
-                   GroupId = 1,
-                   TopicLesson = course2.Title + "Topic 2",
-                   NameLesson = "Lesson 2",
-                   Comment = "Topic 2 - lesson 2",
-               }, new Lesson
-               {
-                   Id = 6,
-                   GroupId = 1,
-                   CourseId = course2.Id,
-                   TopicLesson = course2.Title + "Topic 3",
-                   NameLesson = "Lesson 3",
-                   Comment = "Topic 3 - lesson 3",
-               },
-                //-----------------------------------------------------
-                new Lesson
-                {
-                    Id = 7,
-                    CourseId = course3.Id,
-                    GroupId = 1,
-                    TopicLesson = course3.Title + "Topic 1",
-                    NameLesson = "Lesson 1",
-                    Comment = "Topic 1 - lesson 1",
+           //    },
+           //    new Lesson
+           //    {
+           //        Id = 5,
+           //        CourseId = course2.Id,
+           //        GroupId = 1,
+           //        TopicLesson = course2.Title + "Topic 2",
+           //        NameLesson = "Lesson 2",
+           //        Comment = "Topic 2 - lesson 2",
+           //    }, new Lesson
+           //    {
+           //        Id = 6,
+           //        GroupId = 1,
+           //        CourseId = course2.Id,
+           //        TopicLesson = course2.Title + "Topic 3",
+           //        NameLesson = "Lesson 3",
+           //        Comment = "Topic 3 - lesson 3",
+           //    },
+           //     //-----------------------------------------------------
+           //     new Lesson
+           //     {
+           //         Id = 7,
+           //         CourseId = course3.Id,
+           //         GroupId = 1,
+           //         TopicLesson = course3.Title + "Topic 1",
+           //         NameLesson = "Lesson 1",
+           //         Comment = "Topic 1 - lesson 1",
 
-                },
-               new Lesson
-               {
-                   Id = 8,
-                   CourseId = course3.Id,
-                   GroupId = 1,
-                   TopicLesson = course3.Title + "Topic 2",
-                   NameLesson = "Lesson 2",
-                   Comment = "Topic 2 - lesson 2",
-               }, new Lesson
-               {
-                   Id = 9,
-                   GroupId = 1,
-                   CourseId = course3.Id,
-                   TopicLesson = course3.Title + "Topic 3",
-                   NameLesson = "Lesson 3",
-                   Comment = "Topic 3 - lesson 3",
-               }
-           );
+           //     },
+           //    new Lesson
+           //    {
+           //        Id = 8,
+           //        CourseId = course3.Id,
+           //        GroupId = 1,
+           //        TopicLesson = course3.Title + "Topic 2",
+           //        NameLesson = "Lesson 2",
+           //        Comment = "Topic 2 - lesson 2",
+           //    }, new Lesson
+           //    {
+           //        Id = 9,
+           //        GroupId = 1,
+           //        CourseId = course3.Id,
+           //        TopicLesson = course3.Title + "Topic 3",
+           //        NameLesson = "Lesson 3",
+           //        Comment = "Topic 3 - lesson 3",
+           //    }
+           //);
         }
     }
 }

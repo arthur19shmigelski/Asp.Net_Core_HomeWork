@@ -8,10 +8,10 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParam"]">@Html.DisplayNameFor(m => m.First().Title)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParam"]">Тема</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DescriptionSortParam"]">@Html.DisplayNameFor(m => m.First().Description)</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DescriptionSortParam"]">Описание</a>
             </th>
             @if (ViewContext.HttpContext.User.IsInRole("admin"))
             {

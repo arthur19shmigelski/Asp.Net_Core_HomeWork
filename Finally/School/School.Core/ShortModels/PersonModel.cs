@@ -36,5 +36,7 @@ namespace School.Core.ShortModels
         [Required(ErrorMessage = "Поле -Пароль- не может быть пустым")]
         [DataType(DataType.Password, ErrorMessage = "Некорректный -Пароль-")]
         public string Password { get; set; }
+
+        public int YearRegistration { get; set; } = DateTime.Today.Year;
     }
 }

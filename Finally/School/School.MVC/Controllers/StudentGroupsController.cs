@@ -142,24 +142,6 @@ namespace School.MVC.Controllers
         [Authorize(Roles = "admin, manager")]
         public async Task<IActionResult> Edit(StudentGroupModel groupModel)
         {
-            //if (groupModel.LessonId == 0)
-            //{
-            //    for (int i = groupModel.Lessons.Count() - 1; i > -1; i--)
-            //    {
-            //        if (groupModel.Lessons[i].IsActive == false)
-            //        {
-            //            groupModel.Lessons.Remove(groupModel.Lessons[i]);
-            //        }
-            //    }
-            //}
-
-            //if (groupModel.LessonId > 0)
-            //{
-            //    var lessons = await _lessonsService.GetById(groupModel.LessonId);
-
-            //    groupModel.Lessons.Add(_mapper.Map<LessonModel>(lessons));
-            //}
-
             var group = _mapper.Map<Group>(groupModel);
             if (groupModel.Id > 0)
                 await _groupService.Update(group);

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +9,6 @@ using School.Core.Models;
 using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -39,17 +37,8 @@ namespace School.MVC.Controllers
         #region Index - get first 10 teachers
         public async Task<IActionResult> Index(PaginationOptions options)
         {
-            try
-            {
-                var teachers = await _teacherService.GetByPages(options);
-                return View(teachers);
-            }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            var teachers = await _teacherService.GetByPages(options);
+            return View(teachers);
         }
         #endregion
 
@@ -58,63 +47,44 @@ namespace School.MVC.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
-            try
-            {
-                var modelTeacher = id.HasValue
-            ? _mapper.Map<TeacherModel>(await _teacherService.GetById(id.Value))
-            : new TeacherModel();
-                return View(_mapper.Map<TeacherModel>(modelTeacher));
-            }
+            var modelTeacher = id.HasValue? _mapper.Map<TeacherModel>(await _teacherService.GetById(id.Value)) : new TeacherModel();
 
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return View(_mapper.Map<TeacherModel>(modelTeacher));
         }
 
         [HttpPost]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(TeacherModel teacherModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                var teacher = _mapper.Map<Teacher>(teacherModel);
+
+                if (teacherModel.Id > 0)
+                    await _teacherService.Update(teacher);
+                else
                 {
-                    var teacher = _mapper.Map<Teacher>(teacherModel);
-                    if (teacherModel.Id > 0)
-                        await _teacherService.Update(teacher);
-                    else
+                    IdentityUser user = new();
+
+                    user.UserName = teacher.Email;
+                    user.Email = teacher.Email;
+                    user.EmailConfirmed = true;
+
+                    teacher.UserId = user.Id;
+
+                    IdentityResult result = _userManager.CreateAsync(user, teacherModel.Password).Result;
+
+                    if (result.Succeeded)
                     {
-                        IdentityUser user = new();
-
-                        user.UserName = teacher.Email;
-                        user.Email = teacher.Email;
-                        user.EmailConfirmed = true;
-
-                        teacher.UserId = user.Id;
-
-                        IdentityResult result = _userManager.CreateAsync(user, teacherModel.Password).Result;
-
-                        if (result.Succeeded)
-                        {
-                            _userManager.AddToRoleAsync(user, "manager").Wait();
-                            await _teacherService.Create(teacher);
-                        }
-                        else
-                            return RedirectToAction(nameof(Edit), new { id = teacherModel.Id });
+                        _userManager.AddToRoleAsync(user, "manager").Wait();
+                        await _teacherService.Create(teacher);
                     }
-
-                    return RedirectToAction("Index");
+                    else
+                        return RedirectToAction(nameof(Edit), new { id = teacherModel.Id });
                 }
-                return View(teacherModel);
+                return RedirectToAction("Index");
             }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return View(teacherModel);
         }
         #endregion
 
@@ -123,22 +93,13 @@ namespace School.MVC.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(TeacherModel teacherModel)
         {
-            try
-            {
-                var teacher = _mapper.Map<Teacher>(teacherModel);
-                var userTeacher = await _userManager.FindByIdAsync(teacher.UserId);
+            var teacher = _mapper.Map<Teacher>(teacherModel);
+            var userTeacher = await _userManager.FindByIdAsync(teacher.UserId);
 
-                await _userManager.DeleteAsync(userTeacher);
-                await _teacherService.Delete(teacher.Id);
+            await _userManager.DeleteAsync(userTeacher);
+            await _teacherService.Delete(teacher.Id);
 
-                return RedirectToAction(nameof(Index));
-            }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return RedirectToAction(nameof(Index));
         }
         #endregion
 
@@ -166,7 +127,7 @@ namespace School.MVC.Controllers
                 await _teacherService.SavePhoto(id, content);
             }
 
-            return RedirectToAction(nameof(Edit), new {Id = id});
+            return RedirectToAction(nameof(Edit), new { Id = id });
         }
         #endregion
 

@@ -1,8 +1,6 @@
-﻿using ElmahCore;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using School.Core.ShortModels;
-using System;
 using System.Diagnostics;
 
 namespace School.MVC.Controllers
@@ -18,15 +16,7 @@ namespace School.MVC.Controllers
 
         public IActionResult Index()
         {
-            try
-            {
-                return View();
-            }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

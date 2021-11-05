@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -56,40 +55,31 @@ namespace School.MVC.Controllers
         #region Вывод списка заявок (для каждого пользователя своя логика)
         public async Task<IActionResult> Index(bool? includeClosed, PaginationOptions options)
         {
-            try
+            if (User.IsInRole("student"))
             {
-                if (User.IsInRole("student"))
+                var allRequests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
+
+                var student = await GetCurrentStudentBySystemUser();
+
+                var selectRequestsCurrentStudent = allRequests.Where(studentReq => studentReq.StudentId == student.Id).ToList();
+                if (selectRequestsCurrentStudent == null)
                 {
-                    var allRequests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
 
-                    var student = await GetCurrentStudentBySystemUser();
-
-                    var selectRequestsCurrentStudent = allRequests.Where(studentReq => studentReq.StudentId == student.Id).ToList();
-                    if(selectRequestsCurrentStudent == null)
-                    {
-
-                    }
-                    return View(_mapper.Map<IEnumerable<StudentRequestModel>>(selectRequestsCurrentStudent));
                 }
-
-                else if (User.IsInRole("admin"))
-                {
-                    var students = await _requestService.GetByPages(options);
-
-                    var requests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
-
-                    return View(_mapper.Map<IEnumerable<StudentRequestModel>>(requests));
-                }
-
-                else
-                {
-                    return RedirectToAction(nameof(Error));
-                }
-
+                return View(_mapper.Map<IEnumerable<StudentRequestModel>>(selectRequestsCurrentStudent));
             }
-            catch (Exception e)
+
+            else if (User.IsInRole("admin"))
             {
-                ElmahExtensions.RiseError(new Exception(e.Message));
+                var students = await _requestService.GetByPages(options);
+
+                var requests = includeClosed == true ? await _requestService.GetAll() : await _requestService.GetAllOpen();
+
+                return View(_mapper.Map<IEnumerable<StudentRequestModel>>(requests));
+            }
+
+            else
+            {
                 return RedirectToAction(nameof(Error));
             }
         }
@@ -112,26 +102,18 @@ namespace School.MVC.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> AcceptRequest(StudentRequestModel model)
         {
-            try
-            {
-                if (!ModelState.IsValid) return View(model);
 
-                var student = await _studentService.GetById(model.StudentId);
-                student.GroupId = model.GroupId;
-                await _studentService.Update(student);
+            if (!ModelState.IsValid) return View(model);
 
-                var request = _mapper.Map<StudentRequest>(model);
-                request.Status = School.Core.Models.Enum.RequestStatus.Closed;
-                await _requestService.Update(request);
+            var student = await _studentService.GetById(model.StudentId);
+            student.GroupId = model.GroupId;
+            await _studentService.Update(student);
 
-                return RedirectToAction(nameof(Index));
-            }
+            var request = _mapper.Map<StudentRequest>(model);
+            request.Status = School.Core.Models.Enum.RequestStatus.Closed;
+            await _requestService.Update(request);
 
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return RedirectToAction(nameof(Index));
         }
         #endregion
 
@@ -140,75 +122,50 @@ namespace School.MVC.Controllers
         [Authorize(Roles = "admin, student")]
         public async Task<IActionResult> Edit(int? id)
         {
-            try
+            var model = id.HasValue ? _mapper.Map<StudentRequestModel>(await _requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
+            IdentityUser currentSystemUser = await _userManager.GetUserAsync(User);
+
+            if (currentSystemUser.UserName == "student")
             {
-                var model = id.HasValue ? _mapper.Map<StudentRequestModel>(await _requestService.GetById(id.Value)) : new StudentRequestModel() { Created = DateTime.Today };
-
-                IdentityUser currentSystemUser = await _userManager.GetUserAsync(User);
-                
-                if(currentSystemUser.UserName == "admin")
+                if (id.HasValue && model != null)
                 {
-
-                }
-                else if(currentSystemUser.UserName == "manager")
-                {
-
-                }
-                else
-                {
-                    if (id.HasValue && model != null)
+                    var student = await GetCurrentStudentBySystemUser();
+                    if (model.StudentId == student.Id && student != null)
                     {
-                        var student = await GetCurrentStudentBySystemUser();
-                        if (model.StudentId == student.Id && student != null)
-                        {
-                            return View(model);
-                        }
-                        else
-                        {
-                            return RedirectToAction(nameof(Index));
-                        }
+                        return View(model);
+                    }
+                    else
+                    {
+                        return RedirectToAction(nameof(Index));
                     }
                 }
-                
-                var allCourses = await _courseService.GetAll();
-                ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(allCourses.OrderBy(c => c.Title));
-
-                var allStudents = await _studentService.GetAll();
-                ViewBag.Students = _mapper.Map<IEnumerable<StudentModel>>(allStudents.OrderBy(s => s.LastName));
-
-                return View(model);
             }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+
+            var allCourses = await _courseService.GetAll();
+            ViewBag.Courses = _mapper.Map<IEnumerable<CourseModel>>(allCourses.OrderBy(c => c.Title));
+
+            var allStudents = await _studentService.GetAll();
+            ViewBag.Students = _mapper.Map<IEnumerable<StudentModel>>(allStudents.OrderBy(s => s.LastName));
+
+            return View(model);
         }
 
         [HttpPost]
         [Authorize(Roles = "admin, student")]
         public async Task<IActionResult> Edit(StudentRequestModel model)
         {
-            try
-            {
-                if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid) return View(model);
 
-                var student = await GetCurrentStudentBySystemUser();
-                model.StudentId = student.Id;
+            var student = await GetCurrentStudentBySystemUser();
+            model.StudentId = student.Id;
+            var request = _mapper.Map<StudentRequest>(model);
 
-                var request = _mapper.Map<StudentRequest>(model);
-                if (model.Id > 0)
-                    await _requestService.Update(request);
-                else
-                    await _requestService.Create(request);
-                return RedirectToAction(nameof(Index));
-            }
+            if (model.Id > 0)
+                await _requestService.Update(request);
+            else
+                await _requestService.Create(request);
 
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return RedirectToAction(nameof(Index));
         }
         #endregion
 
@@ -217,16 +174,8 @@ namespace School.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                await _requestService.Delete(id);
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            await _requestService.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
         #endregion
 

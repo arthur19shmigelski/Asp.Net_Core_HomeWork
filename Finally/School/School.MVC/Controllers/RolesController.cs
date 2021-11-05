@@ -1,11 +1,9 @@
-﻿using ElmahCore;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Services.Student;
 using School.BLL.Services.Teacher;
 using School.Core.ShortModels;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -42,51 +40,34 @@ namespace CustomIdentityApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(string name)
         {
-            try
+            if (!string.IsNullOrEmpty(name))
             {
-                if (!string.IsNullOrEmpty(name))
+                IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(name));
+                if (result.Succeeded)
                 {
-                    IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(name));
-                    if (result.Succeeded)
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
                     {
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
+                        ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
-                return View(name);
             }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return View(name);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            try
+            IdentityRole role = await _roleManager.FindByIdAsync(id);
+            if (role != null)
             {
-                IdentityRole role = await _roleManager.FindByIdAsync(id);
-                if (role != null)
-                {
-                    IdentityResult result = await _roleManager.DeleteAsync(role);
-                }
-                return RedirectToAction("Index");
+                IdentityResult result = await _roleManager.DeleteAsync(role);
             }
 
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> UserList()
@@ -108,118 +89,83 @@ namespace CustomIdentityApp.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            try
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user != null)
             {
-                var user = await _userManager.FindByIdAsync(id);
-
-                if(user != null)
+                var userRoles = await _userManager.GetRolesAsync(user);
+                foreach (var item in userRoles)
                 {
-                    var userRoles = await _userManager.GetRolesAsync(user);
-                    foreach (var item in userRoles)
+                    if (string.Equals(item, "student"))
                     {
-                        if(string.Equals(item, "student"))
+                        var students = await _studentsService.GetAll();
+                        var student = students.Where(x => x.UserId == id).FirstOrDefault();
+                        if (student != null)
                         {
-                            var students = await _studentsService.GetAll();
-                            var student = students.Where(x => x.UserId == id).FirstOrDefault();
-                            if (student != null)
-                            {
-                                await _studentsService.Delete(student.Id);
-                                await _userManager.DeleteAsync(user);
-                            }
-                            else
-                                RedirectToAction(nameof(Error));
+                            await _studentsService.Delete(student.Id);
+                            await _userManager.DeleteAsync(user);
                         }
-
-                        else if(string.Equals(item, "manager"))
-                        {
-                            var teachers = await _teacherService.GetAll();
-                            var teacher = teachers.Where(x => x.UserId == id).FirstOrDefault();
-                            if (teacher != null)
-                            {
-                                await _teacherService.Delete(teacher.Id);
-                                await _userManager.DeleteAsync(user);
-                            }
-                            else
-                                await _userManager.DeleteAsync(user);
-                        }
-
                         else
-                        {
                             RedirectToAction(nameof(Error));
+                    }
+
+                    else if (string.Equals(item, "manager"))
+                    {
+                        var teachers = await _teacherService.GetAll();
+                        var teacher = teachers.Where(x => x.UserId == id).FirstOrDefault();
+                        if (teacher != null)
+                        {
+                            await _teacherService.Delete(teacher.Id);
+                            await _userManager.DeleteAsync(user);
                         }
+                        else
+                            await _userManager.DeleteAsync(user);
+                    }
+
+                    else
+                    {
+                        RedirectToAction(nameof(Error));
                     }
                 }
-
-                return RedirectToAction(nameof(UserList));
             }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(UserList));
-            }
+            return RedirectToAction(nameof(UserList));
         }
         public async Task<IActionResult> Edit(string userId)
         {
-            try
-            {  // получаем пользователя
-                var user = await _userManager.FindByIdAsync(userId);
-                if (user != null)
-                {
-                    // получем список ролей пользователя
-                    var userRoles = await _userManager.GetRolesAsync(user);
-                    var allRoles = _roleManager.Roles.ToList();
-                    ChangeRoleViewModel model = new ChangeRoleViewModel
-                    {
-                        UserId = user.Id,
-                        UserEmail = user.Email,
-                        UserRoles = userRoles,
-                        AllRoles = allRoles
-                    };
-                    return View(model);
-                }
-                return NotFound();
-            }
-
-            catch (Exception e)
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
             {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var allRoles = _roleManager.Roles.ToList();
+                ChangeRoleViewModel model = new ChangeRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserRoles = userRoles,
+                    AllRoles = allRoles
+                };
+                return View(model);
             }
+            return NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
-            try
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
             {
-                // получаем пользователя
-                var user = await _userManager.FindByIdAsync(userId);
-                if (user != null)
-                {
-                    // получем список ролей пользователя
-                    var userRoles = await _userManager.GetRolesAsync(user);
-                    // получаем все роли
-                    var allRoles = _roleManager.Roles.ToList();
-                    // получаем список ролей, которые были добавлены
-                    var addedRoles = roles.Except(userRoles);
-                    // получаем роли, которые были удалены
-                    var removedRoles = userRoles.Except(roles);
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var allRoles = _roleManager.Roles.ToList();
+                var addedRoles = roles.Except(userRoles);
+                var removedRoles = userRoles.Except(roles);
 
-                    await _userManager.AddToRolesAsync(user, addedRoles);
+                await _userManager.AddToRolesAsync(user, addedRoles);
+                await _userManager.RemoveFromRolesAsync(user, removedRoles);
 
-                    await _userManager.RemoveFromRolesAsync(user, removedRoles);
-
-                    return RedirectToAction("UserList");
-                }
-                return NotFound();
+                return RedirectToAction("UserList");
             }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return NotFound();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

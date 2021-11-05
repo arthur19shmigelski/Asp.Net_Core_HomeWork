@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ElmahCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Services.Base;
@@ -8,7 +7,6 @@ using School.BLL.Services.StudentGroup;
 using School.BLL.Services.Topic;
 using School.Core.Models;
 using School.Core.ShortModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,14 +38,11 @@ namespace School.MVC.Controllers
         public async Task<IActionResult> Index(string title)
         {
             var modelLessons = _mapper.Map<IEnumerable<LessonModel>>(await _lessonsService.GetAll());
-
             var groups = await _groupService.GetAll();
-
             var group = groups.Where(x => x.Title == title).FirstOrDefault();
-
             var selectModelLessonsByTitle = modelLessons.Where(l => l.GroupId == group.Id).ToList();
-
             ViewBag.Topic = title;
+
             return View(selectModelLessonsByTitle);
         }
 
@@ -64,8 +59,8 @@ namespace School.MVC.Controllers
             if (id.HasValue)
             {
                 modelLesson = _mapper.Map<LessonModel>(await _lessonsService.GetById(id.Value));
-                
                 ViewBag.NameGroup = modelLesson.Group.Title;
+
                 return View(modelLesson);
             }
             else
@@ -75,32 +70,25 @@ namespace School.MVC.Controllers
 
                 var currentGroup = modelGroups.Where(x => x.Title == titleGroup).FirstOrDefault();
                 modelLesson.GroupId = currentGroup.Id;
-
                 ViewBag.NameGroup = currentGroup.Title;
+                
                 return View(modelLesson);
-            }            
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(LessonModel lessonModel)
         {
-            try
-            {
-                if (!ModelState.IsValid) return View(lessonModel);
+            if (!ModelState.IsValid) return View(lessonModel);
 
-                var lesson = _mapper.Map<Lesson>(lessonModel);
+            var lesson = _mapper.Map<Lesson>(lessonModel);
 
-                if (lesson.Id > 0)
-                    await _lessonsService.Update(lesson);
-                else
-                    await _lessonsService.Create(lesson);
-                return RedirectToAction("Start");
-            }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            if (lesson.Id > 0)
+                await _lessonsService.Update(lesson);
+            else
+                await _lessonsService.Create(lesson);
+
+            return RedirectToAction("Start");
         }
         #endregion
 
@@ -108,19 +96,10 @@ namespace School.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(LessonModel lessonModel)
         {
-            try
-            {
-                var lesson = _mapper.Map<Lesson>(lessonModel);
-                await _lessonsService.Delete(lesson.Id);
+            var lesson = _mapper.Map<Lesson>(lessonModel);
+            await _lessonsService.Delete(lesson.Id);
 
-                return RedirectToAction(nameof(Start));
-            }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return RedirectToAction(nameof(Start));
         }
         #endregion 
 
@@ -128,14 +107,7 @@ namespace School.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

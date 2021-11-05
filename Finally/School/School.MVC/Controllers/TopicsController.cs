@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,7 +8,6 @@ using School.Core.Models;
 using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,22 +33,11 @@ namespace School.MVC.Controllers
         #region Index - get first 10 topics
         public async Task<IActionResult> Index(PaginationOptions options, string sortOrder)
         {
-            try
-            {
-                //ViewData["CurrentSort"] = sortOrder;
+            ViewData["TitleSortParam"] = String.IsNullOrEmpty(sortOrder) ? "Title_desc" : "";
+            ViewData["DescriptionSortParam"] = sortOrder == "Description" ? "Description_asc" : "Description";
+            var topics = await _topicService.GetByPagesAndSorted(options, sortOrder);
 
-                ViewData["TitleSortParam"] = String.IsNullOrEmpty(sortOrder) ? "Title_desc" : "";
-                ViewData["DescriptionSortParam"] = sortOrder == "Description" ? "Description_asc" : "Description";
-
-                var topics = await _topicService.GetByPagesAndSorted(options, sortOrder);
-
-                return View(topics);
-            }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return View(topics);
         }
         #endregion
 
@@ -59,45 +46,30 @@ namespace School.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
-            try
-            {
-                var topicModel = id.HasValue ?
-                    _mapper.Map<TopicModel>(await _topicService.GetById(id.Value)) :
-                    new TopicModel();
+            var topicModel = id.HasValue ?
+                _mapper.Map<TopicModel>(await _topicService.GetById(id.Value)) :
+                new TopicModel();
 
-                return View(topicModel);
-            }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return View(topicModel);
         }
 
         [HttpPost]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(TopicModel topicModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    var topic = _mapper.Map<Topic>(topicModel);
-                    if (topic.Id == 0)
-                        await _topicService.Create(topic);
-                    else
-                        await _topicService.Update(topic);
+                var topic = _mapper.Map<Topic>(topicModel);
 
-                    return RedirectToAction(nameof(Index));
-                }
+                if (topic.Id == 0)
+                    await _topicService.Create(topic);
+                else
+                    await _topicService.Update(topic);
 
-                return View(topicModel);
+                return RedirectToAction(nameof(Index));
             }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+
+            return View(topicModel);
         }
         #endregion
 
@@ -106,42 +78,27 @@ namespace School.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                var topic = _mapper.Map<Topic>(await _topicService.GetById(id));
-                await _topicService.Delete(id);
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            var topic = _mapper.Map<Topic>(await _topicService.GetById(id));
+            await _topicService.Delete(id);
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
-            try
-            {
-                var topic = _mapper.Map<Topic>(await _topicService.GetById(id));
+            var topic = _mapper.Map<Topic>(await _topicService.GetById(id));
 
-                var value = await _courseService.GetAll();
-                var newValue = value.Where(x => x.Id == id).Select(x => x);
+            var value = await _courseService.GetAll();
+            var newValue = value.Where(x => x.Id == id).Select(x => x);
 
-                if (newValue.Count() > 0)
-                {
-                    return View("ConfrimDelete", topic);
-                }
-                else
-                    return RedirectToAction(nameof(Delete));
-            }
-            catch (Exception e)
+            if (newValue.Count() > 0)
             {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
+                return View("ConfrimDelete", topic);
             }
+            else
+                return RedirectToAction(nameof(Delete));
         }
         #endregion
     }

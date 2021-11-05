@@ -906,7 +906,7 @@ namespace School.DAL.EF.Contexts
                     TeacherId = teacher1.Id,
                     StartDate = DateTime.Today,
                     Status = GroupStatus.NotStarted,
-                    Title = course1.Title + "Group",
+                    Title = course1.Title + " Group",
                 },
                 new Group
                 {
@@ -914,8 +914,8 @@ namespace School.DAL.EF.Contexts
                     CourseId = course2.Id,
                     TeacherId = teacher2.Id,
                     StartDate = DateTime.Today,
-                    Status = GroupStatus.Started,
-                    Title = course2.Title + "Group",
+                    Status = GroupStatus.NotStarted,
+                    Title = course2.Title + " Group",
                 }, new Group
                 {
                     Id = 3,
@@ -923,7 +923,7 @@ namespace School.DAL.EF.Contexts
                     TeacherId = teacher3.Id,
                     StartDate = DateTime.Today,
                     Status = GroupStatus.NotStarted,
-                    Title = course3.Title + "Group",
+                    Title = course3.Title + " Group",
                 },
                 new Group
                 {
@@ -931,8 +931,8 @@ namespace School.DAL.EF.Contexts
                     CourseId = course4.Id,
                     TeacherId = teacher4.Id,
                     StartDate = DateTime.Today,
-                    Status = GroupStatus.Started,
-                    Title = course4.Title + "Group",
+                    Status = GroupStatus.NotStarted,
+                    Title = course4.Title + " Group",
                 }, new Group
                 {
                     Id = 5,
@@ -940,95 +940,9 @@ namespace School.DAL.EF.Contexts
                     TeacherId = teacher5.Id,
                     StartDate = DateTime.Today,
                     Status = GroupStatus.NotStarted,
-                    Title = course5.Title + "Group",
+                    Title = course5.Title + " Group",
                 }
             );
-
-           // modelBuilder.Entity<Lesson>().HasData(
-           //    new Lesson
-           //    {
-           //        Id = 1,
-           //        CourseId = course1.Id,
-           //        GroupId = 1,
-           //        TopicLesson = course1.Title + "Topic 1",
-           //        NameLesson = "Lesson 1",
-           //        Comment = "Topic 1 - lesson 1",
-
-           //    },
-           //    new Lesson
-           //    {
-           //        Id = 2,
-           //        CourseId = course1.Id,
-           //        GroupId = 1,
-           //        TopicLesson = course1.Title + "Topic 2",
-           //        NameLesson = "Lesson 2",
-           //        Comment = "Topic 2 - lesson 2",
-           //    }, new Lesson
-           //    {
-           //        Id = 3,
-           //        GroupId = 1,
-           //        CourseId = course1.Id,
-           //        TopicLesson = course1.Title + "Topic 3",
-           //        NameLesson = "Lesson 3",
-           //        Comment = "Topic 3 - lesson 3",
-           //    },
-           //    //-----------------------------------------------------
-           //    new Lesson
-           //    {
-           //        Id = 4,
-           //        CourseId = course2.Id,
-           //        GroupId = 1,
-           //        TopicLesson = course2.Title + "Topic 1",
-           //        NameLesson = "Lesson 1",
-           //        Comment = "Topic 1 - lesson 1",
-
-           //    },
-           //    new Lesson
-           //    {
-           //        Id = 5,
-           //        CourseId = course2.Id,
-           //        GroupId = 1,
-           //        TopicLesson = course2.Title + "Topic 2",
-           //        NameLesson = "Lesson 2",
-           //        Comment = "Topic 2 - lesson 2",
-           //    }, new Lesson
-           //    {
-           //        Id = 6,
-           //        GroupId = 1,
-           //        CourseId = course2.Id,
-           //        TopicLesson = course2.Title + "Topic 3",
-           //        NameLesson = "Lesson 3",
-           //        Comment = "Topic 3 - lesson 3",
-           //    },
-           //     //-----------------------------------------------------
-           //     new Lesson
-           //     {
-           //         Id = 7,
-           //         CourseId = course3.Id,
-           //         GroupId = 1,
-           //         TopicLesson = course3.Title + "Topic 1",
-           //         NameLesson = "Lesson 1",
-           //         Comment = "Topic 1 - lesson 1",
-
-           //     },
-           //    new Lesson
-           //    {
-           //        Id = 8,
-           //        CourseId = course3.Id,
-           //        GroupId = 1,
-           //        TopicLesson = course3.Title + "Topic 2",
-           //        NameLesson = "Lesson 2",
-           //        Comment = "Topic 2 - lesson 2",
-           //    }, new Lesson
-           //    {
-           //        Id = 9,
-           //        GroupId = 1,
-           //        CourseId = course3.Id,
-           //        TopicLesson = course3.Title + "Topic 3",
-           //        NameLesson = "Lesson 3",
-           //        Comment = "Topic 3 - lesson 3",
-           //    }
-           //);
         }
     }
 }

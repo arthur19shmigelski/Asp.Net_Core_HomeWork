@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using School.BLL.Extensions;
-using School.Core.Models;
 using School.DAL.EF.Contexts;
 using School.DAL.EF.Extensions;
 using School.MVC.Configuration;
@@ -17,8 +16,6 @@ using School.MVC.Filters;
 using School.MVC.Mapper;
 using School.MVC.Middleware;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace School.MVC
 {
@@ -42,7 +39,12 @@ namespace School.MVC
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<AcademyContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddMvc(options => options.Filters.Add<GlobalExceptionFilter>());
+            services.AddElmah();
+
             services.AddControllersWithViews();
+            services.AddRazorPages();
 
             services.AddBusinessLogicServicesFromDalEF();
             services.AddBusinessLogicServicesFromBLL();
@@ -56,14 +58,6 @@ namespace School.MVC
 
             services.Configure<SecurityOptions>(
                    Configuration.GetSection(SecurityOptions.SectionTitle));
-
-            services.AddRazorPages();
-
-            services.AddElmah();
-
-            services.AddMvc(options =>
-                            options.Filters.Add<GlobalExceptionFilter>()
-                        );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)

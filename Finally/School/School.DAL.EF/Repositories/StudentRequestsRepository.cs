@@ -71,6 +71,9 @@ namespace School.DAL.EF.Repositories
         {
             var originalStudentRequest = await _context.StudentRequests.FindAsync(item.Id);
 
+            originalStudentRequest.Course = null;
+            originalStudentRequest.Student = null;
+
             originalStudentRequest.Comments = item.Comments;
             originalStudentRequest.CourseId = item.CourseId;
             originalStudentRequest.Created = item.Created;

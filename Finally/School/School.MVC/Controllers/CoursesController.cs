@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +13,6 @@ using School.Core.Models.Pages;
 using School.Core.ShortModels;
 using School.MVC.Configuration;
 using School.MVC.Filters;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -50,25 +48,18 @@ namespace School.MVC.Controllers
             _courseService = courseService;
             _groupService = groupService;
         }
+
         #region Index - get first 10 courses
         public async Task<IActionResult> Index(PaginationOptions options)
         {
-            try
+            var courses = await _courseService.GetByPages(options);
+            foreach (var course in courses)
             {
-                var courses = await _courseService.GetByPages(options);
-                foreach (var course in courses)
-                {
-                    var value = await _requestService.GetOpenRequestsCountByCourse(course.Id);
-                    course.RequestsCount = value;
-                }
+                var value = await _requestService.GetOpenRequestsCountByCourse(course.Id);
+                course.RequestsCount = value;
+            }
 
-                return View(courses);
-            }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return View(courses);
         }
         #endregion
 
@@ -77,7 +68,6 @@ namespace School.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
-
             var model = id.HasValue ? _mapper.Map<CourseModel>(await _courseService.GetById(id.Value)) : new CourseModel();
 
             if (id.HasValue)
@@ -91,28 +81,18 @@ namespace School.MVC.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(CourseModel courseModel)
         {
-            try
-            {
-                if (!ModelState.IsValid) return View(courseModel);
+            if (!ModelState.IsValid) return View(courseModel);
 
-                //Плохо мапируется... Почему?
-                var course = _mapper.Map<Course>(courseModel);
+            var course = _mapper.Map<Course>(courseModel);
+            var topicForCourse = await _topicService.GetById(courseModel.TopicId);
+            course.Topic = topicForCourse;
 
-                var topicForCourse = await _topicService.GetById(courseModel.TopicId);
+            if (courseModel.Id > 0)
+                await _courseService.Update(course);
+            else
+                await _courseService.Create(course);
 
-                course.Topic = topicForCourse;
-
-                if (courseModel.Id > 0)
-                    await _courseService.Update(course);
-                else
-                    await _courseService.Create(course);
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return RedirectToAction("Index");
         }
         #endregion
 
@@ -121,16 +101,8 @@ namespace School.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                await _courseService.Delete(id);
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            await _courseService.Delete(id);
+            return RedirectToAction("Index");
         }
         #endregion
 
@@ -138,7 +110,7 @@ namespace School.MVC.Controllers
         public async Task<IActionResult> Search(string search, PaginationOptions options)
         {
             var courses = await _courseService.Search(search);
-            
+
             return View(nameof(Index), new PageList<Course>(courses.AsQueryable(), options));
         }
         #endregion

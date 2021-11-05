@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ElmahCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -53,21 +52,21 @@ namespace School.MVC.Controllers
             IdentityUser currentSystemUser = await _userManager.GetUserAsync(User);
 
             var getAllTeachers = await _teacherService.GetAll();
-
             Teacher getCurrentTeacherBySystemUserId = getAllTeachers.FirstOrDefault(teacher => teacher.UserId == currentSystemUser.Id);
+
             return getCurrentTeacherBySystemUserId;
         }
 
         public async Task<String> GetCurrentRoleBySystemUser()
         {
             IdentityUser currentSystemUser = await _userManager.GetUserAsync(User);
-
             var roleToString = await _userManager.GetRolesAsync(currentSystemUser);
             string stringToSLosf = null;
             foreach (var item in roleToString)
             {
                 stringToSLosf = item;
             }
+
             return stringToSLosf;
         }
         #endregion
@@ -75,34 +74,24 @@ namespace School.MVC.Controllers
         #region Index - get first 10 groups
         public async Task<IActionResult> Index(PaginationOptions options)
         {
-            try
-            {
-                var groups = await _groupService.GetByPages(options);
+            var groups = await _groupService.GetByPages(options);
 
-                if(User.IsInRole("admin"))
-                    return View(groups);
-                else if (User.IsInRole("manager"))
+            if (User.IsInRole("admin"))
+                return View(groups);
+            else if (User.IsInRole("manager"))
+            {
+                var teacher = await GetCurrentTeacherBySystemUser();
+                for (int i = groups.Count() - 1; i >= 0; i--)
                 {
-                    var teacher = await GetCurrentTeacherBySystemUser();
-                    for (int i = groups.Count() - 1; i >= 0; i--)
-                    {
-                        if (groups[i].TeacherId == null)
-                            new NullReferenceException();
-                        if (teacher.Id != groups[i].TeacherId)
-                            groups.Remove(groups[i]);
-                    }
-                    return View(groups);
+                    if (groups[i].TeacherId == null)
+                        new NullReferenceException();
+                    if (teacher.Id != groups[i].TeacherId)
+                        groups.Remove(groups[i]);
                 }
-
-                else
-                    return RedirectToAction(nameof(Error));
+                return View(groups);
             }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
+            else
                 return RedirectToAction(nameof(Error));
-            }
         }
         #endregion
 
@@ -111,19 +100,10 @@ namespace School.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(StudentGroupModel groupModel)
         {
-            try
-            {
-                var groups = _mapper.Map<Group>(groupModel);
-                await _groupService.Delete(groups.Id);
+            var groups = _mapper.Map<Group>(groupModel);
+            await _groupService.Delete(groups.Id);
 
-                return RedirectToAction(nameof(Index));
-            }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return RedirectToAction(nameof(Index));
         }
         #endregion
 
@@ -140,7 +120,7 @@ namespace School.MVC.Controllers
                 model.Students = _mapper.Map<IEnumerable<StudentModel>>(group.Students);
 
                 var lessons = await _lessonsService.GetAll();
-                
+
                 ViewBag.Lessons = _mapper.Map<IEnumerable<LessonModel>>(lessons.Where(x => x.GroupId == group.Id).ToList());
             }
             else
@@ -162,40 +142,31 @@ namespace School.MVC.Controllers
         [Authorize(Roles = "admin, manager")]
         public async Task<IActionResult> Edit(StudentGroupModel groupModel)
         {
-            try
-            {
-                if(groupModel.LessonId == 0)
-                {
-                    for (int i = groupModel.Lessons.Count() - 1; i > -1; i--)
-                    {
-                        if (groupModel.Lessons[i].IsActive == false)
-                        {
-                            groupModel.Lessons.Remove(groupModel.Lessons[i]);
-                        }
-                    }
-                }
+            //if (groupModel.LessonId == 0)
+            //{
+            //    for (int i = groupModel.Lessons.Count() - 1; i > -1; i--)
+            //    {
+            //        if (groupModel.Lessons[i].IsActive == false)
+            //        {
+            //            groupModel.Lessons.Remove(groupModel.Lessons[i]);
+            //        }
+            //    }
+            //}
 
-                if (groupModel.LessonId > 0)
-                {
-                    var lessons = await _lessonsService.GetById(groupModel.LessonId);
+            //if (groupModel.LessonId > 0)
+            //{
+            //    var lessons = await _lessonsService.GetById(groupModel.LessonId);
 
-                    groupModel.Lessons.Add(_mapper.Map<LessonModel>(lessons));
-                }
+            //    groupModel.Lessons.Add(_mapper.Map<LessonModel>(lessons));
+            //}
 
-                var group = _mapper.Map<Group>(groupModel);
-                if (groupModel.Id > 0)
-                    await _groupService.Update(group);
-                else
-                    await _groupService.Create(group);
+            var group = _mapper.Map<Group>(groupModel);
+            if (groupModel.Id > 0)
+                await _groupService.Update(group);
+            else
+                await _groupService.Create(group);
 
-                return RedirectToAction(nameof(Index));
-            }
-
-            catch (Exception e)
-            {
-                ElmahExtensions.RiseError(new Exception(e.Message));
-                return RedirectToAction(nameof(Error));
-            }
+            return RedirectToAction(nameof(Index));
         }
         #endregion
 

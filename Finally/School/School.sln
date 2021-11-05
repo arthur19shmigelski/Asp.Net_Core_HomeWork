@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Angular", "School.An
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Core", "School.Core\School.Core.csproj", "{E3965F5F-103F-46A5-B9B1-28123DD267CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.DAL.EF.Tests", "School.DAL.EF.Tests\School.DAL.EF.Tests.csproj", "{42D1A204-3EE2-4058-B77D-1F805C44798C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.DAL.EF.Tests", "School.DAL.EF.Tests\School.DAL.EF.Tests.csproj", "{42D1A204-3EE2-4058-B77D-1F805C44798C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

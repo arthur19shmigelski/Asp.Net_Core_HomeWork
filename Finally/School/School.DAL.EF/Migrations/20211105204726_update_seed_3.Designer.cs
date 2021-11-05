@@ -10,7 +10,7 @@ using School.DAL.EF.Contexts;
 namespace School.DAL.EF.Migrations
 {
     [DbContext(typeof(AcademyContext))]
-    [Migration("20211105195112_update_seed_3")]
+    [Migration("20211105204726_update_seed_3")]
     partial class update_seed_3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

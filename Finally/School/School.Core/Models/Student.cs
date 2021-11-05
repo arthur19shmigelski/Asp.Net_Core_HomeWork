@@ -1,4 +1,5 @@
 ﻿using School.Core.Models.Enum;
+using System.Collections.Generic;
 
 namespace School.Core.Models
 {

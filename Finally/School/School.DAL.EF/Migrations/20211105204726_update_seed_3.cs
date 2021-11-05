@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace School.DAL.EF.Migrations
 {
-    public partial class update_seed_data_02112021 : Migration
+    public partial class update_seed_3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -91,30 +91,30 @@ namespace School.DAL.EF.Migrations
                 table: "StudentGroups",
                 keyColumn: "Id",
                 keyValue: 1,
-                column: "StartDate",
-                value: new DateTime(2021, 11, 2, 0, 0, 0, 0, DateTimeKind.Local));
+                columns: new[] { "StartDate", "Title" },
+                values: new object[] { new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Local), "C# Group" });
 
             migrationBuilder.UpdateData(
                 table: "StudentGroups",
                 keyColumn: "Id",
                 keyValue: 2,
-                column: "StartDate",
-                value: new DateTime(2021, 11, 2, 0, 0, 0, 0, DateTimeKind.Local));
+                columns: new[] { "StartDate", "Status", "Title" },
+                values: new object[] { new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Local), 0, "Java Group" });
 
             migrationBuilder.UpdateData(
                 table: "StudentGroups",
                 keyColumn: "Id",
                 keyValue: 3,
-                column: "StartDate",
-                value: new DateTime(2021, 11, 2, 0, 0, 0, 0, DateTimeKind.Local));
+                columns: new[] { "StartDate", "Title" },
+                values: new object[] { new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Local), "Web Design Group" });
 
             migrationBuilder.InsertData(
                 table: "StudentGroups",
                 columns: new[] { "Id", "CourseId", "StartDate", "Status", "TeacherId", "Title" },
                 values: new object[,]
                 {
-                    { 4, 4, new DateTime(2021, 11, 2, 0, 0, 0, 0, DateTimeKind.Local), 1, 4, "Промышленная разработка ПО на ASP.NETGroup" },
-                    { 5, 5, new DateTime(2021, 11, 2, 0, 0, 0, 0, DateTimeKind.Local), 0, 5, "Промышленная разработка ПО на JavaGroup" }
+                    { 4, 4, new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Local), 0, 4, "Промышленная разработка ПО на ASP.NET Group" },
+                    { 5, 5, new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Local), 0, 5, "Промышленная разработка ПО на Java Group" }
                 });
 
             migrationBuilder.UpdateData(
@@ -199,22 +199,22 @@ namespace School.DAL.EF.Migrations
                 table: "StudentGroups",
                 keyColumn: "Id",
                 keyValue: 1,
-                column: "StartDate",
-                value: new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Local));
+                columns: new[] { "StartDate", "Title" },
+                values: new object[] { new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Local), "C#Group" });
 
             migrationBuilder.UpdateData(
                 table: "StudentGroups",
                 keyColumn: "Id",
                 keyValue: 2,
-                column: "StartDate",
-                value: new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Local));
+                columns: new[] { "StartDate", "Status", "Title" },
+                values: new object[] { new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Local), 1, "JavaGroup" });
 
             migrationBuilder.UpdateData(
                 table: "StudentGroups",
                 keyColumn: "Id",
                 keyValue: 3,
-                column: "StartDate",
-                value: new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Local));
+                columns: new[] { "StartDate", "Title" },
+                values: new object[] { new DateTime(2021, 11, 1, 0, 0, 0, 0, DateTimeKind.Local), "Web DesignGroup" });
 
             migrationBuilder.UpdateData(
                 table: "Topics",

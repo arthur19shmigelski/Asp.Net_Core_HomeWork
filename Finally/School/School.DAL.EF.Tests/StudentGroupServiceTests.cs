@@ -45,7 +45,6 @@ namespace School.DAL.EF.Tests
                 .Setup(x => x.GetOpenRequestsByCourse(It.IsAny<int>()))
                 .Returns(Task.FromResult<IEnumerable<StudentRequest>>(requests));
 
-
             //act
             underTest.Create(group);
 
@@ -66,7 +65,6 @@ namespace School.DAL.EF.Tests
             requestService
                 .Setup(x => x.GetOpenRequestsByCourse(It.IsAny<int>()))
                 .Returns(Task.FromResult<IEnumerable<StudentRequest>>(requests));
-
 
             //act
             underTest.Create(group);

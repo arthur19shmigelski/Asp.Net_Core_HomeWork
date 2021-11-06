@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Services.Base;
 using School.BLL.Services.Course;
+using School.BLL.Services.Student;
 using School.BLL.Services.StudentGroup;
 using School.BLL.Services.StudentRequest;
 using School.BLL.Services.Teacher;
@@ -27,6 +28,7 @@ namespace School.MVC.Controllers
         private readonly IStudentRequestService _requestService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEntityService<Lesson> _lessonsService;
+        private readonly IStudentService _studentService;
 
         private readonly IMapper _mapper;
 
@@ -36,7 +38,8 @@ namespace School.MVC.Controllers
            IStudentRequestService requestService,
            IMapper mapper,
            IEntityService<Lesson> lessonsService,
-           UserManager<IdentityUser> userManager)
+           UserManager<IdentityUser> userManager,
+           IStudentService studentService)
         {
             _groupService = groupService;
             _teacherService = teacherService;
@@ -44,6 +47,7 @@ namespace School.MVC.Controllers
             _requestService = requestService;
             _userManager = userManager;
             _lessonsService = lessonsService;
+            _studentService = studentService;
             _mapper = mapper;
         }
         #region Some methods
@@ -56,7 +60,15 @@ namespace School.MVC.Controllers
 
             return getCurrentTeacherBySystemUserId;
         }
+        public async Task<Student> GetCurrentStudentBySystemUser()
+        {
+            IdentityUser currentSystemUser = await _userManager.GetUserAsync(User);
 
+            var getAllStudents = await _studentService.GetAll();
+            Student getCurrentStudentBySystemUserId = getAllStudents.FirstOrDefault(student => student.UserId == currentSystemUser.Id);
+
+            return getCurrentStudentBySystemUserId;
+        }
         public async Task<String> GetCurrentRoleBySystemUser()
         {
             IdentityUser currentSystemUser = await _userManager.GetUserAsync(User);
@@ -86,6 +98,16 @@ namespace School.MVC.Controllers
                     if (groups[i].TeacherId == null)
                         new NullReferenceException();
                     if (teacher.Id != groups[i].TeacherId)
+                        groups.Remove(groups[i]);
+                }
+                return View(groups);
+            }
+            else if (User.IsInRole("student"))
+            {
+                var student = await GetCurrentStudentBySystemUser();
+                for (int i = groups.Count() - 1; i >= 0; i--)
+                {
+                    if (groups[i].Id != student.GroupId)
                         groups.Remove(groups[i]);
                 }
                 return View(groups);

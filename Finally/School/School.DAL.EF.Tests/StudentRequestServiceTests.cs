@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace School.DAL.EF.Tests
 {
-    public class StudentGroupServiceTests
+    public class StudentRequestServiceTests
     {
         private Mock<IStudentService> studentService;
         private Mock<IStudentRequestService> requestService;

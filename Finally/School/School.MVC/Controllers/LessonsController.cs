@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using School.BLL.Services.Base;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace School.MVC.Controllers
 {
+    [Authorize(Roles = "admin, manager")]
     public class LessonsController : Controller
     {
         private readonly IEntityService<Lesson> _lessonsService;
